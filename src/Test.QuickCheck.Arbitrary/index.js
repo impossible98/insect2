@@ -8,7 +8,7 @@ let Data_Either = require("../Data.Either/index.js");
 let Data_Enum = require("../Data.Enum/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
 
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Generic_Rep = require("../Data.Generic.Rep/index.js");
 let Data_Identity = require("../Data.Identity/index.js");
 let Data_Lazy = require("../Data.Lazy/index.js");
@@ -129,7 +129,7 @@ let genericCoarbitrary = function (dictGeneric) {
 	return function (dictCoarbitrary) {
 		return function (x) {
 			return function (g) {
-				return Data_Functor.map(Test_QuickCheck_Gen.functorGen)(Data_Generic_Rep.to(dictGeneric))(coarbitrary(dictCoarbitrary)(Data_Generic_Rep.from(dictGeneric)(x))(Data_Functor.map(Test_QuickCheck_Gen.functorGen)(Data_Generic_Rep.from(dictGeneric))(g)));
+				return data.map(Test_QuickCheck_Gen.functorGen)(Data_Generic_Rep.to(dictGeneric))(coarbitrary(dictCoarbitrary)(Data_Generic_Rep.from(dictGeneric)(x))(data.map(Test_QuickCheck_Gen.functorGen)(Data_Generic_Rep.from(dictGeneric))(g)));
 			};
 		};
 	};
@@ -259,7 +259,7 @@ let coarbNonEmptyArray = function (dictCoarbitrary) {
 	})());
 };
 let coarbString = new Coarbitrary(function (s) {
-	return coarbitrary(coarbArray(coarbMaybe(coarbChar)))(Data_Functor.map(Data_Functor.functorArray)(Data_String_CodeUnits.charAt(0))(Data_String_Common.split(Data_Newtype.wrap(Data_String_Pattern.newtypePattern)(""))(s)));
+	return coarbitrary(coarbArray(coarbMaybe(coarbChar)))(data.map(data.functorArray)(Data_String_CodeUnits.charAt(0))(Data_String_Common.split(Data_Newtype.wrap(Data_String_Pattern.newtypePattern)(""))(s)));
 });
 let coarbNonEmptyString = new Coarbitrary((function () {
 	let $114 = coarbitrary(coarbString);
@@ -286,30 +286,30 @@ let arbitrary = function (dict) {
 	return dict.arbitrary;
 };
 let arbitraryArgument = function (dictArbitrary) {
-	return new Arbitrary(Data_Functor.map(Test_QuickCheck_Gen.functorGen)(Data_Generic_Rep.Argument)(arbitrary(dictArbitrary)));
+	return new Arbitrary(data.map(Test_QuickCheck_Gen.functorGen)(Data_Generic_Rep.Argument)(arbitrary(dictArbitrary)));
 };
 let arbitraryConstructor = function (dictArbitrary) {
-	return new Arbitrary(Data_Functor.map(Test_QuickCheck_Gen.functorGen)(Data_Generic_Rep.Constructor)(arbitrary(dictArbitrary)));
+	return new Arbitrary(data.map(Test_QuickCheck_Gen.functorGen)(Data_Generic_Rep.Constructor)(arbitrary(dictArbitrary)));
 };
 let arbitraryIdentity = function (dictArbitrary) {
-	return new Arbitrary(Data_Functor.map(Test_QuickCheck_Gen.functorGen)(Data_Identity.Identity)(arbitrary(dictArbitrary)));
+	return new Arbitrary(data.map(Test_QuickCheck_Gen.functorGen)(Data_Identity.Identity)(arbitrary(dictArbitrary)));
 };
 let arbitraryLazy = function (dictArbitrary) {
 	return new Arbitrary(control.bind(Test_QuickCheck_Gen.bindGen)(arbitrary(dictArbitrary))((function () {
 		let $116 = control.pure(Test_QuickCheck_Gen.applicativeGen);
 		return function ($117) {
-			return $116(Data_Lazy.defer(Data_Functor._const($117)));
+			return $116(Data_Lazy.defer(data._const($117)));
 		};
 	})()));
 };
 let arbitraryList = function (dictArbitrary) {
 	return new Arbitrary(Test_QuickCheck_Gen.sized(function (n) {
-		return control.bind(Test_QuickCheck_Gen.bindGen)(Test_QuickCheck_Gen.chooseInt(0)(n))(Data_Functor.flip(Test_QuickCheck_Gen.listOf)(arbitrary(dictArbitrary)));
+		return control.bind(Test_QuickCheck_Gen.bindGen)(Test_QuickCheck_Gen.chooseInt(0)(n))(data.flip(Test_QuickCheck_Gen.listOf)(arbitrary(dictArbitrary)));
 	}));
 };
 let arbitraryProduct = function (dictArbitrary) {
 	return function (dictArbitrary1) {
-		return new Arbitrary(apply(Test_QuickCheck_Gen.applyGen)(Data_Functor.map(Test_QuickCheck_Gen.functorGen)(Data_Generic_Rep.Product.create)(arbitrary(dictArbitrary)))(arbitrary(dictArbitrary1)));
+		return new Arbitrary(apply(Test_QuickCheck_Gen.applyGen)(data.map(Test_QuickCheck_Gen.functorGen)(Data_Generic_Rep.Product.create)(arbitrary(dictArbitrary)))(arbitrary(dictArbitrary1)));
 	};
 };
 let arbitraryRowListCons = function (dictArbitrary) {
@@ -333,29 +333,29 @@ let arbitraryRowListCons = function (dictArbitrary) {
 };
 let arbitrarySum = function (dictArbitrary) {
 	return function (dictArbitraryGenericSum) {
-		return new Arbitrary(Test_QuickCheck_Gen.oneOf(new Data_NonEmpty.NonEmpty(Data_Functor.map(Test_QuickCheck_Gen.functorGen)(Data_Generic_Rep.Inl.create)(arbitrary(dictArbitrary)), Data_Functor.map(Data_Functor.functorArray)(Data_Functor.map(Test_QuickCheck_Gen.functorGen)(Data_Generic_Rep.Inr.create))(arbitraryGenericSum(dictArbitraryGenericSum)))));
+		return new Arbitrary(Test_QuickCheck_Gen.oneOf(new Data_NonEmpty.NonEmpty(data.map(Test_QuickCheck_Gen.functorGen)(Data_Generic_Rep.Inl.create)(arbitrary(dictArbitrary)), data.map(data.functorArray)(data.map(Test_QuickCheck_Gen.functorGen)(Data_Generic_Rep.Inr.create))(arbitraryGenericSum(dictArbitraryGenericSum)))));
 	};
 };
 let genericArbitrary = function (dictGeneric) {
 	return function (dictArbitrary) {
-		return Data_Functor.map(Test_QuickCheck_Gen.functorGen)(Data_Generic_Rep.to(dictGeneric))(arbitrary(dictArbitrary));
+		return data.map(Test_QuickCheck_Gen.functorGen)(Data_Generic_Rep.to(dictGeneric))(arbitrary(dictArbitrary));
 	};
 };
 let arbUnit = new Arbitrary(control.pure(Test_QuickCheck_Gen.applicativeGen)());
 let arbTuple = function (dictArbitrary) {
 	return function (dictArbitrary1) {
-		return new Arbitrary(apply(Test_QuickCheck_Gen.applyGen)(Data_Functor.map(Test_QuickCheck_Gen.functorGen)(Data_Tuple.Tuple.create)(arbitrary(dictArbitrary)))(arbitrary(dictArbitrary1)));
+		return new Arbitrary(apply(Test_QuickCheck_Gen.applyGen)(data.map(Test_QuickCheck_Gen.functorGen)(Data_Tuple.Tuple.create)(arbitrary(dictArbitrary)))(arbitrary(dictArbitrary1)));
 	};
 };
 let arbOrdering = new Arbitrary(Test_QuickCheck_Gen.elements(new Data_NonEmpty.NonEmpty(Data_Ordering.LT.value, [Data_Ordering.EQ.value, Data_Ordering.GT.value])));
 let arbNumber = new Arbitrary(Test_QuickCheck_Gen.uniform);
 let arbNonEmpty = function (dictArbitrary) {
 	return function (dictArbitrary1) {
-		return new Arbitrary(apply(Test_QuickCheck_Gen.applyGen)(Data_Functor.map(Test_QuickCheck_Gen.functorGen)(Data_NonEmpty.NonEmpty.create)(arbitrary(dictArbitrary1)))(arbitrary(dictArbitrary)));
+		return new Arbitrary(apply(Test_QuickCheck_Gen.applyGen)(data.map(Test_QuickCheck_Gen.functorGen)(Data_NonEmpty.NonEmpty.create)(arbitrary(dictArbitrary1)))(arbitrary(dictArbitrary)));
 	};
 };
 let arbNonEmptyList = function (dictArbitrary) {
-	return new Arbitrary(Data_Functor.map(Test_QuickCheck_Gen.functorGen)(Data_List_Types.NonEmptyList)(arbitrary(arbNonEmpty(arbitraryList(dictArbitrary))(dictArbitrary))));
+	return new Arbitrary(data.map(Test_QuickCheck_Gen.functorGen)(Data_List_Types.NonEmptyList)(arbitrary(arbNonEmpty(arbitraryList(dictArbitrary))(dictArbitrary))));
 };
 let arbMaybe = function (dictArbitrary) {
 	return new Arbitrary(Control_Monad_Gen_Common.genMaybe(Test_QuickCheck_Gen.monadGenGen)(arbitrary(dictArbitrary)));
@@ -363,7 +363,7 @@ let arbMaybe = function (dictArbitrary) {
 let arbInt = new Arbitrary(Test_QuickCheck_Gen.chooseInt(-1000000 | 0)(1000000));
 let arbGenSumSum = function (dictArbitrary) {
 	return function (dictArbitraryGenericSum) {
-		return new ArbitraryGenericSum(Data_Semigroup.append(Data_Semigroup.semigroupArray)([Data_Functor.map(Test_QuickCheck_Gen.functorGen)(Data_Generic_Rep.Inl.create)(arbitrary(dictArbitrary))])(Data_Functor.map(Data_Functor.functorArray)(Data_Functor.map(Test_QuickCheck_Gen.functorGen)(Data_Generic_Rep.Inr.create))(arbitraryGenericSum(dictArbitraryGenericSum))));
+		return new ArbitraryGenericSum(Data_Semigroup.append(Data_Semigroup.semigroupArray)([data.map(Test_QuickCheck_Gen.functorGen)(Data_Generic_Rep.Inl.create)(arbitrary(dictArbitrary))])(data.map(data.functorArray)(data.map(Test_QuickCheck_Gen.functorGen)(Data_Generic_Rep.Inr.create))(arbitraryGenericSum(dictArbitraryGenericSum))));
 	};
 };
 let arbGenSumConstructor = function (dictArbitrary) {
@@ -381,7 +381,7 @@ let arbEither = function (dictArbitrary) {
 		return new Arbitrary(Control_Monad_Gen_Common.genEither(Test_QuickCheck_Gen.monadGenGen)(arbitrary(dictArbitrary))(arbitrary(dictArbitrary1)));
 	};
 };
-let arbChar = new Arbitrary(Data_Functor.map(Test_QuickCheck_Gen.functorGen)(Data_Enum.toEnumWithDefaults(Data_Enum.boundedEnumChar)(Data_Bounded.bottom(Data_Bounded.boundedChar))(Data_Bounded.top(Data_Bounded.boundedChar)))(Test_QuickCheck_Gen.chooseInt(0)(65536)));
+let arbChar = new Arbitrary(data.map(Test_QuickCheck_Gen.functorGen)(Data_Enum.toEnumWithDefaults(Data_Enum.boundedEnumChar)(Data_Bounded.bottom(Data_Bounded.boundedChar))(Data_Bounded.top(Data_Bounded.boundedChar)))(Test_QuickCheck_Gen.chooseInt(0)(65536)));
 let arbBoolean = new Arbitrary(Control_Monad_Gen_Class.chooseBool(Test_QuickCheck_Gen.monadGenGen));
 let arbArray = function (dictArbitrary) {
 	return new Arbitrary(Test_QuickCheck_Gen.arrayOf(arbitrary(dictArbitrary)));
@@ -397,14 +397,14 @@ let arbNonEmptyArray = function (dictArbitrary) {
 		});
 	}));
 };
-let arbString = new Arbitrary(Data_Functor.map(Test_QuickCheck_Gen.functorGen)(Data_String_CodeUnits.fromCharArray)(arbitrary(arbArray(arbChar))));
-let arbNonEmptyString = new Arbitrary(apply(Test_QuickCheck_Gen.applyGen)(Data_Functor.map(Test_QuickCheck_Gen.functorGen)(Data_String_NonEmpty_CodeUnits.cons)(arbitrary(arbChar)))(arbitrary(arbString)));
+let arbString = new Arbitrary(data.map(Test_QuickCheck_Gen.functorGen)(Data_String_CodeUnits.fromCharArray)(arbitrary(arbArray(arbChar))));
+let arbNonEmptyString = new Arbitrary(apply(Test_QuickCheck_Gen.applyGen)(data.map(Test_QuickCheck_Gen.functorGen)(Data_String_NonEmpty_CodeUnits.cons)(arbitrary(arbChar)))(arbitrary(arbString)));
 let coarbFunction = function (dictArbitrary) {
 	return function (dictCoarbitrary) {
 		return new Coarbitrary(function (f) {
 			return function (gen) {
 				return control.bind(Test_QuickCheck_Gen.bindGen)(arbitrary(arbArray(dictArbitrary)))(function (xs) {
-					return coarbitrary(coarbArray(dictCoarbitrary))(Data_Functor.map(Data_Functor.functorArray)(f)(xs))(gen);
+					return coarbitrary(coarbArray(dictCoarbitrary))(data.map(data.functorArray)(f)(xs))(gen);
 				});
 			};
 		});

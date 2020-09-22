@@ -5,7 +5,7 @@ let Control_MonadZero = require("../Control.MonadZero/index.js");
 let Data_Distributive = require("../Data.Distributive/index.js");
 let Data_Exists = require("../Data.Exists/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Functor_Invariant = require("../Data.Functor.Invariant/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
 let Data_Semigroup_Foldable = require("../Data.Semigroup.Foldable/index.js");
@@ -114,7 +114,7 @@ let unCoyoneda = function (f) {
 };
 
 let lowerCoyoneda = function (dictFunctor) {
-	return unCoyoneda(Data_Functor.map(dictFunctor));
+	return unCoyoneda(data.map(dictFunctor));
 };
 
 let foldableCoyoneda = function (dictFoldable) {
@@ -209,7 +209,7 @@ let coyoneda = function (k) {
 		return Coyoneda(Data_Exists.mkExists(new CoyonedaF(k, fi)));
 	};
 };
-let functorCoyoneda = new Data_Functor.Functor(function (f) {
+let functorCoyoneda = new data.Functor(function (f) {
 	return function (v) {
 		return Data_Exists.runExists(function (v1) {
 			return coyoneda(function ($85) {
@@ -275,7 +275,7 @@ let traversableCoyoneda = function (dictTraversable) {
 		return functorCoyoneda;
 	}, function (dictApplicative) {
 		return unCoyoneda(function (k) {
-			let $94 = Data_Functor.map((dictApplicative.Apply0()).Functor0())(liftCoyoneda);
+			let $94 = data.map((dictApplicative.Apply0()).Functor0())(liftCoyoneda);
 			let $95 = Data_Traversable.traverse(dictTraversable)(dictApplicative)(k);
 			return function ($96) {
 				return $94($95($96));
@@ -284,7 +284,7 @@ let traversableCoyoneda = function (dictTraversable) {
 	}, function (dictApplicative) {
 		return function (f) {
 			return unCoyoneda(function (k) {
-				let $97 = Data_Functor.map((dictApplicative.Apply0()).Functor0())(liftCoyoneda);
+				let $97 = data.map((dictApplicative.Apply0()).Functor0())(liftCoyoneda);
 				let $98 = Data_Traversable.traverse(dictTraversable)(dictApplicative)(function ($100) {
 					return f(k($100));
 				});
@@ -302,9 +302,9 @@ let traversable1Coyoneda = function (dictTraversable1) {
 		return traversableCoyoneda(dictTraversable1.Traversable1());
 	}, function (dictApply) {
 		return unCoyoneda(function (k) {
-			let $101 = Data_Functor.map(dictApply.Functor0())(liftCoyoneda);
+			let $101 = data.map(dictApply.Functor0())(liftCoyoneda);
 			let $102 = Data_Semigroup_Traversable.sequence1(dictTraversable1)(dictApply);
-			let $103 = Data_Functor.map((dictTraversable1.Traversable1()).Functor0())(k);
+			let $103 = data.map((dictTraversable1.Traversable1()).Functor0())(k);
 			return function ($104) {
 				return $101($102($103($104)));
 			};
@@ -312,7 +312,7 @@ let traversable1Coyoneda = function (dictTraversable1) {
 	}, function (dictApply) {
 		return function (f) {
 			return unCoyoneda(function (k) {
-				let $105 = Data_Functor.map(dictApply.Functor0())(liftCoyoneda);
+				let $105 = data.map(dictApply.Functor0())(liftCoyoneda);
 				let $106 = Data_Semigroup_Traversable.traverse1(dictTraversable1)(dictApply)(function ($108) {
 					return f(k($108));
 				});

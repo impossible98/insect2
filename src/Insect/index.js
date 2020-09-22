@@ -9,7 +9,7 @@ let Data_Unfoldable = require("../Data.Unfoldable/index.js");
 let Insect_Format = require("../Insect.Format/index.js");
 let Insect_Interpreter = require("../Insect.Interpreter/index.js");
 let Insect_Parser = require("../Insect.Parser/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Map_Internal = require("../Data.Map.Internal/index.js");
 let Data_Bifunctor = require("../Data.Bifunctor/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
@@ -199,7 +199,7 @@ let eqStorageType = new Eq(function (x) {
 
 
 let keys = (() => {
-	let $0 = Data_Functor._void(Data_Map_Internal.functorMap);
+	let $0 = data._void(Data_Map_Internal.functorMap);
 	return function ($1) {
 		return $0($1);
 	};

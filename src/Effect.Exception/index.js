@@ -2,7 +2,7 @@ let $foreign = require("./foreign.js");
 
 const control = require("../control");
 let Data_Either = require("../Data.Either/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Show = require("../Data.Show/index.js");
 let Effect = require("../Effect/index.js");
@@ -14,7 +14,7 @@ let $$try = function (action) {
         return function ($1) {
             return $0(Data_Either.Left.create($1));
         };
-    })())(Data_Functor.map(Effect.functorEffect)(Data_Either.Right.create)(action));
+    })())(data.map(Effect.functorEffect)(Data_Either.Right.create)(action));
 };
 let $$throw = function ($2) {
     return $foreign.throwException($foreign.error($2));

@@ -3,7 +3,7 @@ let $foreign = require("./foreign.js");
 const control = require("../control");
 let Data_Either = require("../Data.Either/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_List = require("../Data.List/index.js");
 let Data_List_Types = require("../Data.List.Types/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
@@ -26,7 +26,7 @@ let printStack = function (err) {
     };
     if (v instanceof Data_Maybe.Just) {
         return control.discard(control.discardUnit)(Effect_Aff.bindAff)(Test_Unit_Console.log(Effect_Aff.monadEffectAff)("  stack: |-"))(function () {
-            return Test_Unit_Console.log(Effect_Aff.monadEffectAff)(Data_String_Common.joinWith("\x0a")(Data_Functor.map(Data_Functor.functorArray)(Data_Semigroup.append(Data_Semigroup.semigroupString)("    "))(Data_String_Common.split("\x0a")(v.value0))));
+            return Test_Unit_Console.log(Effect_Aff.monadEffectAff)(Data_String_Common.joinWith("\x0a")(data.map(data.functorArray)(Data_Semigroup.append(Data_Semigroup.semigroupString)("    "))(Data_String_Common.split("\x0a")(v.value0))));
         });
     };
     throw new Error("Failed pattern match at Test.Unit.Output.TAP (line 22, column 18 - line 26, column 67): " + [ v.constructor.name ]);

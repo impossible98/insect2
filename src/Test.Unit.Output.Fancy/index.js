@@ -1,7 +1,7 @@
 const control = require("../control");
 let Data_Either = require("../Data.Either/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_List = require("../Data.List/index.js");
 let Data_List_Types = require("../Data.List.Types/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
@@ -32,7 +32,7 @@ let printLive = function (tst) {
                     Test_Unit_Console.print(indent$prime(path))();
                     Test_Unit_Console.print("\u2192 Suite: ")();
                     Test_Unit_Console.printLabel(v.value0)();
-                    return Data_Functor._void(Effect.functorEffect)(Test_Unit_Console.print("\x0a"))();
+                    return data._void(Effect.functorEffect)(Test_Unit_Console.print("\x0a"))();
                 });
             };
             if (v instanceof Data_Either.Right) {
@@ -44,7 +44,7 @@ let printLive = function (tst) {
                     return Test_Unit_Console.restorePos();
                 }))(function () {
                     return control.bind(Effect_Aff.bindAff)(Effect_Aff.attempt(v.value0.value1))(function (result) {
-                        return Data_Functor._void(Effect_Aff.functorAff)((function () {
+                        return data._void(Effect_Aff.functorAff)((function () {
                             if (result instanceof Data_Either.Right) {
                                 return Effect_Class.liftEffect(Effect_Aff.monadEffectAff)(function __do() {
                                     Test_Unit_Console.eraseLine();

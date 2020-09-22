@@ -4,7 +4,7 @@ let Data_Bifunctor = require("../Data.Bifunctor/index.js");
 let Data_Bounded = require("../Data.Bounded/index.js");
 let Data_Either = require("../Data.Either/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_List = require("../Data.List/index.js");
 let Data_List_NonEmpty = require("../Data.List.NonEmpty/index.js");
 let Data_List_Types = require("../Data.List.Types/index.js");
@@ -188,7 +188,7 @@ function conversionErrorMessage(v) {
 	function baseRep(u) {
 		let us = Data_Units.baseRepresentation(u);
 		let us$prime = Data_List.sortBy(Data_Ord.comparing(Data_Ord.ordString)(Data_Units.toString))(us);
-		let usStrs = Data_Foldable.intercalate(Data_List_Types.foldableList)(Data_Monoid.monoidArray)([Insect_Format.text("\xb7")])(Data_Functor.map(Data_List_Types.functorList)(function ($139) {
+		let usStrs = Data_Foldable.intercalate(Data_List_Types.foldableList)(Data_Monoid.monoidArray)([Insect_Format.text("\xb7")])(data.map(Data_List_Types.functorList)(function ($139) {
 			return Data_Array.singleton(Insect_Format.unit(Data_Units.toString($139)));
 		})(us$prime));
 		let br = Data_Semigroup.append(Data_Semigroup.semigroupArray)(Data_Array.cons(Insect_Format.text(" (base units: "))(usStrs))([Insect_Format.text(")")]);
@@ -265,7 +265,7 @@ function errorWithInput(prefix) {
 		return (env) => {
 			return (err) => {
 				return {
-					msg: Message.create($$Error.value)(Data_Semigroup.append(Data_Semigroup.semigroupArray)(Data_Functor.map(Data_Functor.functorArray)(Insect_Format.optional)(Data_Semigroup.append(Data_Semigroup.semigroupArray)(Data_Array.cons(Insect_Format.text("  "))(prefix))(Insect_PrettyPrint.pretty(expr))))(Data_Semigroup.append(Data_Semigroup.semigroupArray)(Data_Functor.map(Data_Functor.functorArray)(Insect_Format.optional)([Insect_Format.nl, Insect_Format.nl]))(evalErrorMessage(err)))),
+					msg: Message.create($$Error.value)(Data_Semigroup.append(Data_Semigroup.semigroupArray)(data.map(data.functorArray)(Insect_Format.optional)(Data_Semigroup.append(Data_Semigroup.semigroupArray)(Data_Array.cons(Insect_Format.text("  "))(prefix))(Insect_PrettyPrint.pretty(expr))))(Data_Semigroup.append(Data_Semigroup.semigroupArray)(data.map(data.functorArray)(Insect_Format.optional)([Insect_Format.nl, Insect_Format.nl]))(evalErrorMessage(err)))),
 					newEnv: env
 				};
 			};
@@ -312,8 +312,8 @@ function evalSpecial(func) {
 							};
 							return control.bind(Data_Either.bindEither)($$eval(v)(v3))(function (lowQuantity) {
 								return control.bind(Data_Either.bindEither)($$eval(v)(v4))(function (highQuantity) {
-									return control.bind(Data_Either.bindEither)(Data_Bifunctor.lmap(Data_Either.bifunctorEither)(Insect_Language.QConversionError.create)(Data_Functor.map(Data_Either.functorEither)(round)(Data_Quantity.toScalar(lowQuantity))))(function (low) {
-										return control.bind(Data_Either.bindEither)(Data_Bifunctor.lmap(Data_Either.bifunctorEither)(Insect_Language.QConversionError.create)(Data_Functor.map(Data_Either.functorEither)(round)(Data_Quantity.toScalar(highQuantity))))(function (high) {
+									return control.bind(Data_Either.bindEither)(Data_Bifunctor.lmap(Data_Either.bifunctorEither)(Insect_Language.QConversionError.create)(data.map(Data_Either.functorEither)(round)(Data_Quantity.toScalar(lowQuantity))))(function (low) {
+										return control.bind(Data_Either.bindEither)(Data_Bifunctor.lmap(Data_Either.bifunctorEither)(Insect_Language.QConversionError.create)(data.map(Data_Either.functorEither)(round)(Data_Quantity.toScalar(highQuantity))))(function (high) {
 											let iteration = function (n) {
 												return $$eval({
 													values: Data_Map_Internal.insert(Data_Ord.ordString)(v2.value0)(new Insect_Environment.StoredValue(Insect_Environment.UserDefined.value, Data_Quantity.scalar(toNumber(n))))(v.values),
@@ -325,7 +325,7 @@ function evalSpecial(func) {
 												if ($63) {
 													return Data_List_Types.Nil.value;
 												};
-												return Data_Functor.map(Data_List_Types.functorList)(iteration)(Data_List.range(low)(high));
+												return data.map(Data_List_Types.functorList)(iteration)(Data_List.range(low)(high));
 											})();
 											let $64 = func === "sum";
 											if ($64) {
@@ -378,7 +378,7 @@ function $$eval(env) {
 			})());
 		};
 		if (v instanceof Insect_Language.Negate) {
-			return Data_Functor.map(Data_Either.functorEither)(Data_Quantity.qNegate)($$eval(env)(v.value0));
+			return data.map(Data_Either.functorEither)(Data_Quantity.qNegate)($$eval(env)(v.value0));
 		};
 		if (v instanceof Insect_Language.Apply) {
 			let $80 = v.value0 === "sum" || v.value0 === "product";
@@ -438,7 +438,7 @@ function $$eval(env) {
 							return control.pure(Data_Either.applicativeEither)(Data_Quantity.qDivide(a)(b));
 						};
 						if (v1 instanceof Insect_Language.Pow) {
-							return Data_Functor.map(Data_Either.functorEither)(Data_Quantity.pow(a))(toScalar(b));
+							return data.map(Data_Either.functorEither)(Data_Quantity.pow(a))(toScalar(b));
 						};
 						if (v1 instanceof Insect_Language.Mod) {
 							return modulo(a)(b);
@@ -465,7 +465,7 @@ function evalAndSimplify(env) {
 		if (v instanceof Insect_Language.BinOp && v.value0 instanceof Insect_Language.ConvertTo) {
 			return $$eval(env)(v);
 		};
-		return Data_Functor.map(Data_Either.functorEither)(Data_Quantity.fullSimplify)($$eval(env)(v));
+		return data.map(Data_Either.functorEither)(Data_Quantity.fullSimplify)($$eval(env)(v));
 	};
 }
 
@@ -480,7 +480,7 @@ function runInsect(env) {
 
 			if (v1 instanceof Data_Either.Right) {
 				return {
-					msg: Message.create(Value.value)(Data_Semigroup.append(Data_Semigroup.semigroupArray)(Data_Functor.map(Data_Functor.functorArray)(Insect_Format.optional)(Data_Array.cons(Insect_Format.text("  "))(Insect_PrettyPrint.pretty(v.value0))))(Data_Semigroup.append(Data_Semigroup.semigroupArray)(Data_Functor.map(Data_Functor.functorArray)(Insect_Format.optional)([Insect_Format.nl, Insect_Format.nl, Insect_Format.text("   = ")]))(Insect_PrettyPrint.prettyQuantity(v1.value0)))),
+					msg: Message.create(Value.value)(Data_Semigroup.append(Data_Semigroup.semigroupArray)(data.map(data.functorArray)(Insect_Format.optional)(Data_Array.cons(Insect_Format.text("  "))(Insect_PrettyPrint.pretty(v.value0))))(Data_Semigroup.append(Data_Semigroup.semigroupArray)(data.map(data.functorArray)(Insect_Format.optional)([Insect_Format.nl, Insect_Format.nl, Insect_Format.text("   = ")]))(Insect_PrettyPrint.prettyQuantity(v1.value0)))),
 					newEnv: {
 						values: Data_Map_Internal.insert(Data_Ord.ordString)("ans")(new Insect_Environment.StoredValue(Insect_Environment.UserDefined.value, v1.value0))(env.values),
 						functions: env.functions
@@ -504,7 +504,7 @@ function runInsect(env) {
 					return errorWithInput([Insect_Format.ident(v.value0), Insect_Format.text(" = ")])(v.value1)(env)(new Insect_Language.RedefinedConstantError(v.value0));
 				};
 				return {
-					msg: Message.create(ValueSet.value)(Data_Semigroup.append(Data_Semigroup.semigroupArray)(Data_Functor.map(Data_Functor.functorArray)(Insect_Format.optional)([Insect_Format.text("  "), Insect_Format.ident(v.value0), Insect_Format.text(" = ")]))(Insect_PrettyPrint.prettyQuantity(v1.value0))),
+					msg: Message.create(ValueSet.value)(Data_Semigroup.append(Data_Semigroup.semigroupArray)(data.map(data.functorArray)(Insect_Format.optional)([Insect_Format.text("  "), Insect_Format.ident(v.value0), Insect_Format.text(" = ")]))(Insect_PrettyPrint.prettyQuantity(v1.value0))),
 					newEnv: {
 						values: Data_Map_Internal.insert(Data_Ord.ordString)(v.value0)(new Insect_Environment.StoredValue(Insect_Environment.UserDefined.value, v1.value0))(env.values),
 						functions: Data_Map_Internal["delete"](Data_Ord.ordString)(v.value0)(env.functions)
@@ -516,7 +516,7 @@ function runInsect(env) {
 		}
 
 		if (v instanceof Insect_Language.FunctionAssignment) {
-			let fArgs = Data_Foldable.intercalate(Data_NonEmpty.foldableNonEmpty(Data_List_Types.foldableList))(Data_Monoid.monoidArray)([Insect_Format.text(", ")])(Data_Functor.map(Data_NonEmpty.functorNonEmpty(Data_List_Types.functorList))(function (a) {
+			let fArgs = Data_Foldable.intercalate(Data_NonEmpty.foldableNonEmpty(Data_List_Types.foldableList))(Data_Monoid.monoidArray)([Insect_Format.text(", ")])(data.map(Data_NonEmpty.functorNonEmpty(Data_List_Types.functorList))(function (a) {
 				return [Insect_Format.ident(a)];
 			})(v.value1));
 
@@ -554,7 +554,7 @@ function runInsect(env) {
 			}
 
 			return {
-				msg: Message.create(ValueSet.value)(Data_Semigroup.append(Data_Semigroup.semigroupArray)(Data_Functor.map(Data_Functor.functorArray)(Insect_Format.optional)(Data_Array.cons(Insect_Format.text("  "))(fAssign)))(Insect_PrettyPrint.pretty(v.value2))),
+				msg: Message.create(ValueSet.value)(Data_Semigroup.append(Data_Semigroup.semigroupArray)(data.map(data.functorArray)(Insect_Format.optional)(Data_Array.cons(Insect_Format.text("  "))(fAssign)))(Insect_PrettyPrint.pretty(v.value2))),
 				newEnv: {
 					values: Data_Map_Internal["delete"](Data_Ord.ordString)(v.value0)(env.values),
 					functions: Data_Map_Internal.insert(Data_Ord.ordString)(v.value0)(new Insect_Environment.StoredFunction(Insect_Environment.UserDefined.value, userFunc))(env.functions)
@@ -576,7 +576,7 @@ function runInsect(env) {
 
 			function toLine(kvPairs) {
 				let val = storedValue(Data_Tuple.snd(Data_List_NonEmpty.head(kvPairs)));
-				let identifiers = Data_Array.fromFoldable(Data_Foldable.foldableArray)(Data_Foldable.intercalate(Data_List_Types.foldableNonEmptyList)(Data_Monoid.monoidArray)([Insect_Format.text(" = ")])(Data_Functor.map(Data_List_Types.functorNonEmptyList)(function ($142) {
+				let identifiers = Data_Array.fromFoldable(Data_Foldable.foldableArray)(Data_Foldable.intercalate(Data_List_Types.foldableNonEmptyList)(Data_Monoid.monoidArray)([Insect_Format.text(" = ")])(data.map(Data_List_Types.functorNonEmptyList)(function ($142) {
 					return Data_Array.singleton(Insect_Format.ident(Data_Tuple.fst($142)));
 				})(kvPairs)));
 				return Data_Semigroup.append(Data_Semigroup.semigroupArray)([Insect_Format.nl, Insect_Format.text("  ")])(Data_Semigroup.append(Data_Semigroup.semigroupArray)(identifiers)(Data_Semigroup.append(Data_Semigroup.semigroupArray)([Insect_Format.text(" = ")])(Insect_PrettyPrint.prettyQuantity(val))));

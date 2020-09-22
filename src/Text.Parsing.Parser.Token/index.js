@@ -5,7 +5,6 @@ let Data_Array = require("../Data.Array/index.js");
 let Data_Char_Unicode = require("../Data.Char.Unicode/index.js");
 let Data_Either = require("../Data.Either/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_List = require("../Data.List/index.js");
 let Data_List_Types = require("../Data.List.Types/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
@@ -65,7 +64,7 @@ let apply = function (dict) {
 let applyFirst = function (dictApply) {
 	return function (a) {
 		return function (b) {
-			return apply(dictApply)(Data_Functor.map(dictApply.Functor0())(Data_Functor._const)(a))(b);
+			return apply(dictApply)(data.map(dictApply.Functor0())(data._const)(a))(b);
 		};
 	};
 };
@@ -73,7 +72,7 @@ let applyFirst = function (dictApply) {
 let applySecond = function (dictApply) {
 	return function (a) {
 		return function (b) {
-			return apply(dictApply)(Data_Functor.map(dictApply.Functor0())(Data_Functor._const(identity(categoryFn)))(a))(b);
+			return apply(dictApply)(data.map(dictApply.Functor0())(data._const(identity(categoryFn)))(a))(b);
 		};
 	};
 };
@@ -135,7 +134,7 @@ let theReservedNames = function (dictMonad) {
             return Data_Array.sort(Data_Ord.ordString)(v.reservedNames);
         };
         if (true) {
-            return Data_Array.sort(Data_Ord.ordString)(Data_Functor.map(Data_Functor.functorArray)(Data_String_Common.toLower)(v.reservedNames));
+            return Data_Array.sort(Data_Ord.ordString)(data.map(data.functorArray)(Data_String_Common.toLower)(v.reservedNames));
         };
         throw new Error("Failed pattern match at Text.Parsing.Parser.Token (line 722, column 1 - line 722, column 82): " + [ v.constructor.name ]);
     };
@@ -226,7 +225,7 @@ let inCommentSingle = function (dictMonad) {
     return function (v) {
         let startEnd = Data_Semigroup.append(Data_Semigroup.semigroupArray)(Data_String_CodeUnits.toCharArray(v.commentEnd))(Data_String_CodeUnits.toCharArray(v.commentStart));
         return control.fix(text.lazyParserT)(function (p) {
-            return Text_Parsing_Parser_Combinators.withErrorMessage(dictMonad)(alt(text.altParserT(dictMonad))(alt(text.altParserT(dictMonad))(Data_Functor._void(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Text_Parsing_Parser_Combinators["try"](dictMonad)(Text_Parsing_Parser_String.string(Text_Parsing_Parser_String.stringLikeString)(dictMonad)(v.commentEnd))))(applySecond(text.applyParserT(dictMonad))(Text_Parsing_Parser_Combinators.skipMany1(dictMonad)(Text_Parsing_Parser_String.noneOf(Text_Parsing_Parser_String.stringLikeString)(dictMonad)(startEnd)))(p)))(applySecond(text.applyParserT(dictMonad))(Text_Parsing_Parser_String.oneOf(Text_Parsing_Parser_String.stringLikeString)(dictMonad)(startEnd))(p)))("end of comment");
+            return Text_Parsing_Parser_Combinators.withErrorMessage(dictMonad)(alt(text.altParserT(dictMonad))(alt(text.altParserT(dictMonad))(data._void(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Text_Parsing_Parser_Combinators["try"](dictMonad)(Text_Parsing_Parser_String.string(Text_Parsing_Parser_String.stringLikeString)(dictMonad)(v.commentEnd))))(applySecond(text.applyParserT(dictMonad))(Text_Parsing_Parser_Combinators.skipMany1(dictMonad)(Text_Parsing_Parser_String.noneOf(Text_Parsing_Parser_String.stringLikeString)(dictMonad)(startEnd)))(p)))(applySecond(text.applyParserT(dictMonad))(Text_Parsing_Parser_String.oneOf(Text_Parsing_Parser_String.stringLikeString)(dictMonad)(startEnd))(p)))("end of comment");
         });
     };
 };
@@ -239,7 +238,7 @@ let inCommentMulti = function (dictMonad) {
     return function (v) {
         let startEnd = Data_Semigroup.append(Data_Semigroup.semigroupArray)(Data_String_CodeUnits.toCharArray(v.commentEnd))(Data_String_CodeUnits.toCharArray(v.commentStart));
         return control.fix(text.lazyParserT)(function (p) {
-            return Text_Parsing_Parser_Combinators.withErrorMessage(dictMonad)(alt(text.altParserT(dictMonad))(alt(text.altParserT(dictMonad))(alt(text.altParserT(dictMonad))(Data_Functor._void(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Text_Parsing_Parser_Combinators["try"](dictMonad)(Text_Parsing_Parser_String.string(Text_Parsing_Parser_String.stringLikeString)(dictMonad)(v.commentEnd))))(applySecond(text.applyParserT(dictMonad))(multiLineComment(dictMonad)(v))(p)))(applySecond(text.applyParserT(dictMonad))(Text_Parsing_Parser_Combinators.skipMany1(dictMonad)(Text_Parsing_Parser_String.noneOf(Text_Parsing_Parser_String.stringLikeString)(dictMonad)(startEnd)))(p)))(applySecond(text.applyParserT(dictMonad))(Text_Parsing_Parser_String.oneOf(Text_Parsing_Parser_String.stringLikeString)(dictMonad)(startEnd))(p)))("end of comment");
+            return Text_Parsing_Parser_Combinators.withErrorMessage(dictMonad)(alt(text.altParserT(dictMonad))(alt(text.altParserT(dictMonad))(alt(text.altParserT(dictMonad))(data._void(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Text_Parsing_Parser_Combinators["try"](dictMonad)(Text_Parsing_Parser_String.string(Text_Parsing_Parser_String.stringLikeString)(dictMonad)(v.commentEnd))))(applySecond(text.applyParserT(dictMonad))(multiLineComment(dictMonad)(v))(p)))(applySecond(text.applyParserT(dictMonad))(Text_Parsing_Parser_Combinators.skipMany1(dictMonad)(Text_Parsing_Parser_String.noneOf(Text_Parsing_Parser_String.stringLikeString)(dictMonad)(startEnd)))(p)))(applySecond(text.applyParserT(dictMonad))(Text_Parsing_Parser_String.oneOf(Text_Parsing_Parser_String.stringLikeString)(dictMonad)(startEnd))(p)))("end of comment");
         });
     };
 };
@@ -280,7 +279,7 @@ let makeTokenParser = function (dictMonad) {
             return c !== "\"" && (c !== "\\" && c > "\x1a");
         });
         let sign = function (dictRing) {
-            return alt(text.altParserT(dictMonad))(alt(text.altParserT(dictMonad))(Data_Functor.voidLeft(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Text_Parsing_Parser_String["char"](Text_Parsing_Parser_String.stringLikeString)(dictMonad)("-"))(data.negate(dictRing)))(Data_Functor.voidLeft(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Text_Parsing_Parser_String["char"](Text_Parsing_Parser_String.stringLikeString)(dictMonad)("+"))(identity(categoryFn))))(control.pure(text.applicativeParserT(dictMonad))(identity(categoryFn)));
+            return alt(text.altParserT(dictMonad))(alt(text.altParserT(dictMonad))(data.voidLeft(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Text_Parsing_Parser_String["char"](Text_Parsing_Parser_String.stringLikeString)(dictMonad)("-"))(data.negate(dictRing)))(data.voidLeft(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Text_Parsing_Parser_String["char"](Text_Parsing_Parser_String.stringLikeString)(dictMonad)("+"))(identity(categoryFn))))(control.pure(text.applicativeParserT(dictMonad))(identity(categoryFn)));
         };
         let oper = (function () {
             let go = control.bind(text.bindParserT(dictMonad))(v.opStart)(function (c) {
@@ -298,7 +297,7 @@ let makeTokenParser = function (dictMonad) {
                             return Data_Maybe.Nothing.value;
                         };
                         if (v1 instanceof Data_Maybe.Just) {
-                            return Data_Functor.map(Data_Maybe.functorMaybe)(function (v3) {
+                            return data.map(Data_Maybe.functorMaybe)(function (v3) {
                                 return (base * v1.value0 | 0) + v3 | 0;
                             })(Data_Char_Unicode.digitToInt(v2));
                         };
@@ -321,7 +320,7 @@ let makeTokenParser = function (dictMonad) {
             return lexeme(Text_Parsing_Parser_Combinators["try"](dictMonad)(go));
         };
         let symbol = function (name) {
-            return Data_Functor.voidLeft(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(lexeme(Text_Parsing_Parser_String.string(Text_Parsing_Parser_String.stringLikeString)(dictMonad)(name)))(name);
+            return data.voidLeft(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(lexeme(Text_Parsing_Parser_String.string(Text_Parsing_Parser_String.stringLikeString)(dictMonad)(name)))(name);
         };
         let parens = function (p) {
             return Text_Parsing_Parser_Combinators.between(dictMonad)(symbol("("))(symbol(")"))(p);
@@ -426,12 +425,12 @@ let makeTokenParser = function (dictMonad) {
             return alt(text.altParserT(dictMonad))(fractExponent$prime)(justExponent);
         };
         let fractFloat = function (n) {
-            return Data_Functor.map(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Data_Either.Right.create)(fractExponent(n));
+            return data.map(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Data_Either.Right.create)(fractExponent(n));
         };
         let decimalFloat = control.bind(text.bindParserT(dictMonad))(decimal)(function (n) {
             return Text_Parsing_Parser_Combinators.option(dictMonad)(new Data_Either.Left(n))(fractFloat(n));
         });
-        let zeroNumFloat = alt(text.altParserT(dictMonad))(alt(text.altParserT(dictMonad))(alt(text.altParserT(dictMonad))(Data_Functor.map(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Data_Either.Left.create)(alt(text.altParserT(dictMonad))(hexadecimal)(octal)))(decimalFloat))(fractFloat(0)))(control.pure(text.applicativeParserT(dictMonad))(new Data_Either.Left(0)));
+        let zeroNumFloat = alt(text.altParserT(dictMonad))(alt(text.altParserT(dictMonad))(alt(text.altParserT(dictMonad))(data.map(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Data_Either.Left.create)(alt(text.altParserT(dictMonad))(hexadecimal)(octal)))(decimalFloat))(fractFloat(0)))(control.pure(text.applicativeParserT(dictMonad))(new Data_Either.Left(0)));
         let natFloat = alt(text.altParserT(dictMonad))(applySecond(text.applyParserT(dictMonad))(Text_Parsing_Parser_String["char"](Text_Parsing_Parser_String.stringLikeString)(dictMonad)("0"))(zeroNumFloat))(decimalFloat);
         let naturalOrFloat = Text_Parsing_Parser_Combinators.withErrorMessage(dictMonad)(lexeme(natFloat))("number");
         let floating = control.bind(text.bindParserT(dictMonad))(decimal)(fractExponent);
@@ -472,9 +471,9 @@ let makeTokenParser = function (dictMonad) {
         });
         let charEsc = (function () {
             let parseEsc = function (v1) {
-                return Data_Functor.voidLeft(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Text_Parsing_Parser_String["char"](Text_Parsing_Parser_String.stringLikeString)(dictMonad)(v1.value0))(v1.value1);
+                return data.voidLeft(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Text_Parsing_Parser_String["char"](Text_Parsing_Parser_String.stringLikeString)(dictMonad)(v1.value0))(v1.value1);
             };
-            return Text_Parsing_Parser_Combinators.choice(Data_Foldable.foldableArray)(dictMonad)(Data_Functor.map(Data_Functor.functorArray)(parseEsc)(escMap));
+            return Text_Parsing_Parser_Combinators.choice(Data_Foldable.foldableArray)(dictMonad)(data.map(data.functorArray)(parseEsc)(escMap));
         })();
         let charControl = control.bind(text.bindParserT(dictMonad))(Text_Parsing_Parser_String["char"](Text_Parsing_Parser_String.stringLikeString)(dictMonad)("^"))(function () {
             return control.bind(text.bindParserT(dictMonad))(upper(dictMonad))(function (code) {
@@ -490,7 +489,7 @@ let makeTokenParser = function (dictMonad) {
         });
         let caseString = function (name) {
             if (v.caseSensitive) {
-                return Data_Functor.voidLeft(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Text_Parsing_Parser_String.string(Text_Parsing_Parser_String.stringLikeString)(dictMonad)(name))(name);
+                return data.voidLeft(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Text_Parsing_Parser_String.string(Text_Parsing_Parser_String.stringLikeString)(dictMonad)(name))(name);
             };
             if (true) {
                 let msg = Data_Show.show(Data_Show.showString)(name);
@@ -513,7 +512,7 @@ let makeTokenParser = function (dictMonad) {
                     };
                     throw new Error("Failed pattern match at Text.Parsing.Parser.Token (line 654, column 22 - line 656, column 86): " + [ v1.constructor.name ]);
                 };
-                return Data_Functor.voidLeft(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(walk(name))(name);
+                return data.voidLeft(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(walk(name))(name);
             };
             throw new Error("Failed pattern match at Text.Parsing.Parser.Token (line 649, column 5 - line 649, column 52): " + [ name.constructor.name ]);
         };
@@ -534,9 +533,9 @@ let makeTokenParser = function (dictMonad) {
         let asciiMap = Data_Array.zip(Data_Semigroup.append(Data_Semigroup.semigroupArray)(ascii3codes)(ascii2codes))(Data_Semigroup.append(Data_Semigroup.semigroupArray)(ascii3)(ascii2));
         let charAscii = (function () {
             let parseAscii = function (v1) {
-                return Text_Parsing_Parser_Combinators["try"](dictMonad)(Data_Functor.voidLeft(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Text_Parsing_Parser_String.string(Text_Parsing_Parser_String.stringLikeString)(dictMonad)(v1.value0))(v1.value1));
+                return Text_Parsing_Parser_Combinators["try"](dictMonad)(data.voidLeft(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Text_Parsing_Parser_String.string(Text_Parsing_Parser_String.stringLikeString)(dictMonad)(v1.value0))(v1.value1));
             };
-            return Text_Parsing_Parser_Combinators.choice(Data_Foldable.foldableArray)(dictMonad)(Data_Functor.map(Data_Functor.functorArray)(parseAscii)(asciiMap));
+            return Text_Parsing_Parser_Combinators.choice(Data_Foldable.foldableArray)(dictMonad)(data.map(data.functorArray)(parseAscii)(asciiMap));
         })();
         let escapeCode = Text_Parsing_Parser_Combinators.withErrorMessage(dictMonad)(alt(text.altParserT(dictMonad))(alt(text.altParserT(dictMonad))(alt(text.altParserT(dictMonad))(charEsc)(charNum))(charAscii))(charControl))("escape code");
         let charEscape = applySecond(text.applyParserT(dictMonad))(Text_Parsing_Parser_String["char"](Text_Parsing_Parser_String.stringLikeString)(dictMonad)("\\"))(escapeCode);
@@ -546,9 +545,9 @@ let makeTokenParser = function (dictMonad) {
             return Text_Parsing_Parser_Combinators.withErrorMessage(dictMonad)(lexeme(go))("character");
         })();
         let stringEscape = control.bind(text.bindParserT(dictMonad))(Text_Parsing_Parser_String["char"](Text_Parsing_Parser_String.stringLikeString)(dictMonad)("\\"))(function () {
-            return alt(text.altParserT(dictMonad))(alt(text.altParserT(dictMonad))(Data_Functor.voidLeft(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(escapeGap)(Data_Maybe.Nothing.value))(Data_Functor.voidLeft(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(escapeEmpty)(Data_Maybe.Nothing.value)))(Data_Functor.map(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Data_Maybe.Just.create)(escapeCode));
+            return alt(text.altParserT(dictMonad))(alt(text.altParserT(dictMonad))(data.voidLeft(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(escapeGap)(Data_Maybe.Nothing.value))(data.voidLeft(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(escapeEmpty)(Data_Maybe.Nothing.value)))(data.map(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Data_Maybe.Just.create)(escapeCode));
         });
-        let stringChar = Text_Parsing_Parser_Combinators.withErrorMessage(dictMonad)(alt(text.altParserT(dictMonad))(Data_Functor.map(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Data_Maybe.Just.create)(stringLetter))(stringEscape))("string character");
+        let stringChar = Text_Parsing_Parser_Combinators.withErrorMessage(dictMonad)(alt(text.altParserT(dictMonad))(data.map(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Data_Maybe.Just.create)(stringLetter))(stringEscape))("string character");
         let stringLiteral = (function () {
             let folder = function (v1) {
                 return function (chars) {

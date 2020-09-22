@@ -3,7 +3,7 @@ let Control_Monad_Except_Trans = require("../Control.Monad.Except.Trans/index.js
 let Control_Monad_State_Trans = require("../Control.Monad.State.Trans/index.js");
 let Data_Either = require("../Data.Either/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_List = require("../Data.List/index.js");
 let Data_List_Types = require("../Data.List.Types/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
@@ -51,7 +51,7 @@ let apply = function (dict) {
 let applyFirst = function (dictApply) {
 	return function (a) {
 		return function (b) {
-			return apply(dictApply)(Data_Functor.map(dictApply.Functor0())(Data_Functor._const)(a))(b);
+			return apply(dictApply)(data.map(dictApply.Functor0())(data._const)(a))(b);
 		};
 	};
 };
@@ -59,7 +59,7 @@ let applyFirst = function (dictApply) {
 let applySecond = function (dictApply) {
 	return function (a) {
 		return function (b) {
-			return apply(dictApply)(Data_Functor.map(dictApply.Functor0())(Data_Functor._const(identity(categoryFn)))(a))(b);
+			return apply(dictApply)(data.map(dictApply.Functor0())(data._const(identity(categoryFn)))(a))(b);
 		};
 	};
 };
@@ -153,7 +153,7 @@ let sepBy = function (dictMonad) {
 };
 let optional = function (dictMonad) {
     return function (p) {
-        return alt(text.altParserT(dictMonad))(Data_Functor._void(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(p))(control.pure(text.applicativeParserT(dictMonad))({}));
+        return alt(text.altParserT(dictMonad))(data._void(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(p))(control.pure(text.applicativeParserT(dictMonad))({}));
     };
 };
 let option = function (dictMonad) {
@@ -165,7 +165,7 @@ let option = function (dictMonad) {
 };
 let optionMaybe = function (dictMonad) {
     return function (p) {
-        return option(dictMonad)(Data_Maybe.Nothing.value)(Data_Functor.map(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Data_Maybe.Just.create)(p));
+        return option(dictMonad)(Data_Maybe.Nothing.value)(data.map(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Data_Maybe.Just.create)(p));
     };
 };
 let notFollowedBy = function (dictMonad) {
@@ -176,7 +176,7 @@ let notFollowedBy = function (dictMonad) {
 let manyTill = function (dictMonad) {
     return function (p) {
         return function (end) {
-            let scan = alt(text.altParserT(dictMonad))(Data_Functor.voidLeft(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(end)(Data_List_Types.Nil.value))(control.bind(text.bindParserT(dictMonad))(p)(function (x) {
+            let scan = alt(text.altParserT(dictMonad))(data.voidLeft(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(end)(Data_List_Types.Nil.value))(control.bind(text.bindParserT(dictMonad))(p)(function (x) {
                 return control.bind(text.bindParserT(dictMonad))(scan)(function (xs) {
                     return control.pure(text.applicativeParserT(dictMonad))(new Data_List_Types.Cons(x, xs));
                 });
@@ -296,7 +296,7 @@ let between = function (dictMonad) {
     };
 };
 let asErrorMessage = function (dictMonad) {
-    return Data_Functor.flip(withErrorMessage(dictMonad));
+    return data.flip(withErrorMessage(dictMonad));
 };
 module.exports = {
     withErrorMessage: withErrorMessage,

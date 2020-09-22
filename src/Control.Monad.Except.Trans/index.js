@@ -8,7 +8,7 @@ let Control_Monad_Writer_Class = require("../Control.Monad.Writer.Class/index.js
 let Control_MonadPlus = require("../Control.MonadPlus/index.js");
 let Control_MonadZero = require("../Control.MonadZero/index.js");
 let Data_Either = require("../Data.Either/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
@@ -108,7 +108,7 @@ let withExceptT = function (dictFunctor) {
                     throw new Error("Failed pattern match at Control.Monad.Except.Trans (line 42, column 3 - line 42, column 32): " + [ v1.constructor.name, v2.constructor.name ]);
                 };
             };
-            return ExceptT(Data_Functor.map(dictFunctor)(mapLeft(f))(v));
+            return ExceptT(data.map(dictFunctor)(mapLeft(f))(v));
         };
     };
 };
@@ -131,8 +131,8 @@ let mapExceptT = function (f) {
     };
 };
 let functorExceptT = function (dictFunctor) {
-    return new Data_Functor.Functor(function (f) {
-        return mapExceptT(Data_Functor.map(dictFunctor)(Data_Functor.map(Data_Either.functorEither)(f)));
+    return new data.Functor(function (f) {
+        return mapExceptT(data.map(dictFunctor)(data.map(Data_Either.functorEither)(f)));
     });
 };
 let except = function (dictApplicative) {
@@ -264,7 +264,7 @@ let monadWriterExceptT = function (dictMonadWriter) {
         return monadTellExceptT(dictMonadWriter.MonadTell0());
     }, mapExceptT(function (m) {
         return control.bind(((dictMonadWriter.MonadTell0()).Monad0()).Bind1())(Control_Monad_Writer_Class.listen(dictMonadWriter)(m))(function (v) {
-            return pure(((dictMonadWriter.MonadTell0()).Monad0()).Applicative0())(Data_Functor.map(Data_Either.functorEither)(function (r) {
+            return pure(((dictMonadWriter.MonadTell0()).Monad0()).Applicative0())(data.map(Data_Either.functorEither)(function (r) {
                 return new Data_Tuple.Tuple(r, v.value1);
             })(v.value0));
         });

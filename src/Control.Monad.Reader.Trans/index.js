@@ -8,7 +8,7 @@ let Control_Monad_Writer_Class = require("../Control.Monad.Writer.Class/index.js
 let Control_MonadPlus = require("../Control.MonadPlus/index.js");
 let Control_MonadZero = require("../Control.MonadZero/index.js");
 let Data_Distributive = require("../Data.Distributive/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
@@ -57,7 +57,7 @@ let lift2 = function (dictApply) {
 	return function (f) {
 		return function (a) {
 			return function (b) {
-				return apply(dictApply)(Data_Functor.map(dictApply.Functor0())(f)(a))(b);
+				return apply(dictApply)(data.map(dictApply.Functor0())(f)(a))(b);
 			};
 		};
 	};
@@ -85,7 +85,7 @@ let newtypeReaderT = new Data_Newtype.Newtype(function (n) {
 }, ReaderT);
 let monadTransReaderT = new Control_Monad_Trans_Class.MonadTrans(function () {
 	return function ($67) {
-		return ReaderT(Data_Functor._const($67));
+		return ReaderT(data._const($67));
 	};
 });
 let mapReaderT = function (f) {
@@ -96,8 +96,8 @@ let mapReaderT = function (f) {
 	};
 };
 let functorReaderT = function (dictFunctor) {
-	return new Data_Functor.Functor((function () {
-		let $69 = Data_Functor.map(dictFunctor);
+	return new data.Functor((function () {
+		let $69 = data.map(dictFunctor);
 		return function ($70) {
 			return mapReaderT($69($70));
 		};
@@ -109,7 +109,7 @@ let distributiveReaderT = function (dictDistributive) {
 	}, function (dictFunctor) {
 		return function (f) {
 			let $71 = Data_Distributive.distribute(distributiveReaderT(dictDistributive))(dictFunctor);
-			let $72 = Data_Functor.map(dictFunctor)(f);
+			let $72 = data.map(dictFunctor)(f);
 			return function ($73) {
 				return $71($72($73));
 			};
@@ -160,7 +160,7 @@ let applicativeReaderT = function (dictApplicative) {
 	}, (function () {
 		let $74 = control.pure(dictApplicative);
 		return function ($75) {
-			return ReaderT(Data_Functor._const($74($75)));
+			return ReaderT(data._const($74($75)));
 		};
 	})());
 };
@@ -188,7 +188,7 @@ let monadContReaderT = function (dictMonadCont) {
 		return function (r) {
 			return callCC(dictMonadCont)(function (c) {
 				let v = f(function ($76) {
-					return ReaderT(Data_Functor._const(c($76)));
+					return ReaderT(data._const(c($76)));
 				});
 				return v(r);
 			});
@@ -296,7 +296,7 @@ let altReaderT = function (dictAlt) {
 let plusReaderT = function (dictPlus) {
 	return new control.Plus(function () {
 		return altReaderT(dictPlus.Alt0());
-	}, Data_Functor._const(control.empty(dictPlus)));
+	}, data._const(control.empty(dictPlus)));
 };
 let alternativeReaderT = function (dictAlternative) {
 	return new Alternative(function () {

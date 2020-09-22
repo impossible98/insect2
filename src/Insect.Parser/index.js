@@ -3,7 +3,7 @@ let Data_Array = require("../Data.Array/index.js");
 let Data_Decimal = require("../Data.Decimal/index.js");
 let Data_Either = require("../Data.Either/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Identity = require("../Data.Identity/index.js");
 let Data_List = require("../Data.List/index.js");
 let Data_List_Types = require("../Data.List.Types/index.js");
@@ -75,7 +75,7 @@ function apply(dict) {
 function applyFirst(dictApply) {
 	return function (a) {
 		return function (b) {
-			return apply(dictApply)(Data_Functor.map(dictApply.Functor0())(Data_Functor._const)(a))(b);
+			return apply(dictApply)(data.map(dictApply.Functor0())(data._const)(a))(b);
 		};
 	};
 }
@@ -83,7 +83,7 @@ function applyFirst(dictApply) {
 function applySecond(dictApply) {
 	return function (a) {
 		return function (b) {
-			return apply(dictApply)(Data_Functor.map(dictApply.Functor0())(Data_Functor._const(identity(categoryFn)))(a))(b);
+			return apply(dictApply)(data.map(dictApply.Functor0())(data._const(identity(categoryFn)))(a))(b);
 		};
 	};
 }
@@ -183,13 +183,13 @@ let parens = token.parens;
 let reserved = token.reserved;
 let reservedOp = token.reservedOp;
 
-let variable = Data_Functor.map(text.functorParserT(Data_Identity.functorIdentity))(Insect_Language.Variable.create)(token.identifier);
+let variable = data.map(text.functorParserT(Data_Identity.functorIdentity))(Insect_Language.Variable.create)(token.identifier);
 
 let whiteSpace = token.whiteSpace;
 
 let number = (() => {
 	let fromCharArray = (() => {
-		let $42 = Data_Functor.map(Data_Functor.functorArray)(Data_String_CodePoints.codePointFromChar);
+		let $42 = data.map(data.functorArray)(Data_String_CodePoints.codePointFromChar);
 		return function ($43) {
 			return Data_String_CodePoints.fromCodePointArray($42($43));
 		};
@@ -203,7 +203,7 @@ let number = (() => {
 		});
 	});
 	return control.bind(text.bindParserT(Data_Identity.monadIdentity))(digits)(function (intPart) {
-		return control.bind(text.bindParserT(Data_Identity.monadIdentity))(Text_Parsing_Parser_Combinators.optionMaybe(Data_Identity.monadIdentity)(apply(text.applyParserT(Data_Identity.monadIdentity))(Data_Functor.map(text.functorParserT(Data_Identity.functorIdentity))(Data_Semigroup.append(Data_Semigroup.semigroupString))(Text_Parsing_Parser_String.string(Text_Parsing_Parser_String.stringLikeString)(Data_Identity.monadIdentity)(".")))(digits)))(function (mFracPart) {
+		return control.bind(text.bindParserT(Data_Identity.monadIdentity))(Text_Parsing_Parser_Combinators.optionMaybe(Data_Identity.monadIdentity)(apply(text.applyParserT(Data_Identity.monadIdentity))(data.map(text.functorParserT(Data_Identity.functorIdentity))(Data_Semigroup.append(Data_Semigroup.semigroupString))(Text_Parsing_Parser_String.string(Text_Parsing_Parser_String.stringLikeString)(Data_Identity.monadIdentity)(".")))(digits)))(function (mFracPart) {
 			let fracPart = Data_Maybe.fromMaybe("")(mFracPart);
 			return control.bind(text.bindParserT(Data_Identity.monadIdentity))(Text_Parsing_Parser_Combinators.optionMaybe(Data_Identity.monadIdentity)(Text_Parsing_Parser_Combinators["try"](Data_Identity.monadIdentity)(control.bind(text.bindParserT(Data_Identity.monadIdentity))(Text_Parsing_Parser_String.string(Text_Parsing_Parser_String.stringLikeString)(Data_Identity.monadIdentity)("e"))(() => {
 				return control.discard(control.discardUnit)(text.bindParserT(Data_Identity.monadIdentity))(Text_Parsing_Parser_Combinators.notFollowedBy(Data_Identity.monadIdentity)(identStart))(() => {
@@ -243,9 +243,9 @@ function buildDictParser(v) {
 	}
 
 	function entryParser(v1) {
-		return Data_Foldable.oneOf(Data_Foldable.foldableArray)(text.plusParserT(Data_Identity.monadIdentity))(Data_Functor.map(Data_Functor.functorArray)(abbrevParser(v1.value0))(v1.value1));
+		return Data_Foldable.oneOf(Data_Foldable.foldableArray)(text.plusParserT(Data_Identity.monadIdentity))(data.map(data.functorArray)(abbrevParser(v1.value0))(v1.value1));
 	};
-	return Data_Foldable.oneOf(Data_Foldable.foldableArray)(text.plusParserT(Data_Identity.monadIdentity))(Data_Functor.map(Data_Functor.functorArray)(entryParser)(v.value0))
+	return Data_Foldable.oneOf(Data_Foldable.foldableArray)(text.plusParserT(Data_Identity.monadIdentity))(data.map(data.functorArray)(entryParser)(v.value0))
 }
 
 let imperialUnit = Text_Parsing_Parser_Combinators.withErrorMessage(Data_Identity.monadIdentity)(buildDictParser(imperialUnitDict))("imperial unit");
@@ -299,7 +299,7 @@ function expression(env) {
 	let addOp = reservedOp("+");
 
 	return control.fix(text.lazyParserT)(function (p) {
-		let atomic = applySecond(text.applyParserT(Data_Identity.monadIdentity))(whiteSpace)(alt(text.altParserT(Data_Identity.monadIdentity))(alt(text.altParserT(Data_Identity.monadIdentity))(alt(text.altParserT(Data_Identity.monadIdentity))(alt(text.altParserT(Data_Identity.monadIdentity))(parens(p))(Data_Functor.map(text.functorParserT(Data_Identity.functorIdentity))(Insect_Language.Scalar.create)(number)))(Text_Parsing_Parser_Combinators["try"](Data_Identity.monadIdentity)(Data_Functor.map(text.functorParserT(Data_Identity.functorIdentity))(Insect_Language.Unit.create)(derivedUnit))))(Text_Parsing_Parser_Combinators["try"](Data_Identity.monadIdentity)(apply(text.applyParserT(Data_Identity.monadIdentity))(Data_Functor.map(text.functorParserT(Data_Identity.functorIdentity))(Insect_Language.Apply.create)($$function(env)))(parens(sepBy1(Data_Identity.monadIdentity)(p)(commaOp))))))(variable));
+		let atomic = applySecond(text.applyParserT(Data_Identity.monadIdentity))(whiteSpace)(alt(text.altParserT(Data_Identity.monadIdentity))(alt(text.altParserT(Data_Identity.monadIdentity))(alt(text.altParserT(Data_Identity.monadIdentity))(alt(text.altParserT(Data_Identity.monadIdentity))(parens(p))(data.map(text.functorParserT(Data_Identity.functorIdentity))(Insect_Language.Scalar.create)(number)))(Text_Parsing_Parser_Combinators["try"](Data_Identity.monadIdentity)(data.map(text.functorParserT(Data_Identity.functorIdentity))(Insect_Language.Unit.create)(derivedUnit))))(Text_Parsing_Parser_Combinators["try"](Data_Identity.monadIdentity)(apply(text.applyParserT(Data_Identity.monadIdentity))(data.map(text.functorParserT(Data_Identity.functorIdentity))(Insect_Language.Apply.create)($$function(env)))(parens(sepBy1(Data_Identity.monadIdentity)(p)(commaOp))))))(variable));
 		let suffixFac = control.bind(text.bindParserT(Data_Identity.monadIdentity))(atomic)(function (a) {
 			return control.bind(text.bindParserT(Data_Identity.monadIdentity))(Text_Parsing_Parser_Combinators.optionMaybe(Data_Identity.monadIdentity)(applySecond(text.applyParserT(Data_Identity.monadIdentity))(facOp)(control.pure(text.applicativeParserT(Data_Identity.monadIdentity))(Insect_Language.Factorial.create))))(function (mf) {
 				if (mf instanceof Data_Maybe.Just) {
@@ -337,20 +337,20 @@ function expression(env) {
 				});
 			};
 			return control.fix(text.lazyParserT)(function (e) {
-				return Data_Functor.map(text.functorParserT(Data_Identity.functorIdentity))(foldr1(Insect_Language.BinOp.create(Insect_Language.Pow.value)))(list(e));
+				return data.map(text.functorParserT(Data_Identity.functorIdentity))(foldr1(Insect_Language.BinOp.create(Insect_Language.Pow.value)))(list(e));
 			});
 		})();
-		let sepByMulImplicit = Data_Functor.map(text.functorParserT(Data_Identity.functorIdentity))(Data_NonEmpty.foldl1(Data_List_Types.foldableList)(Insect_Language.BinOp.create(Insect_Language.Mul.value)))(sepBy1(Data_Identity.monadIdentity)(sepByPow)(control.pure(text.applicativeParserT(Data_Identity.monadIdentity))()));
+		let sepByMulImplicit = data.map(text.functorParserT(Data_Identity.functorIdentity))(Data_NonEmpty.foldl1(Data_List_Types.foldableList)(Insect_Language.BinOp.create(Insect_Language.Mul.value)))(sepBy1(Data_Identity.monadIdentity)(sepByPow)(control.pure(text.applicativeParserT(Data_Identity.monadIdentity))()));
 		let prefixed = control.fix(text.lazyParserT)(function (e) {
-			return alt(text.altParserT(Data_Identity.monadIdentity))(alt(text.altParserT(Data_Identity.monadIdentity))(applySecond(text.applyParserT(Data_Identity.monadIdentity))(subOp)(Data_Functor.map(text.functorParserT(Data_Identity.functorIdentity))(Insect_Language.Negate.create)(e)))(applySecond(text.applyParserT(Data_Identity.monadIdentity))(addOp)(e)))(sepByMulImplicit);
+			return alt(text.altParserT(Data_Identity.monadIdentity))(alt(text.altParserT(Data_Identity.monadIdentity))(applySecond(text.applyParserT(Data_Identity.monadIdentity))(subOp)(data.map(text.functorParserT(Data_Identity.functorIdentity))(Insect_Language.Negate.create)(e)))(applySecond(text.applyParserT(Data_Identity.monadIdentity))(addOp)(e)))(sepByMulImplicit);
 		});
-		let sepByMod = Data_Functor.map(text.functorParserT(Data_Identity.functorIdentity))(Data_NonEmpty.foldl1(Data_List_Types.foldableList)(Insect_Language.BinOp.create(Insect_Language.Mod.value)))(sepBy1(Data_Identity.monadIdentity)(prefixed)(modOp));
-		let sepByPer = Data_Functor.map(text.functorParserT(Data_Identity.functorIdentity))(Data_NonEmpty.foldl1(Data_List_Types.foldableList)(Insect_Language.BinOp.create(Insect_Language.Div.value)))(sepBy1(Data_Identity.monadIdentity)(sepByMod)(perOp));
-		let sepByDiv = Data_Functor.map(text.functorParserT(Data_Identity.functorIdentity))(Data_NonEmpty.foldl1(Data_List_Types.foldableList)(Insect_Language.BinOp.create(Insect_Language.Div.value)))(sepBy1(Data_Identity.monadIdentity)(sepByPer)(divOp));
-		let sepByMul = Data_Functor.map(text.functorParserT(Data_Identity.functorIdentity))(Data_NonEmpty.foldl1(Data_List_Types.foldableList)(Insect_Language.BinOp.create(Insect_Language.Mul.value)))(sepBy1(Data_Identity.monadIdentity)(sepByDiv)(mulOp));
-		let sepBySub = Data_Functor.map(text.functorParserT(Data_Identity.functorIdentity))(Data_NonEmpty.foldl1(Data_List_Types.foldableList)(Insect_Language.BinOp.create(Insect_Language.Sub.value)))(sepBy1(Data_Identity.monadIdentity)(sepByMul)(subOp));
-		let sepByAdd = Data_Functor.map(text.functorParserT(Data_Identity.functorIdentity))(Data_NonEmpty.foldl1(Data_List_Types.foldableList)(Insect_Language.BinOp.create(Insect_Language.Add.value)))(sepBy1(Data_Identity.monadIdentity)(sepBySub)(addOp));
-		let sepByConv = Data_Functor.map(text.functorParserT(Data_Identity.functorIdentity))(Data_NonEmpty.foldl1(Data_List_Types.foldableList)(Insect_Language.BinOp.create(Insect_Language.ConvertTo.value)))(sepBy1(Data_Identity.monadIdentity)(sepByAdd)(arrOp));
+		let sepByMod = data.map(text.functorParserT(Data_Identity.functorIdentity))(Data_NonEmpty.foldl1(Data_List_Types.foldableList)(Insect_Language.BinOp.create(Insect_Language.Mod.value)))(sepBy1(Data_Identity.monadIdentity)(prefixed)(modOp));
+		let sepByPer = data.map(text.functorParserT(Data_Identity.functorIdentity))(Data_NonEmpty.foldl1(Data_List_Types.foldableList)(Insect_Language.BinOp.create(Insect_Language.Div.value)))(sepBy1(Data_Identity.monadIdentity)(sepByMod)(perOp));
+		let sepByDiv = data.map(text.functorParserT(Data_Identity.functorIdentity))(Data_NonEmpty.foldl1(Data_List_Types.foldableList)(Insect_Language.BinOp.create(Insect_Language.Div.value)))(sepBy1(Data_Identity.monadIdentity)(sepByPer)(divOp));
+		let sepByMul = data.map(text.functorParserT(Data_Identity.functorIdentity))(Data_NonEmpty.foldl1(Data_List_Types.foldableList)(Insect_Language.BinOp.create(Insect_Language.Mul.value)))(sepBy1(Data_Identity.monadIdentity)(sepByDiv)(mulOp));
+		let sepBySub = data.map(text.functorParserT(Data_Identity.functorIdentity))(Data_NonEmpty.foldl1(Data_List_Types.foldableList)(Insect_Language.BinOp.create(Insect_Language.Sub.value)))(sepBy1(Data_Identity.monadIdentity)(sepByMul)(subOp));
+		let sepByAdd = data.map(text.functorParserT(Data_Identity.functorIdentity))(Data_NonEmpty.foldl1(Data_List_Types.foldableList)(Insect_Language.BinOp.create(Insect_Language.Add.value)))(sepBy1(Data_Identity.monadIdentity)(sepBySub)(addOp));
+		let sepByConv = data.map(text.functorParserT(Data_Identity.functorIdentity))(Data_NonEmpty.foldl1(Data_List_Types.foldableList)(Insect_Language.BinOp.create(Insect_Language.ConvertTo.value)))(sepBy1(Data_Identity.monadIdentity)(sepByAdd)(arrOp));
 		return sepByConv;
 	});
 }
@@ -401,7 +401,7 @@ function assignment(env) {
 }
 
 function statement(env) {
-	return alt(text.altParserT(Data_Identity.monadIdentity))(alt(text.altParserT(Data_Identity.monadIdentity))(Data_Functor.map(text.functorParserT(Data_Identity.functorIdentity))(Insect_Language.Command.create)(command))(assignment(env)))(Data_Functor.map(text.functorParserT(Data_Identity.functorIdentity))(Insect_Language.Expression.create)(fullExpression(env)));
+	return alt(text.altParserT(Data_Identity.monadIdentity))(alt(text.altParserT(Data_Identity.monadIdentity))(data.map(text.functorParserT(Data_Identity.functorIdentity))(Insect_Language.Command.create)(command))(assignment(env)))(data.map(text.functorParserT(Data_Identity.functorIdentity))(Insect_Language.Expression.create)(fullExpression(env)));
 }
 
 function parseInsect(arg) {

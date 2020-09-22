@@ -7,7 +7,6 @@ let Control_Monad_State_Trans = require("../Control.Monad.State.Trans/index.js")
 let Data_Array = require("../Data.Array/index.js");
 let Data_Bounded = require("../Data.Bounded/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_Identity = require("../Data.Identity/index.js");
 let Data_List = require("../Data.List/index.js");
 let Data_List_Types = require("../Data.List.Types/index.js");
@@ -143,7 +142,7 @@ let variant = function (n) {
 let resize = function (sz) {
 	return function (g) {
 		return Gen(Control_Monad_State_Class.state(Control_Monad_State_Trans.monadStateStateT(Data_Identity.monadIdentity))(function (v) {
-			return Data_Functor.map(Data_Tuple.functorTuple)(function (v1) {
+			return data.map(Data_Tuple.functorTuple)(function (v1) {
 				return {
 					size: v.size,
 					newSeed: v1.newSeed
@@ -165,7 +164,7 @@ let replicateMRec = function (dictMonadRec) {
 				if (v1.value1 === 0) {
 					return control.pure((dictMonadRec.Monad0()).Applicative0())(new Control_Monad_Rec_Class.Done(v1.value0));
 				};
-				return Data_Functor.mapFlipped((((dictMonadRec.Monad0()).Bind1()).Apply0()).Functor0())(v)(function (x) {
+				return data.mapFlipped((((dictMonadRec.Monad0()).Bind1()).Apply0()).Functor0())(v)(function (x) {
 					return new Control_Monad_Rec_Class.Loop(new Data_Tuple.Tuple(new Data_List_Types.Cons(x, v1.value0), v1.value1 - 1 | 0));
 				});
 			};
@@ -200,7 +199,7 @@ let mkSeed = function (x) {
 	};
 	return ensureBetween(seedMin)(seedMax)(x);
 };
-let randomSeed = Data_Functor.map(Effect.functorEffect)(mkSeed)(randomInt(seedMin)(seedMax));
+let randomSeed = data.map(Effect.functorEffect)(mkSeed)(randomInt(seedMin)(seedMax));
 let lcgC = 0;
 let lcgA = 48271;
 
@@ -235,7 +234,7 @@ let repeatable = function (f) {
 };
 let perturbGen = function (n) {
 	return function (gen) {
-		return control.discard(control.discardUnit)(Control_Monad_State_Trans.bindStateT(Data_Identity.monadIdentity))(Data_Functor._void(Control_Monad_State_Trans.functorStateT(Data_Identity.functorIdentity))(Control_Monad_State_Class.modify(Control_Monad_State_Trans.monadStateStateT(Data_Identity.monadIdentity))(function (s) {
+		return control.discard(control.discardUnit)(Control_Monad_State_Trans.bindStateT(Data_Identity.monadIdentity))(data._void(Control_Monad_State_Trans.functorStateT(Data_Identity.functorIdentity))(Control_Monad_State_Class.modify(Control_Monad_State_Trans.monadStateStateT(Data_Identity.monadIdentity))(function (s) {
 			let $29 = {};
 			for (let $30 in s) {
 				if ({}.hasOwnProperty.call(s, $30)) {
@@ -269,12 +268,12 @@ let lcgStep = (function () {
 })();
 let lazyGen = Control_Monad_State_Trans.lazyStateT;
 let functorGen = Control_Monad_State_Trans.functorStateT(Data_Identity.functorIdentity);
-let uniform = Data_Functor.map(functorGen)(function (n) {
+let uniform = data.map(functorGen)(function (n) {
 	return toNumber(n) / toNumber(lcgM);
 })(lcgStep);
 let vectorOf = function (k) {
 	return function (g) {
-		return Data_Functor.map(functorGen)(Data_List.toUnfoldable(Data_Unfoldable.unfoldableArray))(listOf(k)(g));
+		return data.map(functorGen)(Data_List.toUnfoldable(Data_Unfoldable.unfoldableArray))(listOf(k)(g));
 	};
 };
 let evalGen = function ($57) {
@@ -303,7 +302,7 @@ let choose = function (a) {
 	return function (b) {
 		let min$prime = Data_Ord.min(Data_Ord.ordNumber)(a)(b);
 		let max$prime = Data_Ord.max(Data_Ord.ordNumber)(a)(b);
-		return Data_Functor.map(functorGen)((function () {
+		return data.map(functorGen)((function () {
 			let $58 = add(semiringNumber)(min$prime);
 			let $59 = mul(semiringNumber)(max$prime - min$prime);
 			return function ($60) {
@@ -315,7 +314,7 @@ let choose = function (a) {
 let bindGen = Control_Monad_State_Trans.bindStateT(Data_Identity.monadIdentity);
 let frequency = function (v) {
 	let xxs = new Data_List_Types.Cons(v.value0, v.value1);
-	let total = Data_Newtype.unwrap(Data_Newtype.newtypeAdditive)(Data_Foldable.fold(Data_List_Types.foldableList)(Data_Monoid_Additive.monoidAdditive(semiringNumber))(Data_Functor.map(Data_List_Types.functorList)(function ($61) {
+	let total = Data_Newtype.unwrap(Data_Newtype.newtypeAdditive)(Data_Foldable.fold(Data_List_Types.foldableList)(Data_Monoid_Additive.monoidAdditive(semiringNumber))(data.map(Data_List_Types.functorList)(function ($61) {
 		return Data_Monoid_Additive.Additive(Data_Tuple.fst($61));
 	})(xxs)));
 	let pick = function ($copy_n) {
@@ -365,9 +364,9 @@ let chooseInt$prime = function (a) {
 		let clamp = function (x) {
 			return numA + remainder(x)((numB - numA) + 1);
 		};
-		let choose31BitPosNumber = Data_Functor.map(functorGen)(toNumber)(lcgStep);
-		let choose32BitPosNumber = apply(applyGen)(Data_Functor.map(functorGen)(add(semiringNumber))(choose31BitPosNumber))(Data_Functor.map(functorGen)(mul(semiringNumber)(2.0))(choose31BitPosNumber));
-		return Data_Functor.map(functorGen)(function ($62) {
+		let choose31BitPosNumber = data.map(functorGen)(toNumber)(lcgStep);
+		let choose32BitPosNumber = apply(applyGen)(data.map(functorGen)(add(semiringNumber))(choose31BitPosNumber))(data.map(functorGen)(mul(semiringNumber)(2.0))(choose31BitPosNumber));
+		return data.map(functorGen)(function ($62) {
 			return floor(clamp($62));
 		})(choose32BitPosNumber);
 	};
@@ -390,7 +389,7 @@ let arrayOf = function (g) {
 };
 let monadGenGen = new Control_Monad_Gen_Class.MonadGen(function () {
 	return monadGen;
-}, Data_Functor.map(functorGen)(function (v) {
+}, data.map(functorGen)(function (v) {
 	return v < 0.5;
 })(uniform), choose, chooseInt, function (f) {
 	return function (g) {
@@ -434,7 +433,7 @@ let elements = function (v) {
 
 let shuffle = function (xs) {
 	return control.bind(bindGen)(vectorOf(Data_Array.length(xs))(chooseInt(0)(Data_Bounded.top(Data_Bounded.boundedInt))))(function (ns) {
-		return control.pure(applicativeGen)(Data_Functor.map(Data_Functor.functorArray)(Data_Tuple.snd)(Data_Array.sortBy(Data_Ord.comparing(Data_Ord.ordInt)(Data_Tuple.fst))(Data_Array.zip(ns)(xs))));
+		return control.pure(applicativeGen)(data.map(data.functorArray)(Data_Tuple.snd)(Data_Array.sortBy(Data_Ord.comparing(Data_Ord.ordInt)(Data_Tuple.fst))(Data_Array.zip(ns)(xs))));
 	});
 };
 let suchThat = function (gen) {

@@ -3,7 +3,7 @@
 let Data_Array = require("../Data.Array/index.js");
 let Data_Decimal = require("../Data.Decimal/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_List_Types = require("../Data.List.Types/index.js");
 let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_NonEmpty = require("../Data.NonEmpty/index.js");
@@ -89,7 +89,7 @@ let withParens = function (v) {
 };
 let prettyApply = function (fn) {
     return function (xs) {
-        return Data_Semigroup.append(Data_Semigroup.semigroupArray)([ Insect_Format["function"](fn), Insect_Format.text("(") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)(Data_Foldable.intercalate(Data_NonEmpty.foldableNonEmpty(Data_List_Types.foldableList))(Data_Monoid.monoidArray)([ Insect_Format.text(", ") ])(Data_Functor.map(Data_NonEmpty.functorNonEmpty(Data_List_Types.functorList))(pretty)(xs)))([ Insect_Format.text(")") ]));
+        return Data_Semigroup.append(Data_Semigroup.semigroupArray)([ Insect_Format["function"](fn), Insect_Format.text("(") ])(Data_Semigroup.append(Data_Semigroup.semigroupArray)(Data_Foldable.intercalate(Data_NonEmpty.foldableNonEmpty(Data_List_Types.foldableList))(Data_Monoid.monoidArray)([ Insect_Format.text(", ") ])(data.map(Data_NonEmpty.functorNonEmpty(Data_List_Types.functorList))(pretty)(xs)))([ Insect_Format.text(")") ]));
     };
 };
 let pretty = function (v) {

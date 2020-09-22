@@ -2,7 +2,7 @@ const control = require("../control");
 let Data_Bounded = require("../Data.Bounded/index.js");
 let Data_Date = require("../Data.Date/index.js");
 let Data_Enum = require("../Data.Enum/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
 let Data_Ordering = require("../Data.Ordering/index.js");
@@ -743,7 +743,7 @@ let showDateTime = new Data_Show.Show(function (v) {
 function modifyTimeF(dictFunctor) {
 	return function (f) {
 		return function (v) {
-			return Data_Functor.map(dictFunctor)(DateTime.create(v.value0))(f(v.value1));
+			return data.map(dictFunctor)(DateTime.create(v.value0))(f(v.value1));
 		};
 	};
 }
@@ -757,7 +757,7 @@ function modifyTime(f) {
 function modifyDateF(dictFunctor) {
 	return function (f) {
 		return function (v) {
-			return Data_Functor.map(dictFunctor)(Data_Functor.flip(DateTime.create)(v.value1))(f(v.value0));
+			return data.map(dictFunctor)(data.flip(DateTime.create)(v.value1))(f(v.value0));
 		};
 	};
 }
@@ -818,7 +818,7 @@ function adjust(dictDuration) {
 	return function (d) {
 		return function (dt) {
 			return control.bind(Data_Maybe.bindMaybe)(adjustImpl(Data_Maybe.Just.create)(Data_Maybe.Nothing.value)(fromDuration(dictDuration)(d))(toRecord(dt)))(function (rec) {
-				return apply(Data_Maybe.applyMaybe)(Data_Functor.map(Data_Maybe.functorMaybe)(DateTime.create)(control.join(Data_Maybe.bindMaybe)(apply(Data_Maybe.applyMaybe)(apply(Data_Maybe.applyMaybe)(Data_Functor.map(Data_Maybe.functorMaybe)(Data_Date.exactDate)(Data_Enum.toEnum(boundedEnumYear)(rec.year)))(Data_Enum.toEnum(boundedEnumMonth)(rec.month)))(Data_Enum.toEnum(boundedEnumDay)(rec.day)))))(apply(Data_Maybe.applyMaybe)(apply(Data_Maybe.applyMaybe)(apply(Data_Maybe.applyMaybe)(Data_Functor.map(Data_Maybe.functorMaybe)(Data_Time.Time.create)(Data_Enum.toEnum(Data_Time_Component.boundedEnumHour)(rec.hour)))(Data_Enum.toEnum(Data_Time_Component.boundedEnumMinute)(rec.minute)))(Data_Enum.toEnum(Data_Time_Component.boundedEnumSecond)(rec.second)))(Data_Enum.toEnum(Data_Time_Component.boundedEnumMillisecond)(rec.millisecond)));
+				return apply(Data_Maybe.applyMaybe)(data.map(Data_Maybe.functorMaybe)(DateTime.create)(control.join(Data_Maybe.bindMaybe)(apply(Data_Maybe.applyMaybe)(apply(Data_Maybe.applyMaybe)(data.map(Data_Maybe.functorMaybe)(Data_Date.exactDate)(Data_Enum.toEnum(boundedEnumYear)(rec.year)))(Data_Enum.toEnum(boundedEnumMonth)(rec.month)))(Data_Enum.toEnum(boundedEnumDay)(rec.day)))))(apply(Data_Maybe.applyMaybe)(apply(Data_Maybe.applyMaybe)(apply(Data_Maybe.applyMaybe)(data.map(Data_Maybe.functorMaybe)(Data_Time.Time.create)(Data_Enum.toEnum(Data_Time_Component.boundedEnumHour)(rec.hour)))(Data_Enum.toEnum(Data_Time_Component.boundedEnumMinute)(rec.minute)))(Data_Enum.toEnum(Data_Time_Component.boundedEnumSecond)(rec.second)))(Data_Enum.toEnum(Data_Time_Component.boundedEnumMillisecond)(rec.millisecond)));
 			});
 		};
 	};

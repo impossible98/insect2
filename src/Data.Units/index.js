@@ -1,6 +1,6 @@
 let Data_Decimal = require("../Data.Decimal/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_List = require("../Data.List/index.js");
 let Data_List_NonEmpty = require("../Data.List.NonEmpty/index.js");
 let Data_List_Types = require("../Data.List.Types/index.js");
@@ -341,12 +341,12 @@ let toString = function (v) {
     let withExp = function (v1) {
         return prefixName$prime(v1.prefix) + (shortName(v1.baseUnit) + prettyExponent(v1.exponent));
     };
-    let positiveUsStr = Data_Foldable.intercalate(Data_List_Types.foldableList)(Data_Monoid.monoidString)("\xb7")(Data_Functor.map(Data_List_Types.functorList)(withExp)(splitted.init));
+    let positiveUsStr = Data_Foldable.intercalate(Data_List_Types.foldableList)(Data_Monoid.monoidString)("\xb7")(data.map(Data_List_Types.functorList)(withExp)(splitted.init));
     let negativeUs = Data_List.sortBy(Data_Ord.comparing(Data_Ord.ordNumber)(function (v1) {
         return v1.exponent;
     }))(splitted.rest);
-    let negativeUsStr = Data_Foldable.intercalate(Data_List_Types.foldableList)(Data_Monoid.monoidString)("\xb7")(Data_Functor.map(Data_List_Types.functorList)(withExp)(negativeUs));
-    let negativeUsStr$prime = Data_Foldable.intercalate(Data_List_Types.foldableList)(Data_Monoid.monoidString)("\xb7")(Data_Functor.map(Data_List_Types.functorList)(function ($219) {
+    let negativeUsStr = Data_Foldable.intercalate(Data_List_Types.foldableList)(Data_Monoid.monoidString)("\xb7")(data.map(Data_List_Types.functorList)(withExp)(negativeUs));
+    let negativeUsStr$prime = Data_Foldable.intercalate(Data_List_Types.foldableList)(Data_Monoid.monoidString)("\xb7")(data.map(Data_List_Types.functorList)(function ($219) {
         return withExp(reverseExp($219));
     })(negativeUs));
     let unitString = (function () {
@@ -372,12 +372,12 @@ let power = function (u) {
                 prefix: rec.prefix
             };
         };
-        return DerivedUnit.create(Data_Functor.map(Data_List_Types.functorList)(update)(runDerivedUnit(u)));
+        return DerivedUnit.create(data.map(Data_List_Types.functorList)(update)(runDerivedUnit(u)));
     };
 };
 let noPrefix = new Prefix(Decimal.value, zero(Data_Decimal.semiringDecimal));
 let removePrefix = function (v) {
-    return DerivedUnit.create(Data_Functor.map(Data_List_Types.functorList)(function (v1) {
+    return DerivedUnit.create(data.map(Data_List_Types.functorList)(function (v1) {
         return {
             prefix: noPrefix,
             baseUnit: v1.baseUnit,
@@ -467,7 +467,7 @@ let showDerivedUnit = new Data_Show.Show(function (v) {
         if (v1 instanceof Data_List_Types.Cons && v1.value1 instanceof Data_List_Types.Nil) {
             return show$prime(v1.value0);
         };
-        return "(" + (Data_Foldable.intercalate(Data_List_Types.foldableList)(Data_Monoid.monoidString)(" <> ")(Data_Functor.map(Data_List_Types.functorList)(show$prime)(v1)) + ")");
+        return "(" + (Data_Foldable.intercalate(Data_List_Types.foldableList)(Data_Monoid.monoidString)(" <> ")(data.map(Data_List_Types.functorList)(show$prime)(v1)) + ")");
     };
     return listString(v.value0);
 });
@@ -581,7 +581,7 @@ let simplify = function (v) {
         return {
             prefix: (Data_List_NonEmpty.head(units)).prefix,
             baseUnit: (Data_List_NonEmpty.head(units)).baseUnit,
-            exponent: Data_Foldable.sum(Data_List_Types.foldableNonEmptyList)(semiringNumber)(Data_Functor.map(Data_List_Types.functorNonEmptyList)(function (v1) {
+            exponent: Data_Foldable.sum(Data_List_Types.foldableNonEmptyList)(semiringNumber)(data.map(Data_List_Types.functorNonEmptyList)(function (v1) {
                 return v1.exponent;
             })(units))
         };
@@ -590,13 +590,13 @@ let simplify = function (v) {
         let $221 = Data_List.filter(function (x) {
             return !(x.exponent === 0.0);
         });
-        let $222 = Data_Functor.map(Data_List_Types.functorList)(merge);
+        let $222 = data.map(Data_List_Types.functorList)(merge);
         let $223 = groupBy$prime(function (u1) {
             return function (u2) {
                 return eq(eqBaseUnit)(u1.baseUnit)(u2.baseUnit) && eq(eqPrefix)(u1.prefix)(u2.prefix);
             };
         });
-        let $224 = Data_Functor.map(Data_List_Types.functorList)(Data_List_NonEmpty.toList);
+        let $224 = data.map(Data_List_Types.functorList)(Data_List_NonEmpty.toList);
         let $225 = groupBy$prime(function (u1) {
             return function (u2) {
                 return eq(eqBaseUnit)(u1.baseUnit)(u2.baseUnit);
@@ -649,24 +649,24 @@ let eqDerivedUnit = new Eq(function (u1) {
                 throw new Error("Failed pattern match at Data.Units (line 335, column 11 - line 335, column 50): " + [ v.constructor.name ]);
             };
             let prefixPair = function (v) {
-                return Data_Functor.map(Data_Pair.functorPair)(function (v1) {
+                return data.map(Data_Pair.functorPair)(function (v1) {
                     return mul(Data_Decimal.semiringDecimal)(v1)(Data_Decimal.fromNumber(v.exponent));
                 })(toPair(v.prefix));
             };
-            return Data_Functor.map(Data_Pair.functorPair)(Data_Newtype.un(Data_Newtype.newtypeAdditive)(Data_Monoid_Additive.Additive))(Data_Foldable.fold(Data_List_Types.foldableList)(Data_Pair.monoidPair(Data_Monoid_Additive.monoidAdditive(Data_Decimal.semiringDecimal)))(Data_Functor.map(Data_List_Types.functorList)((function () {
-                let $230 = Data_Functor.map(Data_Pair.functorPair)(Data_Monoid_Additive.Additive);
+            return data.map(Data_Pair.functorPair)(Data_Newtype.un(Data_Newtype.newtypeAdditive)(Data_Monoid_Additive.Additive))(Data_Foldable.fold(Data_List_Types.foldableList)(Data_Pair.monoidPair(Data_Monoid_Additive.monoidAdditive(Data_Decimal.semiringDecimal)))(data.map(Data_List_Types.functorList)((function () {
+                let $230 = data.map(Data_Pair.functorPair)(Data_Monoid_Additive.Additive);
                 return function ($231) {
                     return $230(prefixPair($231));
                 };
             })())(us)));
         };
-        return eq(Data_List_Types.eqList(eqBaseUnit))(Data_Functor.map(Data_List_Types.functorList)(function (v) {
+        return eq(Data_List_Types.eqList(eqBaseUnit))(data.map(Data_List_Types.functorList)(function (v) {
             return v.baseUnit;
-        })(list1$prime))(Data_Functor.map(Data_List_Types.functorList)(function (v) {
+        })(list1$prime))(data.map(Data_List_Types.functorList)(function (v) {
             return v.baseUnit;
-        })(list2$prime)) && (eq(Data_List_Types.eqList(eqNumber))(Data_Functor.map(Data_List_Types.functorList)(function (v) {
+        })(list2$prime)) && (eq(Data_List_Types.eqList(eqNumber))(data.map(Data_List_Types.functorList)(function (v) {
             return v.exponent;
-        })(list1$prime))(Data_Functor.map(Data_List_Types.functorList)(function (v) {
+        })(list1$prime))(data.map(Data_List_Types.functorList)(function (v) {
             return v.exponent;
         })(list2$prime)) && eq(Data_Pair.eqPair(Data_Decimal.eqDecimal))(globalPrefix(list1))(globalPrefix(list2)));
     };
@@ -768,9 +768,9 @@ let splitByDimension = function (v) {
         };
     };
     let reduce = function (us$prime) {
-        let us = sortBy$prime(Data_Functor.flip(heuristic))(us$prime);
+        let us = sortBy$prime(data.flip(heuristic))(us$prime);
         let first = Data_List_NonEmpty.head(us);
-        let exp = Data_Foldable.sum(Data_List_Types.foldableNonEmptyList)(semiringNumber)(Data_Functor.map(Data_List_Types.functorNonEmptyList)(exponentWRT(first))(us));
+        let exp = Data_Foldable.sum(Data_List_Types.foldableNonEmptyList)(semiringNumber)(data.map(Data_List_Types.functorNonEmptyList)(exponentWRT(first))(us));
         let convertTo = DerivedUnit.create(Data_List.singleton({
             exponent: exp,
             baseUnit: first.baseUnit,
@@ -779,8 +779,8 @@ let splitByDimension = function (v) {
         return new Data_Tuple.Tuple(convertTo, DerivedUnit.create(Data_List_NonEmpty.toList(us)));
     };
     let transform = (function () {
-        let $234 = Data_Functor.map(Data_List_Types.functorList)(reduce);
-        let $235 = groupBy$prime(Data_Functor.on(eq(eqDerivedUnit))(standardUnitWithoutExponent));
+        let $234 = data.map(Data_List_Types.functorList)(reduce);
+        let $235 = groupBy$prime(data.on(eq(eqDerivedUnit))(standardUnitWithoutExponent));
         return function ($236) {
             return $234($235($236));
         };
@@ -803,9 +803,9 @@ let toStandardUnit = function (v) {
         let exponent$prime = Data_Decimal.fromNumber(v1.exponent);
         return new Data_Tuple.Tuple(power(standardUnit)(v1.exponent), Data_Decimal.pow(mul(Data_Decimal.semiringDecimal)(Data_Decimal.pow(toNum(v1.prefix.value0))(v1.prefix.value1))(factor))(exponent$prime));
     };
-    let converted = Data_Functor.map(Data_List_Types.functorList)(convert)(v.value0);
+    let converted = data.map(Data_List_Types.functorList)(convert)(v.value0);
     let units$prime = Data_Foldable.foldMap(Data_List_Types.foldableList)(monoidDerivedUnit)(Data_Tuple.fst)(converted);
-    let conv = Data_Foldable.product(Data_List_Types.foldableList)(Data_Decimal.semiringDecimal)(Data_Functor.map(Data_List_Types.functorList)(Data_Tuple.snd)(converted));
+    let conv = Data_Foldable.product(Data_List_Types.foldableList)(Data_Decimal.semiringDecimal)(data.map(Data_List_Types.functorList)(Data_Tuple.snd)(converted));
     return new Data_Tuple.Tuple(units$prime, conv);
 };
 let baseRepresentation = function (du) {
@@ -836,7 +836,7 @@ let baseRepresentation = function (du) {
             return u;
         };
         let du$prime = Data_Tuple.fst(toStandardUnit(du));
-        let us = Data_Functor.map(Data_List_Types.functorList)(function ($237) {
+        let us = data.map(Data_List_Types.functorList)(function ($237) {
             return replace(Data_Tuple.snd($237));
         })(splitByDimension(du$prime));
         return us;

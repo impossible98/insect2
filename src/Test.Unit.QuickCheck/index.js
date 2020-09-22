@@ -8,7 +8,6 @@ let Effect_Class = require("../Effect.Class/index.js");
 let Test_QuickCheck = require("../Test.QuickCheck/index.js");
 let Test_Unit = require("../Test.Unit/index.js");
 const data = require("../data");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
 let Data_Show = require("../Data.Show/index.js");
 let Effect = require("../Effect/index.js");
@@ -95,7 +94,7 @@ let mkSeed = function (x) {
 	};
 	return ensureBetween(seedMin)(seedMax)(x);
 };
-let randomSeed = Data_Functor.map(Effect.functorEffect)(mkSeed)(randomInt(seedMin)(seedMax));
+let randomSeed = data.map(Effect.functorEffect)(mkSeed)(randomInt(seedMin)(seedMax));
 let lcgC = 0;
 let lcgA = 48271;
 

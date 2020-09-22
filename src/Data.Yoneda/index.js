@@ -1,7 +1,6 @@
 const control = require("../control");
 let Control_Monad_Trans_Class = require("../Control.Monad.Trans.Class/index.js");
 const data = require("../data");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
 
 
@@ -48,7 +47,7 @@ let lowerYoneda = function (v) {
 let liftYoneda = function (dictFunctor) {
     return function (m) {
         return function (k) {
-            return Data_Functor.map(dictFunctor)(k)(m);
+            return data.map(dictFunctor)(k)(m);
         };
     };
 };
@@ -57,10 +56,10 @@ let monadTransYoneda = new Control_Monad_Trans_Class.MonadTrans(function (dictMo
 });
 let hoistYoneda = function (nat) {
     return function (v) {
-        return Data_Functor.map(Data_Functor.functorFn)(nat)(v);
+        return data.map(data.functorFn)(nat)(v);
     };
 };
-let functorYoneda = new Data_Functor.Functor(function (f) {
+let functorYoneda = new data.Functor(function (f) {
     return function (m) {
         return function (k) {
             return runYoneda(m)(function ($34) {

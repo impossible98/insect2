@@ -2,7 +2,6 @@ const control = require("../control");
 let Data_Bounded = require("../Data.Bounded/index.js");
 let Data_Enum = require("../Data.Enum/index.js");
 let data = require("../data");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
 let Data_Ordering = require("../Data.Ordering/index.js");
@@ -930,7 +929,7 @@ let enumDate = new Data_Enum.Enum(() => {
 		};
 		return pd;
 	})();
-	return apply(Data_Maybe.applyMaybe)(apply(Data_Maybe.applyMaybe)(Data_Functor.map(Data_Maybe.functorMaybe)($$Date.create)(y$prime))(control.pure(Data_Maybe.applicativeMaybe)(m$prime)))(d$prime);
+	return apply(Data_Maybe.applyMaybe)(apply(Data_Maybe.applyMaybe)(data.map(Data_Maybe.functorMaybe)($$Date.create)(y$prime))(control.pure(Data_Maybe.applicativeMaybe)(m$prime)))(d$prime);
 }, function (v) {
 	let sm = Data_Enum.succ(enumMonth)(v.value1);
 	let l = lastDayOfMonth(v.value0)(v.value1);
@@ -963,7 +962,7 @@ let enumDate = new Data_Enum.Enum(() => {
 		};
 		return sd;
 	})();
-	return apply(Data_Maybe.applyMaybe)(apply(Data_Maybe.applyMaybe)(Data_Functor.map(Data_Maybe.functorMaybe)($$Date.create)(y$prime))(control.pure(Data_Maybe.applicativeMaybe)(m$prime)))(d$prime);
+	return apply(Data_Maybe.applyMaybe)(apply(Data_Maybe.applyMaybe)(data.map(Data_Maybe.functorMaybe)($$Date.create)(y$prime))(control.pure(Data_Maybe.applicativeMaybe)(m$prime)))(d$prime);
 });
 
 let toDuration = function (dict) {
@@ -1040,20 +1039,20 @@ let adjust = function (v) {
 				})();
 				let dt$prime = (() => {
 					if (low) {
-						return control.bindFlipped(Data_Maybe.bindMaybe)(Data_Enum.pred(enumDate))(Data_Functor.map(Data_Maybe.functorMaybe)($$Date.create(v2.value0)(v2.value1))(Data_Enum.toEnum(boundedEnumDay)(1)));
+						return control.bindFlipped(Data_Maybe.bindMaybe)(Data_Enum.pred(enumDate))(data.map(Data_Maybe.functorMaybe)($$Date.create(v2.value0)(v2.value1))(Data_Enum.toEnum(boundedEnumDay)(1)));
 					};
 					if (hi) {
 						return Data_Enum.succ(enumDate)(new $$Date(v2.value0, v2.value1, l));
 					};
 					if (true) {
-						return Data_Functor.map(Data_Maybe.functorMaybe)($$Date.create(v2.value0)(v2.value1))(Data_Enum.toEnum(boundedEnumDay)(j));
+						return data.map(Data_Maybe.functorMaybe)($$Date.create(v2.value0)(v2.value1))(Data_Enum.toEnum(boundedEnumDay)(j));
 					};
 					throw new Error("Failed pattern match at Data.Date (line 104, column 9 - line 106, column 48): " + []);
 				})();
 				return control.bindFlipped(Data_Maybe.bindMaybe)(adj(i$prime))(dt$prime);
 			};
 		};
-		return control.bind(Data_Maybe.bindMaybe)(fromNumber(v))(Data_Functor.flip(adj)(date));
+		return control.bind(Data_Maybe.bindMaybe)(fromNumber(v))(data.flip(adj)(date));
 	};
 };
 

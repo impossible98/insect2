@@ -1,6 +1,6 @@
 const control = require("../control");
 let Data_Either = require("../Data.Either/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Effect = require("../Effect/index.js");
 let Effect_Exception = require("../Effect.Exception/index.js");
@@ -24,7 +24,7 @@ let throwError = function (dict) {
 };
 let monadThrowMaybe = new MonadThrow(function () {
     return Data_Maybe.monadMaybe;
-}, Data_Functor._const(Data_Maybe.Nothing.value));
+}, data._const(Data_Maybe.Nothing.value));
 let monadThrowEither = new MonadThrow(function () {
     return Data_Either.monadEither;
 }, Data_Either.Left.create);
@@ -59,7 +59,7 @@ let monadErrorEither = new MonadError(function () {
 });
 let monadErrorEffect = new MonadError(function () {
     return monadThrowEffect;
-}, Data_Functor.flip(Effect_Exception.catchException));
+}, data.flip(Effect_Exception.catchException));
 let catchError = function (dict) {
     return dict.catchError;
 };
@@ -84,7 +84,7 @@ let catchJust = function (dictMonadError) {
 };
 let $$try = function (dictMonadError) {
     return function (a) {
-        return catchError(dictMonadError)(Data_Functor.map(((((dictMonadError.MonadThrow0()).Monad0()).Bind1()).Apply0()).Functor0())(Data_Either.Right.create)(a))((function () {
+        return catchError(dictMonadError)(data.map(((((dictMonadError.MonadThrow0()).Monad0()).Bind1()).Apply0()).Functor0())(Data_Either.Right.create)(a))((function () {
             let $17 = pure(((dictMonadError.MonadThrow0()).Monad0()).Applicative0());
             return function ($18) {
                 return $17(Data_Either.Left.create($18));

@@ -2,7 +2,7 @@ const control = require("../control");
 let Control_Monad_Gen_Class = require("../Control.Monad.Gen.Class/index.js");
 let Control_Monad_Rec_Class = require("../Control.Monad.Rec.Class/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Monoid_Additive = require("../Data.Monoid.Additive/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
@@ -97,7 +97,7 @@ let unfoldable = function (dictMonadRec) {
                     };
                     throw new Error("Failed pattern match at Control.Monad.Gen (line 93, column 3 - line 93, column 68): " + [ v.constructor.name ]);
                 };
-                return Data_Functor.map((((dictMonadGen.Monad0()).Bind1()).Apply0()).Functor0())(Data_Unfoldable.unfoldr(dictUnfoldable)(unfold))(Control_Monad_Gen_Class.sized(dictMonadGen)((function () {
+                return data.map((((dictMonadGen.Monad0()).Bind1()).Apply0()).Functor0())(Data_Unfoldable.unfoldr(dictUnfoldable)(unfold))(Control_Monad_Gen_Class.sized(dictMonadGen)((function () {
                     let $53 = Control_Monad_Rec_Class.tailRecM(dictMonadRec)(loopGen);
                     let $54 = Data_Tuple.Tuple.create(Nil.value);
                     return function ($55) {
@@ -150,7 +150,7 @@ let freqSemigroup = function (v) {
 let frequency = function (dictMonadGen) {
     return function (dictFoldable1) {
         return function (xs) {
-            let total = Data_Newtype.alaF(Data_Functor.functorFn)(Data_Functor.functorFn)(Data_Newtype.newtypeAdditive)(Data_Newtype.newtypeAdditive)(Data_Monoid_Additive.Additive)(Data_Foldable.foldMap(dictFoldable1.Foldable0())(Data_Monoid_Additive.monoidAdditive(semiringNumber)))(Data_Tuple.fst)(xs);
+            let total = Data_Newtype.alaF(data.functorFn)(data.functorFn)(Data_Newtype.newtypeAdditive)(Data_Newtype.newtypeAdditive)(Data_Monoid_Additive.Additive)(Data_Foldable.foldMap(dictFoldable1.Foldable0())(Data_Monoid_Additive.monoidAdditive(semiringNumber)))(Data_Tuple.fst)(xs);
             return control.bind((dictMonadGen.Monad0()).Bind1())(Control_Monad_Gen_Class.chooseFloat(dictMonadGen)(0.0)(total))(getFreqVal(Data_Semigroup_Foldable.foldMap1(dictFoldable1)(semigroupFreqSemigroup)(freqSemigroup)(xs)));
         };
     };
@@ -159,7 +159,7 @@ let filtered = function (dictMonadRec) {
     return function (dictMonadGen) {
         return function (gen) {
             let go = function (v) {
-                return Data_Functor.mapFlipped((((dictMonadGen.Monad0()).Bind1()).Apply0()).Functor0())(gen)(function (a) {
+                return data.mapFlipped((((dictMonadGen.Monad0()).Bind1()).Apply0()).Functor0())(gen)(function (a) {
                     if (a instanceof Data_Maybe.Nothing) {
                         return new Control_Monad_Rec_Class.Loop({});
                     };
@@ -177,7 +177,7 @@ let suchThat = function (dictMonadRec) {
     return function (dictMonadGen) {
         return function (gen) {
             return function (pred) {
-                return filtered(dictMonadRec)(dictMonadGen)(Data_Functor.mapFlipped((((dictMonadGen.Monad0()).Bind1()).Apply0()).Functor0())(gen)(function (a) {
+                return filtered(dictMonadRec)(dictMonadGen)(data.mapFlipped((((dictMonadGen.Monad0()).Bind1()).Apply0()).Functor0())(gen)(function (a) {
                     let $51 = pred(a);
                     if ($51) {
                         return new Data_Maybe.Just(a);
@@ -201,7 +201,7 @@ let choose = function (dictMonadGen) {
     };
 };
 let atIndex = function ($57) {
-    return AtIndex(Data_Functor._const($57));
+    return AtIndex(data._const($57));
 };
 let fromIndex = function (dictFoldable1) {
     return function (i) {

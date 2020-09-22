@@ -3,7 +3,6 @@ let Control_Monad_State_Class = require("../Control.Monad.State.Class/index.js")
 let Data_Array = require("../Data.Array/index.js");
 const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Show = require("../Data.Show/index.js");
@@ -141,14 +140,14 @@ let $$char = function (dictStringLike) {
 let noneOf = function (dictStringLike) {
     return function (dictMonad) {
         return function (ss) {
-            return Text_Parsing_Parser_Combinators.withErrorMessage(dictMonad)(satisfy(dictStringLike)(dictMonad)(Data_Functor.flip(Data_Foldable.notElem(Data_Foldable.foldableArray)(data.eqChar))(ss)))("none of " + Data_Show.show(Data_Show.showArray(Data_Show.showChar))(ss));
+            return Text_Parsing_Parser_Combinators.withErrorMessage(dictMonad)(satisfy(dictStringLike)(dictMonad)(data.flip(Data_Foldable.notElem(Data_Foldable.foldableArray)(data.eqChar))(ss)))("none of " + Data_Show.show(Data_Show.showArray(Data_Show.showChar))(ss));
         };
     };
 };
 let oneOf = function (dictStringLike) {
     return function (dictMonad) {
         return function (ss) {
-            return Text_Parsing_Parser_Combinators.withErrorMessage(dictMonad)(satisfy(dictStringLike)(dictMonad)(Data_Functor.flip(Data_Foldable.elem(Data_Foldable.foldableArray)(data.eqChar))(ss)))("one of " + Data_Show.show(Data_Show.showArray(Data_Show.showChar))(ss));
+            return Text_Parsing_Parser_Combinators.withErrorMessage(dictMonad)(satisfy(dictStringLike)(dictMonad)(data.flip(Data_Foldable.elem(Data_Foldable.foldableArray)(data.eqChar))(ss)))("one of " + Data_Show.show(Data_Show.showArray(Data_Show.showChar))(ss));
         };
     };
 };
@@ -163,7 +162,7 @@ let whiteSpace = function (dictStringLike) {
 };
 let skipSpaces = function (dictStringLike) {
     return function (dictMonad) {
-        return Data_Functor._void(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(whiteSpace(dictStringLike)(dictMonad));
+        return data._void(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(whiteSpace(dictStringLike)(dictMonad));
     };
 };
 

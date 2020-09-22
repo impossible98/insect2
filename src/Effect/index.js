@@ -1,6 +1,6 @@
 const control = require("../control");
 
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
 
@@ -93,7 +93,7 @@ let lift2 = function (dictApply) {
 	return function (f) {
 		return function (a) {
 			return function (b) {
-				return apply(dictApply)(Data_Functor.map(dictApply.Functor0())(f)(a))(b);
+				return apply(dictApply)(data.map(dictApply.Functor0())(f)(a))(b);
 			};
 		};
 	};
@@ -167,7 +167,7 @@ let applyEffect = new Apply(() => {
 let applicativeEffect = new control.Applicative(() => {
 	return applyEffect;
 }, pureE);
-let functorEffect = new Data_Functor.Functor(control.liftA1(applicativeEffect));
+let functorEffect = new data.Functor(control.liftA1(applicativeEffect));
 let semigroupEffect = function (dictSemigroup) {
 	return new Data_Semigroup.Semigroup(lift2(applyEffect)(Data_Semigroup.append(dictSemigroup)));
 };

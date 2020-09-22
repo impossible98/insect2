@@ -3,7 +3,6 @@ let Control_Monad_Rec_Class = require("../Control.Monad.Rec.Class/index.js");
 const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_FoldableWithIndex = require("../Data.FoldableWithIndex/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_List_Types = require("../Data.List.Types/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Maybe_First = require("../Data.Maybe.First/index.js");
@@ -148,7 +147,7 @@ let testableFunction = function (dictArbitrary) {
 	};
 };
 let testableGen = function (dictTestable) {
-	return new Testable(Data_Functor.flip(control.bind(Test_QuickCheck_Gen.bindGen))(test(dictTestable)));
+	return new Testable(data.flip(control.bind(Test_QuickCheck_Gen.bindGen))(test(dictTestable)));
 };
 let showResult = new Data_Show.Show(function (v) {
 	if (v instanceof Success) {
@@ -225,7 +224,7 @@ let quickCheckPure$prime = function (dictTestable) {
 			return function (prop) {
 				let go = function (p) {
 					return Test_QuickCheck_Gen.stateful(function (gs) {
-						return Data_Functor.map(Test_QuickCheck_Gen.functorGen)(Data_Tuple.Tuple.create(gs.newSeed))(test(dictTestable)(p));
+						return data.map(Test_QuickCheck_Gen.functorGen)(Data_Tuple.Tuple.create(gs.newSeed))(test(dictTestable)(p));
 					});
 				};
 				return Test_QuickCheck_Gen.evalGen(Data_Unfoldable.replicateA(Test_QuickCheck_Gen.applicativeGen)(Data_List_Types.unfoldableList)(Data_List_Types.traversableList)(n)(go(prop)))({
@@ -263,7 +262,7 @@ let quickCheckGenPure = function (dictTestable) {
 
 
 
-let randomSeed = Data_Functor.map(Effect.functorEffect)(mkSeed)(randomInt(seedMin)(seedMax));
+let randomSeed = data.map(Effect.functorEffect)(mkSeed)(randomInt(seedMin)(seedMax));
 
 
 let quickCheck$prime = function (dictTestable) {
