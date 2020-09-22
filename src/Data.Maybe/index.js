@@ -197,6 +197,7 @@ function fromJust() {
 }
 
 let extendMaybe = new control.Extend(() => {
+
 	return functorMaybe;
 }, (v) => {
 	return (v1) => {
