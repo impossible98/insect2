@@ -1,0 +1,35 @@
+{
+  "name": "insect",
+  "version": "0.0.2",
+  "description": "",
+  "author": "impossible98",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/impossible98/insect.git"
+  },
+  "homepage": "https://github.com/impossible98/insect#readme",
+  "scripts": {
+    "dist": "ncc build src/main && node scripts/dist.js",
+    "start": "ncc build src/main && node scripts/dist.js && node dist/main.js",
+    "startw": "run-p server browserify:watch",
+    "server": "live-server web --open",
+    "version": "node scripts/version.js"
+  },
+  "bugs": {
+    "url": "https://github.com/impossible98/insect/issues"
+  },
+  "dependencies": {
+    "decimal.js": "^10.2.0",
+    "fs-extra": "^9.0.1",
+    "historic-readline": "^1.0.8",
+    "jquery.terminal": "^2.12.0",
+    "keyboardevent-key-polyfill": "=1.1.0",
+    "line-reader": "^0.4.0"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.24.1",
+    "live-server": "^1.2.1",
+    "npm-run-all": "^4.1.5"
+  }
+}

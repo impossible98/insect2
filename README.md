@@ -1,0 +1,7 @@
+# insect
+
+## Develop
+
+```
+npm install
+```
