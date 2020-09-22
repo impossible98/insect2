@@ -19,7 +19,6 @@ let Data_Ord = require("../Data.Ord/index.js");
 let Data_Tuple = require("../Data.Tuple/index.js");
 let Data_Unfoldable = require("../Data.Unfoldable/index.js");
 const data = require("../data");
-let Data_EuclideanRing = require("../Data.EuclideanRing/index.js");
 let Effect = require("../Effect/index.js");
 
 
@@ -190,7 +189,7 @@ let mkSeed = function (x) {
 		return function (max) {
 			return function (n) {
 				let rangeSize = max - min | 0;
-				let n$prime = Data_EuclideanRing.mod(Data_EuclideanRing.euclideanRingInt)(n)(rangeSize);
+				let n$prime = data.mod(data.euclideanRingInt)(n)(rangeSize);
 				let $14 = n$prime < min;
 				if ($14) {
 					return n$prime + max | 0;

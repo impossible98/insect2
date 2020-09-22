@@ -13,7 +13,6 @@ let Data_String_Common = require("../Data.String.Common/index.js");
 let Data_String_Pattern = require("../Data.String.Pattern/index.js");
 const text = require("../text");
 let Text_Parsing_Parser_Combinators = require("../Text.Parsing.Parser.Combinators/index.js");
-let Data_EuclideanRing = require("../Data.EuclideanRing/index.js");
 
 
 let updatePosString = function (pos$prime) {
@@ -35,7 +34,7 @@ let updatePosString = function (pos$prime) {
                 if (c === "\x09") {
                     return {
                         line: v.line,
-                        column: (v.column + 8 | 0) - Data_EuclideanRing.mod(Data_EuclideanRing.euclideanRingInt)(v.column - 1 | 0)(8) | 0
+                        column: (v.column + 8 | 0) - data.mod(data.euclideanRingInt)(v.column - 1 | 0)(8) | 0
                     };
                 };
                 return {

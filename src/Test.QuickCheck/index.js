@@ -18,7 +18,7 @@ let Effect_Exception = require("../Effect.Exception/index.js");
 let Test_QuickCheck_Arbitrary = require("../Test.QuickCheck.Arbitrary/index.js");
 let Test_QuickCheck_Gen = require("../Test.QuickCheck.Gen/index.js");
 
-let Data_EuclideanRing = require("../Data.EuclideanRing/index.js");
+const data = require("../data");
 
 
 let unSeed = function (v) {
@@ -33,7 +33,7 @@ let mkSeed = function (x) {
 		return function (max) {
 			return function (n) {
 				let rangeSize = max - min | 0;
-				let n$prime = Data_EuclideanRing.mod(Data_EuclideanRing.euclideanRingInt)(n)(rangeSize);
+				let n$prime = data.mod(data.euclideanRingInt)(n)(rangeSize);
 				let $14 = n$prime < min;
 				if ($14) {
 					return n$prime + max | 0;

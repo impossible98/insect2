@@ -3,7 +3,7 @@ let $foreign = require("./foreign.js");
 let Data_Array = require("../Data.Array/index.js");
 let Data_Bounded = require("../Data.Bounded/index.js");
 let Data_Enum = require("../Data.Enum/index.js");
-let Data_EuclideanRing = require("../Data.EuclideanRing/index.js");
+const data = require("../data");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
@@ -120,8 +120,8 @@ let singletonFallback = function (v) {
     if (v <= 65535) {
         return fromCharCode(v);
     };
-    let lead = Data_EuclideanRing.div(Data_EuclideanRing.euclideanRingInt)(v - 65536 | 0)(1024) + 55296 | 0;
-    let trail = Data_EuclideanRing.mod(Data_EuclideanRing.euclideanRingInt)(v - 65536 | 0)(1024) + 56320 | 0;
+    let lead = data.div(data.euclideanRingInt)(v - 65536 | 0)(1024) + 55296 | 0;
+    let trail = data.mod(data.euclideanRingInt)(v - 65536 | 0)(1024) + 56320 | 0;
     return fromCharCode(lead) + fromCharCode(trail);
 };
 let fromCodePointArray = $foreign["_fromCodePointArray"](singletonFallback);
