@@ -1,45 +1,47 @@
-class TypeEquals {
-	constructor(from, to) {
-		this.from = from;
-		this.to = to;
+class Type {
+	constructor(kw, kw2) {
+		this.kw = kw;
+		this.kw2 = kw2;
 	}
 }
 
-let refl = new TypeEquals(function (a) {
+let refl = new Type((a) => {
 	return a;
-}, function (a) {
+}, (a) => {
 	return a;
 });
 
 let RProxy = (() => {
-	function RProxy() {
+	function RProxy() { };
 
-	};
 	RProxy.value = new RProxy();
+
 	return RProxy;
 })();
 
 let RLProxy = (() => {
-	function RLProxy() {
+	function RLProxy() { };
 
-	};
 	RLProxy.value = new RLProxy();
+
 	return RLProxy;
 })();
 
 
-let to = function (dict) {
-	return dict.to;
-};
+function to(dict) {
 
-let from = function (dict) {
+	return dict.to;
+}
+
+function from(dict) {
+
 	return dict.from;
-};
+}
 
 module.exports = {
 	RProxy: RProxy,
 	RLProxy: RLProxy,
-	TypeEquals: TypeEquals,
+	TypeEquals: Type,
 	to: to,
 	from: from,
 	refl: refl
