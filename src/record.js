@@ -1,14 +1,6 @@
 const type = require('./type');
 
 
-function eq(arg) {
-	return arg.eq;
-}
-
-function reflectSymbol(arg) {
-	return arg.reflectSymbol;
-}
-
 function equalFields(arg) {
 	return arg.equalFields;
 }
@@ -105,7 +97,7 @@ function set(arg) {
 			return function (l) {
 				return function (b) {
 					return function (r) {
-						return unsafeSet(reflectSymbol(arg)(l))(b)(r);
+						return unsafeSet(equalFields(arg)(l))(b)(r);
 					};
 				};
 			};
@@ -133,7 +125,7 @@ function insert(arg) {
 			return function (l) {
 				return function (a) {
 					return function (r) {
-						return unsafeSet(reflectSymbol(arg)(l))(a)(r);
+						return unsafeSet(equalFields(arg)(l))(a)(r);
 					};
 				};
 			};
@@ -145,7 +137,7 @@ function get(arg) {
 	return () => {
 		return function (l) {
 			return function (r) {
-				return unsafeGet(reflectSymbol(arg)(l))(r);
+				return unsafeGet(equalFields(arg)(l))(r);
 			};
 		};
 	};
@@ -185,7 +177,7 @@ function equalFieldsCons(arg) {
 							let get$prime = get(arg)()(SProxy.value);
 							let equalRest = equalFields(dictEqualFields)(type.RLProxy.value);
 
-							return eq(dictEq)(get$prime(a))(get$prime(b)) && equalRest(a)(b);
+							return equalFields(dictEq)(get$prime(a))(get$prime(b)) && equalRest(a)(b);
 						};
 					};
 				});
@@ -219,7 +211,7 @@ function $$delete(arg) {
 		return () => {
 			return function (l) {
 				return function (r) {
-					return unsafeDelete(reflectSymbol(arg)(l))(r);
+					return unsafeDelete(equalFields(arg)(l))(r);
 				};
 			};
 		};
