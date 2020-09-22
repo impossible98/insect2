@@ -16,9 +16,6 @@ let Data_Semigroup = require("../Data.Semigroup/index.js");
 let Data_Show = require("../Data.Show/index.js");
 
 
-let $$Set = function (x) {
-    return x;
-};
 let union = function (dictOrd) {
     return function (v) {
         return function (v1) {
@@ -255,6 +252,7 @@ let properSubset = function (dictOrd) {
 let checkValid = function (v) {
     return Data_Map_Internal.checkValid(v);
 };
+
 module.exports = {
     fromFoldable: fromFoldable,
     toUnfoldable: toUnfoldable,
