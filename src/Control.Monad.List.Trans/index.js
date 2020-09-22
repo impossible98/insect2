@@ -3,7 +3,6 @@ let Control_Monad_Rec_Class = require("../Control.Monad.Rec.Class/index.js");
 let Control_Monad_Trans_Class = require("../Control.Monad.Trans.Class/index.js");
 let Control_MonadPlus = require("../Control.MonadPlus/index.js");
 let Control_MonadZero = require("../Control.MonadZero/index.js");
-let Control_Plus = require("../Control.Plus/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_Lazy = require("../Data.Lazy/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
@@ -653,7 +652,7 @@ let altListT = function (dictApplicative) {
 	}, concat(dictApplicative));
 };
 let plusListT = function (dictMonad) {
-	return new Control_Plus.Plus(function () {
+	return new control.Plus(function () {
 		return altListT(dictMonad.Applicative0());
 	}, nil(dictMonad.Applicative0()));
 };

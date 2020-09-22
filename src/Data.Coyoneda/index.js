@@ -2,7 +2,6 @@ const control = require("../control");
 let Control_Monad_Trans_Class = require("../Control.Monad.Trans.Class/index.js");
 let Control_MonadPlus = require("../Control.MonadPlus/index.js");
 let Control_MonadZero = require("../Control.MonadZero/index.js");
-let Control_Plus = require("../Control.Plus/index.js");
 let Data_Distributive = require("../Data.Distributive/index.js");
 let Data_Exists = require("../Data.Exists/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
@@ -12,7 +11,6 @@ let Data_Ord = require("../Data.Ord/index.js");
 let Data_Semigroup_Foldable = require("../Data.Semigroup.Foldable/index.js");
 let Data_Semigroup_Traversable = require("../Data.Semigroup.Traversable/index.js");
 let Data_Traversable = require("../Data.Traversable/index.js");
-let Control_Plus = require("../Control.Plus/index.js");
 
 
 class Eq {
@@ -386,9 +384,9 @@ let altCoyoneda = function (dictAlt) {
 	});
 };
 let plusCoyoneda = function (dictPlus) {
-	return new Control_Plus.Plus(() => {
+	return new control.Plus(() => {
 		return altCoyoneda(dictPlus.Alt0());
-	}, liftCoyoneda(Control_Plus.empty(dictPlus)));
+	}, liftCoyoneda(control.empty(dictPlus)));
 };
 let alternativeCoyoneda = function (dictAlternative) {
 	return new Control_Alternative.Alternative(() => {

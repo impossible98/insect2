@@ -7,18 +7,13 @@ let Control_Monad_Trans_Class = require("../Control.Monad.Trans.Class/index.js")
 let Control_Monad_Writer_Class = require("../Control.Monad.Writer.Class/index.js");
 let Control_MonadPlus = require("../Control.MonadPlus/index.js");
 let Control_MonadZero = require("../Control.MonadZero/index.js");
-let Control_Plus = require("../Control.Plus/index.js");
 let Data_Distributive = require("../Data.Distributive/index.js");
-
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
 let Effect_Class = require("../Effect.Class/index.js");
 
-let Control_Plus = require("../Control.Plus/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
-let Data_Semigroup = require("../Data.Semigroup/index.js");
 
 
 class Alt {
@@ -299,9 +294,9 @@ let altReaderT = function (dictAlt) {
 	});
 };
 let plusReaderT = function (dictPlus) {
-	return new Control_Plus.Plus(function () {
+	return new control.Plus(function () {
 		return altReaderT(dictPlus.Alt0());
-	}, Data_Functor._const(Control_Plus.empty(dictPlus)));
+	}, Data_Functor._const(control.empty(dictPlus)));
 };
 let alternativeReaderT = function (dictAlternative) {
 	return new Alternative(function () {

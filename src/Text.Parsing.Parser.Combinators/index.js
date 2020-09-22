@@ -1,7 +1,6 @@
 const control = require("../control");
 let Control_Monad_Except_Trans = require("../Control.Monad.Except.Trans/index.js");
 let Control_Monad_State_Trans = require("../Control.Monad.State.Trans/index.js");
-let Control_Plus = require("../Control.Plus/index.js");
 let Data_Either = require("../Data.Either/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
@@ -222,7 +221,7 @@ let endBy = function (dictMonad) {
 };
 let choice = function (dictFoldable) {
     return function (dictMonad) {
-        return Data_Foldable.foldl(dictFoldable)(alt(text.altParserT(dictMonad)))(Control_Plus.empty(text.plusParserT(dictMonad)));
+        return Data_Foldable.foldl(dictFoldable)(alt(text.altParserT(dictMonad)))(control.empty(text.plusParserT(dictMonad)));
     };
 };
 let chainr1$prime = function (dictMonad) {

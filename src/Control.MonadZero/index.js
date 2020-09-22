@@ -1,5 +1,4 @@
 const control = require("../control");
-let Control_Plus = require("../Control.Plus/index.js");
 
 
 class Alternative {
@@ -11,7 +10,7 @@ class Alternative {
 let alternativeArray = new Alternative(function () {
     return control.applicativeArray;
 }, function () {
-    return Control_Plus.plusArray;
+    return control.plusArray;
 });
 
 
@@ -30,7 +29,7 @@ let guard = function (dictMonadZero) {
             return control.pure((dictMonadZero.Alternative1()).Applicative0())({});
         };
         if (!v) {
-            return Control_Plus.empty((dictMonadZero.Alternative1()).Plus1());
+            return control.empty((dictMonadZero.Alternative1()).Plus1());
         };
         throw new Error("Failed pattern match at Control.MonadZero (line 54, column 1 - line 54, column 52): " + [ v.constructor.name ]);
     };

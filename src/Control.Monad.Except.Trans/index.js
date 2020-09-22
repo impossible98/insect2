@@ -7,7 +7,6 @@ let Control_Monad_Trans_Class = require("../Control.Monad.Trans.Class/index.js")
 let Control_Monad_Writer_Class = require("../Control.Monad.Writer.Class/index.js");
 let Control_MonadPlus = require("../Control.MonadPlus/index.js");
 let Control_MonadZero = require("../Control.MonadZero/index.js");
-let Control_Plus = require("../Control.Plus/index.js");
 let Data_Either = require("../Data.Either/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_Monoid = require("../Data.Monoid/index.js");
@@ -339,7 +338,7 @@ let altExceptT = function (dictSemigroup) {
 };
 let plusExceptT = function (dictMonoid) {
     return function (dictMonad) {
-        return new Control_Plus.Plus(function () {
+        return new control.Plus(function () {
             return altExceptT(dictMonoid.Semigroup0())(dictMonad);
         }, Control_Monad_Error_Class.throwError(monadThrowExceptT(dictMonad))(Data_Monoid.mempty(dictMonoid)));
     };

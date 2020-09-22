@@ -1,6 +1,5 @@
 const control = require("../control");
 let Control_MonadZero = require("../Control.MonadZero/index.js");
-let Control_Plus = require("../Control.Plus/index.js");
 let Data_Bounded = require("../Data.Bounded/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_Functor_Invariant = require("../Data.Functor.Invariant/index.js");
@@ -318,7 +317,7 @@ let altMaybe = new Alt(() => {
 	};
 });
 
-let plusMaybe = new Control_Plus.Plus(() => {
+let plusMaybe = new control.Plus(() => {
 	return altMaybe;
 }, Nothing.value);
 

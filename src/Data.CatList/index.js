@@ -1,7 +1,6 @@
 const control = require("../control");
 let Control_MonadPlus = require("../Control.MonadPlus/index.js");
 let Control_MonadZero = require("../Control.MonadZero/index.js");
-let Control_Plus = require("../Control.Plus/index.js");
 let Data_CatQueue = require("../Data.CatQueue/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
@@ -14,7 +13,6 @@ let Data_Traversable = require("../Data.Traversable/index.js");
 let Data_Tuple = require("../Data.Tuple/index.js");
 let Data_Unfoldable = require("../Data.Unfoldable/index.js");
 let Data_Unfoldable1 = require("../Data.Unfoldable1/index.js");
-let Control_Plus = require("../Control.Plus/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
 
@@ -406,7 +404,7 @@ let unfoldableCatList = new Data_Unfoldable.Unfoldable(function () {
 let altCatList = new Alt(function () {
 	return functorCatList;
 }, append);
-let plusCatList = new Control_Plus.Plus(function () {
+let plusCatList = new control.Plus(function () {
 	return altCatList;
 }, empty);
 let alternativeCatList = new Control_Alternative.Alternative(function () {

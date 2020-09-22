@@ -2,6 +2,31 @@ let Data_Bifunctor = require("./Data.Bifunctor/index.js");
 let Data_Functor = require("./Data.Functor/index.js");
 let Data_Semigroup = require("./Data.Semigroup/index.js");
 
+class Control2 {
+	constructor(kw, kw2) {
+		this.kw = kw;
+		this.kw2 = kw2;
+	}
+}
+
+class Plus {
+	constructor(Alt0, empty) {
+		this.Alt0 = Alt0;
+		this.empty = empty;
+	}
+}
+
+let altArray = new Control2(() => {
+	return Data_Functor.functorArray;
+}, Data_Semigroup.append(Data_Semigroup.semigroupArray));
+
+let plusArray = new Plus(() => {
+	return altArray;
+}, []);
+
+let empty = function (dict) {
+	return dict.empty;
+};
 
 class Control {
 	constructor(kw) {
@@ -537,6 +562,10 @@ module.exports = {
 	unless: unless,
 	unlessM: unlessM,
 	when: when,
-	whenM: whenM
+	whenM: whenM,
+
+	Plus: Plus,
+	empty: empty,
+	plusArray: plusArray
 
 };

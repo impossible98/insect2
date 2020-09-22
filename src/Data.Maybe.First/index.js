@@ -1,11 +1,10 @@
 let Control_MonadZero = require("../Control.MonadZero/index.js");
-let Control_Plus = require("../Control.Plus/index.js");
+const control = require("../control");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
 let Data_Show = require("../Data.Show/index.js");
-const control = require("../control");
 let Data_Functor = require("../Data.Functor/index.js");
 
 
@@ -34,7 +33,7 @@ class Alternative {
 let alternativeArray = new Alternative(function () {
     return control.applicativeArray;
 }, function () {
-    return Control_Plus.plusArray;
+    return control.plusArray;
 });
 let First = function (x) {
     return x;
@@ -79,7 +78,7 @@ let applicativeFirst = Data_Maybe.applicativeMaybe;
 let altFirst = new Alt(function () {
     return functorFirst;
 }, Data_Semigroup.append(semigroupFirst));
-let plusFirst = new Control_Plus.Plus(function () {
+let plusFirst = new control.Plus(function () {
     return altFirst;
 }, Data_Monoid.mempty(monoidFirst));
 let alternativeFirst = new Alternative(function () {

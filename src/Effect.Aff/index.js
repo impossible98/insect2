@@ -1,12 +1,10 @@
 let $foreign = require("./foreign.js");
 
-
 const control = require("../control");
 let Control_Monad_Error_Class = require("../Control.Monad.Error.Class/index.js");
 let Control_Monad_Rec_Class = require("../Control.Monad.Rec.Class/index.js");
 let Control_Parallel = require("../Control.Parallel/index.js");
 let Control_Parallel_Class = require("../Control.Parallel.Class/index.js");
-let Control_Plus = require("../Control.Plus/index.js");
 let Data_Either = require("../Data.Either/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
@@ -16,7 +14,6 @@ let Data_Semigroup = require("../Data.Semigroup/index.js");
 let Effect = require("../Effect/index.js");
 let Effect_Class = require("../Effect.Class/index.js");
 let Effect_Exception = require("../Effect.Exception/index.js");
-let Control_Plus = require("../Control.Plus/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
 
@@ -381,12 +378,12 @@ let altAff = new Alt(() => {
 		return Control_Monad_Error_Class.catchError(monadErrorAff)(a1)(Data_Functor._const(a2));
 	};
 });
-let plusAff = new Control_Plus.Plus(() => {
+let plusAff = new control.Plus(() => {
 	return altAff;
 }, Control_Monad_Error_Class.throwError(monadThrowAff)(Effect_Exception.error("Always fails")));
-let plusParAff = new Control_Plus.Plus(() => {
+let plusParAff = new control.Plus(() => {
 	return altParAff;
-}, Control_Parallel_Class.parallel(parallelAff)(Control_Plus.empty(plusAff)));
+}, Control_Parallel_Class.parallel(parallelAff)(control.empty(plusAff)));
 let alternativeParAff = new Alternative(() => {
 	return applicativeParAff;
 }, () => {

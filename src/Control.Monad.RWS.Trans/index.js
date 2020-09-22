@@ -5,7 +5,6 @@ let Control_Monad_Rec_Class = require("../Control.Monad.Rec.Class/index.js");
 let Control_Monad_State_Class = require("../Control.Monad.State.Class/index.js");
 let Control_Monad_Trans_Class = require("../Control.Monad.Trans.Class/index.js");
 let Control_Monad_Writer_Class = require("../Control.Monad.Writer.Class/index.js");
-let Control_Plus = require("../Control.Plus/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
@@ -359,11 +358,11 @@ let altRWST = function (dictAlt) {
 	});
 };
 let plusRWST = function (dictPlus) {
-	return new Control_Plus.Plus(() => {
+	return new control.Plus(() => {
 		return altRWST(dictPlus.Alt0());
 	}, function (v) {
 		return function (v1) {
-			return Control_Plus.empty(dictPlus);
+			return control.empty(dictPlus);
 		};
 	});
 };

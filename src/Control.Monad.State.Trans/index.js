@@ -7,7 +7,6 @@ let Control_Monad_Trans_Class = require("../Control.Monad.Trans.Class/index.js")
 let Control_Monad_Writer_Class = require("../Control.Monad.Writer.Class/index.js");
 let Control_MonadPlus = require("../Control.MonadPlus/index.js");
 let Control_MonadZero = require("../Control.MonadZero/index.js");
-let Control_Plus = require("../Control.Plus/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Tuple = require("../Data.Tuple/index.js");
@@ -293,10 +292,10 @@ let altStateT = function (dictMonad) {
 };
 let plusStateT = function (dictMonad) {
     return function (dictPlus) {
-        return new Control_Plus.Plus(() => {
+        return new control.Plus(() => {
             return altStateT(dictMonad)(dictPlus.Alt0());
         }, function (v) {
-            return Control_Plus.empty(dictPlus);
+            return control.empty(dictPlus);
         });
     };
 };

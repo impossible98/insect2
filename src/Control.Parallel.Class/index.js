@@ -3,16 +3,13 @@ let Control_Monad_Except_Trans = require("../Control.Monad.Except.Trans/index.js
 let Control_Monad_Maybe_Trans = require("../Control.Monad.Maybe.Trans/index.js");
 let Control_Monad_Reader_Trans = require("../Control.Monad.Reader.Trans/index.js");
 let Control_Monad_Writer_Trans = require("../Control.Monad.Writer.Trans/index.js");
-let Control_Plus = require("../Control.Plus/index.js");
 let Data_Either = require("../Data.Either/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Effect_Class = require("../Effect.Class/index.js");
 let Effect_Ref = require("../Effect.Ref/index.js");
-let Control_Plus = require("../Control.Plus/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
-let Control_Plus = require("../Control.Plus/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
@@ -411,7 +408,7 @@ let altParCont = function (dictMonadEffect) {
 };
 
 let plusParCont = function (dictMonadEffect) {
-	return new Control_Plus.Plus(() => {
+	return new control.Plus(() => {
 		return altParCont(dictMonadEffect);
 	}, ParCont(function (v) {
 		return control.pure((dictMonadEffect.Monad0()).Applicative0())({});

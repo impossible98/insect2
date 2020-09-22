@@ -1,5 +1,4 @@
 const control = require("../control");
-let Control_Plus = require("../Control.Plus/index.js");
 const data = require("../data");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_HeytingAlgebra = require("../Data.HeytingAlgebra/index.js");
@@ -158,7 +157,7 @@ let $$null = function (dictFoldable) {
 };
 let oneOf = function (dictFoldable) {
 	return function (dictPlus) {
-		return foldr(dictFoldable)(alt(dictPlus.Alt0()))(Control_Plus.empty(dictPlus));
+		return foldr(dictFoldable)(alt(dictPlus.Alt0()))(control.empty(dictPlus));
 	};
 };
 let oneOfMap = function (dictFoldable) {
@@ -169,7 +168,7 @@ let oneOfMap = function (dictFoldable) {
 				return function ($196) {
 					return $195(f($196));
 				};
-			})())(Control_Plus.empty(dictPlus));
+			})())(control.empty(dictPlus));
 		};
 	};
 };

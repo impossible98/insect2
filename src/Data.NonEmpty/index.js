@@ -1,5 +1,4 @@
 const control = require("../control");
-let Control_Plus = require("../Control.Plus/index.js");
 const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_FoldableWithIndex = require("../Data.FoldableWithIndex/index.js");
@@ -82,7 +81,7 @@ let tail = function (v) {
 };
 let singleton = function (dictPlus) {
     return function (a) {
-        return new NonEmpty(a, Control_Plus.empty(dictPlus));
+        return new NonEmpty(a, control.empty(dictPlus));
     };
 };
 let showNonEmpty = function (dictShow) {

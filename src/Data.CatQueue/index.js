@@ -1,7 +1,6 @@
 const control = require("../control");
 let Control_MonadPlus = require("../Control.MonadPlus/index.js");
 let Control_MonadZero = require("../Control.MonadZero/index.js");
-let Control_Plus = require("../Control.Plus/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_List = require("../Data.List/index.js");
@@ -16,7 +15,6 @@ let Data_Traversable = require("../Data.Traversable/index.js");
 let Data_Tuple = require("../Data.Tuple/index.js");
 let Data_Unfoldable = require("../Data.Unfoldable/index.js");
 let Data_Unfoldable1 = require("../Data.Unfoldable1/index.js");
-let Control_Plus = require("../Control.Plus/index.js");
 
 
 class Eq {
@@ -371,7 +369,7 @@ let applicativeCatQueue = new control.Applicative(function () {
 let altCatQueue = new Alt(function () {
     return functorCatQueue;
 }, Data_Semigroup.append(semigroupCatQueue));
-let plusCatQueue = new Control_Plus.Plus(function () {
+let plusCatQueue = new control.Plus(function () {
     return altCatQueue;
 }, empty);
 let alternativeCatQueue = new Control_Alternative.Alternative(function () {

@@ -9,7 +9,6 @@ let Control_Monad_Trans_Class = require("../Control.Monad.Trans.Class/index.js")
 let Control_Monad_Writer_Class = require("../Control.Monad.Writer.Class/index.js");
 let Control_MonadPlus = require("../Control.MonadPlus/index.js");
 let Control_MonadZero = require("../Control.MonadZero/index.js");
-let Control_Plus = require("../Control.Plus/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
@@ -295,7 +294,7 @@ let altMaybeT = function (dictMonad) {
 	});
 };
 let plusMaybeT = function (dictMonad) {
-	return new Control_Plus.Plus(function () {
+	return new control.Plus(function () {
 		return altMaybeT(dictMonad);
 	}, pure(dictMonad.Applicative0())(Data_Maybe.Nothing.value));
 };

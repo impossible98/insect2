@@ -1,5 +1,4 @@
 const control = require("../control");
-let Control_Plus = require("../Control.Plus/index.js");
 let Data_Either = require("../Data.Either/index.js");
 const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
@@ -183,13 +182,13 @@ let checkWeekUsage = function (v) {
     if ($60) {
         return control.pure(Data_List_Types.applicativeList)(InvalidWeekComponentUsage.value);
     };
-    return Control_Plus.empty(Data_List_Types.plusList);
+    return control.empty(Data_List_Types.plusList);
 };
 let checkNegativeValues = function (v) {
     return Data_Functor.flip(Data_Foldable.foldMap(Data_List_Types.foldableList)(Data_List_Types.monoidList))(v.asList)(function (v1) {
         let $64 = v1.value1 >= 0.0;
         if ($64) {
-            return Control_Plus.empty(Data_List_Types.plusList);
+            return control.empty(Data_List_Types.plusList);
         };
         return control.pure(Data_List_Types.applicativeList)(new ContainsNegativeValue(v1.value0));
     });
@@ -214,14 +213,14 @@ let checkFractionalUse = function (v) {
     if (v1 instanceof Data_List_Types.Cons && checkRest(v1.value1)) {
         return control.pure(Data_List_Types.applicativeList)(new InvalidFractionalUse(v1.value0.value0));
     };
-    return Control_Plus.empty(Data_List_Types.plusList);
+    return control.empty(Data_List_Types.plusList);
 };
 let checkEmptiness = function (v) {
     let $76 = Data_List["null"](v.asList);
     if ($76) {
         return control.pure(Data_List_Types.applicativeList)(IsEmpty.value);
     };
-    return Control_Plus.empty(Data_List_Types.plusList);
+    return control.empty(Data_List_Types.plusList);
 };
 let checkValidIsoDuration = function (v) {
     let check = Data_Foldable.fold(Data_Foldable.foldableArray)(Data_Monoid.monoidFn(Data_List_Types.monoidList))([ checkWeekUsage, checkEmptiness, checkFractionalUse, checkNegativeValues ]);

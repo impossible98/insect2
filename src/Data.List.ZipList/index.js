@@ -1,12 +1,10 @@
 const control = require("../control");
-let Control_Plus = require("../Control.Plus/index.js");
 let Data_List_Lazy = require("../Data.List.Lazy/index.js");
 let Data_List_Lazy_Types = require("../Data.List.Lazy.Types/index.js");
 let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
 let Data_Show = require("../Data.Show/index.js");
-let Control_Plus = require("../Control.Plus/index.js");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
 
 
@@ -91,7 +89,7 @@ let applicativeZipList = new control.Applicative(function () {
 let altZipList = new Alt(function () {
     return functorZipList;
 }, Data_Semigroup.append(semigroupZipList));
-let plusZipList = new Control_Plus.Plus(function () {
+let plusZipList = new control.Plus(function () {
     return altZipList;
 }, Data_Monoid.mempty(monoidZipList));
 let alternativeZipList = new Alternative(function () {

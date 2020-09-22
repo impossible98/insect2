@@ -1,7 +1,6 @@
 const control = require("../control");
 let Control_MonadPlus = require("../Control.MonadPlus/index.js");
 let Control_MonadZero = require("../Control.MonadZero/index.js");
-let Control_Plus = require("../Control.Plus/index.js");
 const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_FoldableWithIndex = require("../Data.FoldableWithIndex/index.js");
@@ -718,7 +717,7 @@ let altNonEmptyList = new Alt(function () {
 let altList = new Alt(function () {
     return functorList;
 }, Data_Semigroup.append(semigroupList));
-let plusList = new Control_Plus.Plus(function () {
+let plusList = new control.Plus(function () {
     return altList;
 }, nil);
 let alternativeList = new Alternative(function () {
