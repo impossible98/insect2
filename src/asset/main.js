@@ -1,4 +1,3 @@
-// Load KeyboardEvent polyfill for old browsers
 keyboardeventKeyPolyfill.polyfill();
 
 var insectEnv = Insect.initialEnvironment;
@@ -9,27 +8,22 @@ function updateUrl(url) {
 }
 
 function interpret(line) {
-	// Skip empty lines or line comments
 	var lineTrimmed = line.trim();
 	if (lineTrimmed === "" || lineTrimmed[0] === "#") {
 		return;
 	}
 
-	// Run insect
 	var res = Insect.repl(Insect.fmtJqueryTerminal)(insectEnv)(line);
 	insectEnv = res.newEnv;
 
-	// Handle shell commands
 	if (clearCommands.indexOf(res.msgType) >= 0) {
 		updateUrl("");
 	}
 
 	if (res.msgType == "clear") {
-		// Clear screen:
 		this.clear();
 		return "";
 	} else if (res.msgType == "quit") {
-		// Treat as reset:
 		this.clear();
 		insectEnv = Insect.initialEnvironment;
 		return "";
@@ -66,8 +60,8 @@ $(document).ready(function () {
 		name: "terminal",
 		height: 550,
 		prompt: "[[;;;prompt]&#8811; ]>>> ",
-		clear: false, // do not include 'clear' command
-		exit: false, // do not include 'exit' command
+		clear: false,
+		exit: false,
 		checkArity: false,
 		historySize: 200,
 		historyFilter: function (line) {
