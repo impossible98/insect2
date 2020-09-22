@@ -27,6 +27,6 @@ jobs:
           file: Dockerfile
           platforms: linux/amd64
           push: true
-          tags: insect:latest
+          tags: impossible98/insect2:latest
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
