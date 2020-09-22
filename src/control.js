@@ -1,5 +1,5 @@
 let Data_Bifunctor = require("./Data.Bifunctor/index.js");
-let Data_Functor = require("./Data.Functor/index.js");
+const data = require("./data");
 let Data_Semigroup = require("./Data.Semigroup/index.js");
 
 class Control2 {
@@ -17,7 +17,7 @@ class Plus {
 }
 
 let altArray = new Control2(() => {
-	return Data_Functor.functorArray;
+	return data.functorArray;
 }, Data_Semigroup.append(Data_Semigroup.semigroupArray));
 
 let plusArray = new Plus(() => {
@@ -126,7 +126,7 @@ function arrayApply(fs) {
 }
 
 let applyFn = new Apply(() => {
-	return Data_Functor.functorFn;
+	return data.functorFn;
 }, function (f) {
 	return function (g) {
 		return function (x) {
@@ -136,7 +136,7 @@ let applyFn = new Apply(() => {
 });
 
 let applyArray = new Apply(() => {
-	return Data_Functor.functorArray;
+	return data.functorArray;
 }, arrayApply);
 
 
@@ -254,7 +254,7 @@ let categoryFn = new Category(() => {
 function biapplyFirst(dictBiapply) {
 	return function (a) {
 		return function (b) {
-			return biapply(dictBiapply)(identity(categoryFn)(Data_Bifunctor.bimap(dictBiapply.Bifunctor0())(Data_Functor._const(identity(categoryFn)))(Data_Functor._const(identity(categoryFn))))(a))(b);
+			return biapply(dictBiapply)(identity(categoryFn)(Data_Bifunctor.bimap(dictBiapply.Bifunctor0())(data._const(identity(categoryFn)))(data._const(identity(categoryFn))))(a))(b);
 		};
 	};
 }
@@ -262,7 +262,7 @@ function biapplyFirst(dictBiapply) {
 function biapplySecond(dictBiapply) {
 	return function (a) {
 		return function (b) {
-			return biapply(dictBiapply)(identity(categoryFn)(Data_Bifunctor.bimap(dictBiapply.Bifunctor0())(Data_Functor._const)(Data_Functor._const))(a))(b);
+			return biapply(dictBiapply)(identity(categoryFn)(Data_Bifunctor.bimap(dictBiapply.Bifunctor0())(data._const)(data._const))(a))(b);
 		};
 	};
 }
@@ -399,7 +399,7 @@ let discardUnit = new Discard(function (dictBind) {
 });
 
 let extendArray = new Extend(() => {
-	return Data_Functor.functorArray;
+	return data.functorArray;
 }, arrayExtend);
 
 
@@ -414,7 +414,7 @@ function arrayBind(arr) {
 }
 
 function bindFlipped(dictBind) {
-	return Data_Functor.flip(bind(dictBind));
+	return data.flip(bind(dictBind));
 }
 
 function composeKleisliFlipped(dictBind) {
@@ -469,7 +469,7 @@ function arrayExtend(f) {
 
 function extendFn(dictSemigroup) {
 	return new Extend(() => {
-		return Data_Functor.functorFn;
+		return data.functorFn;
 	}, function (f) {
 		return function (g) {
 			return function (w) {

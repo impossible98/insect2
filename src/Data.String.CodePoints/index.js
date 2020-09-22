@@ -4,7 +4,6 @@ let Data_Array = require("../Data.Array/index.js");
 let Data_Bounded = require("../Data.Bounded/index.js");
 let Data_Enum = require("../Data.Enum/index.js");
 const data = require("../data");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
 let Data_Show = require("../Data.Show/index.js");
@@ -71,7 +70,7 @@ let uncons = function (s) {
     });
 };
 let unconsButWithTuple = function (s) {
-    return Data_Functor.map(Data_Maybe.functorMaybe)(function (v) {
+    return data.map(Data_Maybe.functorMaybe)(function (v) {
         return new Data_Tuple.Tuple(v.head, v.tail);
     })(uncons(s));
 };
@@ -98,14 +97,14 @@ let length = function ($52) {
 };
 let lastIndexOf = function (p) {
     return function (s) {
-        return Data_Functor.map(Data_Maybe.functorMaybe)(function (i) {
+        return data.map(Data_Maybe.functorMaybe)(function (i) {
             return length(Data_String_CodeUnits.take(i)(s));
         })(Data_String_CodeUnits.lastIndexOf(p)(s));
     };
 };
 let indexOf = function (p) {
     return function (s) {
-        return Data_Functor.map(Data_Maybe.functorMaybe)(function (i) {
+        return data.map(Data_Maybe.functorMaybe)(function (i) {
             return length(Data_String_CodeUnits.take(i)(s));
         })(Data_String_CodeUnits.indexOf(p)(s));
     };
@@ -143,7 +142,7 @@ let lastIndexOf$prime = function (p) {
     return function (i) {
         return function (s) {
             let i$prime = Data_String_CodeUnits.length(take(i)(s));
-            return Data_Functor.map(Data_Maybe.functorMaybe)(function (k) {
+            return data.map(Data_Maybe.functorMaybe)(function (k) {
                 return length(Data_String_CodeUnits.take(k)(s));
             })(Data_String_CodeUnits["lastIndexOf'"](p)(i$prime)(s));
         };
@@ -179,7 +178,7 @@ let indexOf$prime = function (p) {
     return function (i) {
         return function (s) {
             let s$prime = drop(i)(s);
-            return Data_Functor.map(Data_Maybe.functorMaybe)(function (k) {
+            return data.map(Data_Maybe.functorMaybe)(function (k) {
                 return i + length(Data_String_CodeUnits.take(k)(s$prime)) | 0;
             })(Data_String_CodeUnits.indexOf(p)(s$prime));
         };

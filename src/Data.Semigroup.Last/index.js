@@ -1,6 +1,5 @@
 const control = require("../control");
 const data = require("../data");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
 let Data_Show = require("../Data.Show/index.js");
@@ -29,7 +28,7 @@ let semigroupLast = new Data_Semigroup.Semigroup(function (v) {
 let ordLast = function (dictOrd) {
     return dictOrd;
 };
-let functorLast = new Data_Functor.Functor(function (f) {
+let functorLast = new data.Functor(function (f) {
     return function (m) {
         return f(m);
     };

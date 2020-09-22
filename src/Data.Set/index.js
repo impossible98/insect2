@@ -5,7 +5,6 @@ let Data_Array = require("../Data.Array/index.js");
 let Data_Array_ST = require("../Data.Array.ST/index.js");
 const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_List = require("../Data.List/index.js");
 let Data_List_Types = require("../Data.List.Types/index.js");
 let Data_Map_Internal = require("../Data.Map.Internal/index.js");
@@ -90,12 +89,12 @@ let foldableSet = new Data_Foldable.Foldable(function (dictMonoid) {
     };
 });
 let findMin = function (v) {
-    return Data_Functor.map(Data_Maybe.functorMaybe)(function (v1) {
+    return data.map(Data_Maybe.functorMaybe)(function (v1) {
         return v1.key;
     })(Data_Map_Internal.findMin(v));
 };
 let findMax = function (v) {
-    return Data_Functor.map(Data_Maybe.functorMaybe)(function (v1) {
+    return data.map(Data_Maybe.functorMaybe)(function (v1) {
         return v1.key;
     })(Data_Map_Internal.findMax(v));
 };
@@ -235,7 +234,7 @@ let $$delete = function (dictOrd) {
 let difference = function (dictOrd) {
     return function (s1) {
         return function (s2) {
-            return Data_Foldable.foldl(Data_List_Types.foldableList)(Data_Functor.flip($$delete(dictOrd)))(s1)(toList(s2));
+            return Data_Foldable.foldl(Data_List_Types.foldableList)(data.flip($$delete(dictOrd)))(s1)(toList(s2));
         };
     };
 };

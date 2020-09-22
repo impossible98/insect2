@@ -16,7 +16,7 @@ let Data_Ordering = require("./Data.Ordering/index.js");
 let Data_Semigroup = require("./Data.Semigroup/index.js");
 let Data_Show = require("./Data.Show/index.js");
 let Data_Tuple = require("./Data.Tuple/index.js");
-let Data_Functor = require("./Data.Functor/index.js");
+
 
 
 let initialPos = {

@@ -1,6 +1,6 @@
 let Data_Bounded = require("../Data.Bounded/index.js");
 let Data_Enum = require("../Data.Enum/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
@@ -214,7 +214,7 @@ let millisToTime = function (v) {
     let minutes = Math.floor((v - hours * 3600000.0) / 60000.0);
     let seconds = Math.floor((v - (hours * 3600000.0 + minutes * 60000.0)) / 1000.0);
     let milliseconds = v - (hours * 3600000.0 + minutes * 60000.0 + seconds * 1000.0);
-    return Data_Maybe.fromJust()(apply(Data_Maybe.applyMaybe)(apply(Data_Maybe.applyMaybe)(apply(Data_Maybe.applyMaybe)(Data_Functor.map(Data_Maybe.functorMaybe)(Time.create)(Data_Enum.toEnum(Data_Time_Component.boundedEnumHour)(floor(hours))))(Data_Enum.toEnum(Data_Time_Component.boundedEnumMinute)(floor(minutes))))(Data_Enum.toEnum(Data_Time_Component.boundedEnumSecond)(floor(seconds))))(Data_Enum.toEnum(Data_Time_Component.boundedEnumMillisecond)(floor(milliseconds))));
+    return Data_Maybe.fromJust()(apply(Data_Maybe.applyMaybe)(apply(Data_Maybe.applyMaybe)(apply(Data_Maybe.applyMaybe)(data.map(Data_Maybe.functorMaybe)(Time.create)(Data_Enum.toEnum(Data_Time_Component.boundedEnumHour)(floor(hours))))(Data_Enum.toEnum(Data_Time_Component.boundedEnumMinute)(floor(minutes))))(Data_Enum.toEnum(Data_Time_Component.boundedEnumSecond)(floor(seconds))))(Data_Enum.toEnum(Data_Time_Component.boundedEnumMillisecond)(floor(milliseconds))));
 };
 let hour = function (v) {
     return v.value0;
