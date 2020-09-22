@@ -13,7 +13,7 @@
     "compile": "tsc",
     "dist": "ncc build src/main && node scripts/dist.js",
     "start": "ncc build src/main && node scripts/dist.js && node dist/main.js",
-    "web": "live-server src/asset --open",
+    "web": "live-server src --open",
     "version": "node scripts/version.js"
   },
   "bugs": {

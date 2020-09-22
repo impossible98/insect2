@@ -59,7 +59,7 @@ $(document).ready(function () {
 		greetings: greeting,
 		name: "terminal",
 		height: 550,
-		prompt: "[[;;;prompt]&#8811; ]>>> ",
+		prompt: ">>> ",
 		clear: false,
 		exit: false,
 		checkArity: false,
