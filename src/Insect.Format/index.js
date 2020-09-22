@@ -42,6 +42,7 @@ let Normal = (() => {
     Normal.value = new Normal();
     return Normal;
 })();
+
 let Optional = (() => {
     function Optional() {
 
@@ -49,6 +50,7 @@ let Optional = (() => {
     Optional.value = new Optional();
     return Optional;
 })();
+
 let FTText = (() => {
     function FTText() {
 
@@ -98,6 +100,7 @@ let FTUnit = (() => {
     FTUnit.value = new FTUnit();
     return FTUnit;
 })();
+
 let Formatted = (() => {
     function Formatted(value0, value1, value2) {
         this.value0 = value0;
@@ -113,18 +116,23 @@ let Formatted = (() => {
     };
     return Formatted;
 })();
+
 let val = Formatted.create(Normal.value)(FTValue.value);
 let unit = Formatted.create(Normal.value)(FTUnit.value);
+
 let uncurry = function (fmt) {
     return function (v) {
         return fmt(v.value0)(v.value1)(v.value2);
     };
 };
+
 let text = Formatted.create(Normal.value)(FTText.value);
 let optional = function (v) {
     return new Formatted(Optional.value, v.value1, v.value2);
 };
+
 let nl = text("\x0a");
+
 let jtClass = function (v) {
     return function (v1) {
         if (v1 === "") {
@@ -133,13 +141,16 @@ let jtClass = function (v) {
         return "[[;;;hl-" + (v + ("]" + (v1 + "]")));
     };
 };
+
 let ident = Formatted.create(Normal.value)(FTIdentifier.value);
-let $$function = Formatted.create(Normal.value)(FTFunction.value);
+let _function = Formatted.create(Normal.value)(FTFunction.value);
+
 let format = function (formatter) {
     return function (m) {
         return Data_Foldable.foldMap(Data_Foldable.foldableArray)(Data_Monoid.monoidString)(uncurry(formatter))(Data_Array.cons(optional(nl))(m));
     };
 };
+
 let fmtPlain = function (v) {
     return function (v1) {
         return function (v2) {
@@ -214,13 +225,14 @@ let fmtConsole = function (v) {
         };
     };
 };
+
 module.exports = {
     text: text,
     emph: emph,
     error: error,
     val: val,
     ident: ident,
-    "function": $$function,
+    "function": _function,
     unit: unit,
     optional: optional,
     nl: nl,
