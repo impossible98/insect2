@@ -1,4 +1,4 @@
-const control = require("../control");
+const control = require('../control');
 const data = require('../data');
 
 

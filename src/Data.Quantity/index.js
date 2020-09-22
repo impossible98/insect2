@@ -1,4 +1,4 @@
-const control = require("../control");
+const control = require('../control');
 let Data_Decimal = require("../Data.Decimal/index.js");
 let Data_Either = require("../Data.Either/index.js");
 const data = require("../data");

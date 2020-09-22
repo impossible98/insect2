@@ -1,4 +1,4 @@
-const control = require("../control");
+const control = require('../control');
 let Control_MonadPlus = require("../Control.MonadPlus/index.js");
 let Control_MonadZero = require("../Control.MonadZero/index.js");
 let Data_CatQueue = require("../Data.CatQueue/index.js");

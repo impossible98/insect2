@@ -1,4 +1,4 @@
-const control = require("../control");
+const control = require('../control');
 const data = require("../data");
 let Data_FunctorWithIndex = require("../Data.FunctorWithIndex/index.js");
 let Data_List = require("../Data.List/index.js");

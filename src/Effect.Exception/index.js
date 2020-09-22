@@ -1,6 +1,6 @@
 let $foreign = require("./foreign.js");
 
-const control = require("../control");
+const control = require('../control');
 let Data_Either = require("../Data.Either/index.js");
 const data = require('../data');
 let Data_Maybe = require("../Data.Maybe/index.js");

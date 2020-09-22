@@ -1,4 +1,4 @@
-const control = require("../control");
+const control = require('../control');
 const data = require("../data");
 let Data_HeytingAlgebra = require("../Data.HeytingAlgebra/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");

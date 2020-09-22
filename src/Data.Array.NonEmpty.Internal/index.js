@@ -1,6 +1,6 @@
 let $foreign = require("./foreign.js");
 
-const control = require("../control");
+const control = require('../control');
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_FoldableWithIndex = require("../Data.FoldableWithIndex/index.js");
 const data = require('../data');

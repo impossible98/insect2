@@ -1,4 +1,4 @@
-const control = require("../control");
+const control = require('../control');
 let Data_Bifoldable = require("../Data.Bifoldable/index.js");
 let Data_Bifunctor = require("../Data.Bifunctor/index.js");
 let Data_Bifunctor_Clown = require("../Data.Bifunctor.Clown/index.js");

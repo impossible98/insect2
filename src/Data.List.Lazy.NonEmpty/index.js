@@ -1,4 +1,4 @@
-const control = require("../control");
+const control = require('../control');
 const data = require('../data');
 let Data_Lazy = require("../Data.Lazy/index.js");
 let Data_List_Lazy = require("../Data.List.Lazy/index.js");

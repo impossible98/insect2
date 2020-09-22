@@ -1,4 +1,4 @@
-const control = require("../control");
+const control = require('../control');
 let Data_Either = require("../Data.Either/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_List = require("../Data.List/index.js");

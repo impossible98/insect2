@@ -1,4 +1,4 @@
-const control = require("../control");
+const control = require('../control');
 let Control_Monad_Trans_Class = require("../Control.Monad.Trans.Class/index.js");
 const data = require("../data");
 let Data_Ord = require("../Data.Ord/index.js");

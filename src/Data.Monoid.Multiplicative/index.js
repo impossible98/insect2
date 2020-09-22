@@ -1,4 +1,4 @@
-const control = require("../control");
+const control = require('../control');
 const data = require("../data");
 let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Ord = require("../Data.Ord/index.js");

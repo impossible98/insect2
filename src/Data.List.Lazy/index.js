@@ -1,4 +1,4 @@
-const control = require("../control");
+const control = require('../control');
 let Control_Monad_Rec_Class = require("../Control.Monad.Rec.Class/index.js");
 const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
