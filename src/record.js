@@ -1,8 +1,16 @@
 const type = require('./type');
 
 
-function eq(dict) {
-	return dict.eq;
+function eq(arg) {
+	return arg.eq;
+}
+
+function reflectSymbol(arg) {
+	return arg.reflectSymbol;
+}
+
+function equalFields(arg) {
+	return arg.equalFields;
 }
 
 function unsafeHas(label) {
@@ -57,9 +65,7 @@ let SProxy = (() => {
 	return SProxy;
 })();
 
-function reflectSymbol(dict) {
-	return dict.reflectSymbol;
-}
+
 
 class EqualFields {
 	constructor(equalFields) {
@@ -160,16 +166,14 @@ function modify(arg) {
 }
 
 let equalFieldsNil = new EqualFields((v) => {
-	return (v1) => {
-		return (v2) => {
+	return () => {
+		return () => {
 			return true;
 		};
 	};
 });
 
-function equalFields(dict) {
-	return dict.equalFields;
-}
+
 
 function equalFieldsCons(arg) {
 	return function (dictEq) {
