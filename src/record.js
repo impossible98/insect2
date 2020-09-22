@@ -1,47 +1,54 @@
 const type = require('./type');
 
 
+
+class EqualFields {
+	constructor(equalFields) {
+		this.equalFields = equalFields;
+	}
+}
+
 function equalFields(arg) {
 	return arg.equalFields;
 }
 
-function unsafeHas(label) {
-	return (rec) => {
-		return {}.hasOwnProperty.call(rec, label);
+function unsafeHas(arg) {
+	return (arg2) => {
+		return {}.hasOwnProperty.call(arg2, arg);
 	};
 }
 
-function unsafeGet(label) {
-	return (rec) => {
-		return rec[label];
+function unsafeGet(arg) {
+	return (arg2) => {
+		return arg2[arg];
 	};
 }
 
-function unsafeSet(label) {
+function unsafeSet(arg) {
 	return (value) => {
-		return (rec) => {
+		return (arg2) => {
 			let copy = {};
 
-			for (let key in rec) {
-				if ({}.hasOwnProperty.call(rec, key)) {
-					copy[key] = rec[key];
+			for (let key in arg2) {
+				if ({}.hasOwnProperty.call(arg2, key)) {
+					copy[key] = arg2[key];
 				}
 			}
 
-			copy[label] = value;
+			copy[arg] = value;
 
 			return copy;
 		};
 	};
 }
 
-function unsafeDelete(label) {
-	return (rec) => {
+function unsafeDelete(arg) {
+	return (arg2) => {
 		let copy = {};
 
-		for (let key in rec) {
-			if (key !== label && {}.hasOwnProperty.call(rec, key)) {
-				copy[key] = rec[key];
+		for (let key in arg2) {
+			if (key !== arg && {}.hasOwnProperty.call(arg2, key)) {
+				copy[key] = arg2[key];
 			}
 		}
 
@@ -56,14 +63,6 @@ let SProxy = (() => {
 
 	return SProxy;
 })();
-
-
-
-class EqualFields {
-	constructor(equalFields) {
-		this.equalFields = equalFields;
-	}
-}
 
 function unsafeUnionFn(r1, r2) {
 	let copy = {};
@@ -164,8 +163,6 @@ let equalFieldsNil = new EqualFields((v) => {
 		};
 	};
 });
-
-
 
 function equalFieldsCons(arg) {
 	return function (dictEq) {
