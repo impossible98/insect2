@@ -2,7 +2,6 @@ const control = require("../control");
 let Data_Decimal = require("../Data.Decimal/index.js");
 let Data_Either = require("../Data.Either/index.js");
 const data = require("../data");
-let Data_EuclideanRing = require("../Data.EuclideanRing/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_List_Types = require("../Data.List.Types/index.js");
@@ -96,7 +95,7 @@ let qMultiply = function (v) {
 };
 let qDivide = function (v) {
     return function (v1) {
-        return quantity$prime(Data_EuclideanRing.div(Data_Decimal.euclideanRingDecimal)(v.value0)(v1.value0))(Data_Units.divideUnits(v.value1)(v1.value1));
+        return quantity$prime(data.div(Data_Decimal.euclideanRingDecimal)(v.value0)(v1.value0))(Data_Units.divideUnits(v.value1)(v1.value1));
     };
 };
 let prettyDecimal = function (d) {
@@ -206,7 +205,7 @@ let convert = function (to) {
             let from$prime = derivedUnit(q$prime);
             let $97 = data.eq(Data_Units.eqDerivedUnit)(from$prime)(v1.value0);
             if ($97) {
-                return Data_Either.Right.create(new Quantity(Data_EuclideanRing.div(Data_Decimal.euclideanRingDecimal)(q$prime.value0)(v1.value1), to));
+                return Data_Either.Right.create(new Quantity(data.div(Data_Decimal.euclideanRingDecimal)(q$prime.value0)(v1.value1), to));
             };
             return Data_Either.Left.create(new ConversionError(v.value1, to));
         };

@@ -1,5 +1,5 @@
 let Data_Enum = require("../Data.Enum/index.js");
-let Data_EuclideanRing = require("../Data.EuclideanRing/index.js");
+let data = require("../data");
 
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_Generic_Rep = require("../Data.Generic.Rep/index.js");
@@ -203,7 +203,7 @@ let genericBoundedEnumProduct = function (dictGenericBoundedEnum) {
             return from(genericCardinality$prime(dictGenericBoundedEnum1));
         })(), function (n) {
             let to = function (v) {
-                return apply(Data_Maybe.applyMaybe)(Data_Functor.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.Product.create)(genericToEnum$prime(dictGenericBoundedEnum)(Data_EuclideanRing.div(Data_EuclideanRing.euclideanRingInt)(n)(v))))(genericToEnum$prime(dictGenericBoundedEnum1)(Data_EuclideanRing.mod(Data_EuclideanRing.euclideanRingInt)(n)(v)));
+                return apply(Data_Maybe.applyMaybe)(Data_Functor.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.Product.create)(genericToEnum$prime(dictGenericBoundedEnum)(data.div(data.euclideanRingInt)(n)(v))))(genericToEnum$prime(dictGenericBoundedEnum1)(data.mod(data.euclideanRingInt)(n)(v)));
             };
             return to(genericCardinality$prime(dictGenericBoundedEnum1));
         });

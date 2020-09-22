@@ -1,6 +1,6 @@
 let $foreign = require("./foreign.js");
+
 const data = require("../data");
-let Data_EuclideanRing = require("../Data.EuclideanRing/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
 let Data_Ordering = require("../Data.Ordering/index.js");
@@ -65,7 +65,7 @@ let commutativeRingDecimal = new data.CommutativeRing(function () {
     return ringDecimal;
 });
 
-let euclideanRingDecimal = new Data_EuclideanRing.EuclideanRing(function () {
+let euclideanRingDecimal = new data.EuclideanRing(function () {
     return commutativeRingDecimal;
 }, function (v) {
     return 1;
@@ -77,7 +77,7 @@ let euclideanRingDecimal = new Data_EuclideanRing.EuclideanRing(function () {
 
 function factorial (n) {
     if (Data_Ord.lessThan(ordDecimal)(n)(zero(semiringDecimal))) {
-        return Data_EuclideanRing.div(euclideanRingDecimal)(one(semiringDecimal))(zero(semiringDecimal));
+        return data.div(euclideanRingDecimal)(one(semiringDecimal))(zero(semiringDecimal));
     };
     if (true) {
         return $foreign.gamma($foreign.ceil(add(semiringDecimal)(n)(one(semiringDecimal))));

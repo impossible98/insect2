@@ -2,6 +2,112 @@ const record = require('./record');
 const type = require('./type');
 
 
+let zero = function (dict) {
+	return dict.zero;
+};
+
+let mul = function (dict) {
+	return dict.mul;
+};
+
+let intDegree = function (x) {
+	return Math.min(Math.abs(x), 2147483647);
+};
+
+let intDiv = function (x) {
+	return function (y) {
+		if (y === 0) return 0;
+		return y > 0 ? Math.floor(x / y) : -Math.floor(x / -y);
+	};
+};
+
+let intMod = function (x) {
+	return function (y) {
+		if (y === 0) return 0;
+		let yy = Math.abs(y);
+		return ((x % yy) + yy) % yy;
+	};
+};
+
+let numDiv = function (n1) {
+	return function (n2) {
+		return n1 / n2;
+	};
+};
+
+let EuclideanRing = function (CommutativeRing0, degree, div, mod) {
+	this.CommutativeRing0 = CommutativeRing0;
+	this.degree = degree;
+	this.div = div;
+	this.mod = mod;
+};
+
+let mod = function (dict) {
+	return dict.mod;
+};
+
+let gcd = function ($copy_dictEq) {
+	return function ($copy_dictEuclideanRing) {
+		return function ($copy_a) {
+			return function ($copy_b) {
+				let $tco_var_dictEq = $copy_dictEq;
+				let $tco_var_dictEuclideanRing = $copy_dictEuclideanRing;
+				let $tco_var_a = $copy_a;
+				let $tco_done = false;
+				let $tco_result;
+				function $tco_loop(dictEq, dictEuclideanRing, a, b) {
+					let $7 = eq(dictEq)(b)(zero(((dictEuclideanRing.CommutativeRing0()).Ring0()).Semiring0()));
+					if ($7) {
+						$tco_done = true;
+						return a;
+					};
+					$tco_var_dictEq = dictEq;
+					$tco_var_dictEuclideanRing = dictEuclideanRing;
+					$tco_var_a = b;
+					$copy_b = mod(dictEuclideanRing)(a)(b);
+					return;
+				};
+				while (!$tco_done) {
+					$tco_result = $tco_loop($tco_var_dictEq, $tco_var_dictEuclideanRing, $tco_var_a, $copy_b);
+				};
+				return $tco_result;
+			};
+		};
+	};
+};
+let euclideanRingNumber = new EuclideanRing(function () {
+	return commutativeRingNumber;
+}, function (v) {
+	return 1;
+}, numDiv, function (v) {
+	return function (v1) {
+		return 0.0;
+	};
+});
+let euclideanRingInt = new EuclideanRing(function () {
+	return commutativeRingInt;
+}, intDegree, intDiv, intMod);
+let div = function (dict) {
+	return dict.div;
+};
+let lcm = function (dictEq) {
+	return function (dictEuclideanRing) {
+		return function (a) {
+			return function (b) {
+				let $8 = eq(dictEq)(a)(zero(((dictEuclideanRing.CommutativeRing0()).Ring0()).Semiring0())) || data.eq(dictEq)(b)(zero(((dictEuclideanRing.CommutativeRing0()).Ring0()).Semiring0()));
+				if ($8) {
+					return zero(((dictEuclideanRing.CommutativeRing0()).Ring0()).Semiring0());
+				};
+				return div(dictEuclideanRing)(mul(((dictEuclideanRing.CommutativeRing0()).Ring0()).Semiring0())(a)(b))(gcd(dictEq)(dictEuclideanRing)(a)(b));
+			};
+		};
+	};
+};
+let degree = function (dict) {
+	return dict.degree;
+};
+
+
 let SProxy = (function () {
 	function SProxy() { };
 	SProxy.value = new SProxy();
@@ -144,10 +250,6 @@ function notEq1(dictEq1) {
 	};
 }
 
-let mul = function (dict) {
-	return dict.mul;
-};
-
 let DivisionRing = function (Ring0, recip) {
 	this.Ring0 = Ring0;
 	this.recip = recip;
@@ -174,7 +276,7 @@ let leftDiv = function (dictDivisionRing) {
 };
 
 let divisionringNumber = new DivisionRing(function () {
-	return data.ringNumber;
+	return ringNumber;
 }, function (x) {
 	return 1.0 / x;
 });
@@ -186,17 +288,17 @@ let CommutativeRing = function (Ring0) {
 	this.Ring0 = Ring0;
 };
 let commutativeRingUnit = new CommutativeRing(function () {
-	return data.ringUnit;
+	return ringUnit;
 });
 let commutativeRingRecordNil = new CommutativeRingRecord(function () {
-	return data.ringRecordNil;
+	return ringRecordNil;
 });
 let commutativeRingRecordCons = function (dictIsSymbol) {
 	return function (dictCons) {
 		return function (dictCommutativeRingRecord) {
 			return function (dictCommutativeRing) {
 				return new CommutativeRingRecord(function () {
-					return data.ringRecordCons(dictIsSymbol)()(dictCommutativeRingRecord.RingRecord0())(dictCommutativeRing.Ring0());
+					return ringRecordCons(dictIsSymbol)()(dictCommutativeRingRecord.RingRecord0())(dictCommutativeRing.Ring0());
 				});
 			};
 		};
@@ -205,19 +307,19 @@ let commutativeRingRecordCons = function (dictIsSymbol) {
 let commutativeRingRecord = function (dictRowToList) {
 	return function (dictCommutativeRingRecord) {
 		return new CommutativeRing(function () {
-			return data.ringRecord()(dictCommutativeRingRecord.RingRecord0());
+			return ringRecord()(dictCommutativeRingRecord.RingRecord0());
 		});
 	};
 };
 let commutativeRingNumber = new CommutativeRing(function () {
-	return data.ringNumber;
+	return ringNumber;
 });
 let commutativeRingInt = new CommutativeRing(function () {
-	return data.ringInt;
+	return ringInt;
 });
 let commutativeRingFn = function (dictCommutativeRing) {
 	return new CommutativeRing(function () {
-		return data.ringFn(dictCommutativeRing.Ring0());
+		return ringFn(dictCommutativeRing.Ring0());
 	});
 };
 
@@ -471,5 +573,13 @@ module.exports = {
 	eqRec: eqRec,
 	eq1Array: eq1Array,
 	eqRowNil: eqRowNil,
-	eqRowCons: eqRowCons
+	eqRowCons: eqRowCons,
+	EuclideanRing: EuclideanRing,
+	degree: degree,
+	div: div,
+	mod: mod,
+	gcd: gcd,
+	lcm: lcm,
+	euclideanRingInt: euclideanRingInt,
+	euclideanRingNumber: euclideanRingNumber
 };

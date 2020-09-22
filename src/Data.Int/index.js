@@ -1,6 +1,5 @@
 let Data_Bounded = require("../Data.Bounded/index.js");
 const data = require("../data");
-let Data_EuclideanRing = require("../Data.EuclideanRing/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
 let Data_Ordering = require("../Data.Ordering/index.js");
@@ -266,7 +265,7 @@ let commutativeRingParity = new data.CommutativeRing(function () {
 	return ringParity;
 });
 
-let euclideanRingParity = new Data_EuclideanRing.EuclideanRing(function () {
+let euclideanRingParity = new data.EuclideanRing(function () {
 	return commutativeRingParity;
 }, function (v) {
 	if (v instanceof Even) {

@@ -2,7 +2,6 @@ const control = require("../control");
 let Data_BooleanAlgebra = require("../Data.BooleanAlgebra/index.js");
 let Data_Bounded = require("../Data.Bounded/index.js");
 const data = require("../data");
-let Data_EuclideanRing = require("../Data.EuclideanRing/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_FoldableWithIndex = require("../Data.FoldableWithIndex/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
@@ -272,23 +271,23 @@ let commutativeRingLazy = function (dictCommutativeRing) {
 	});
 };
 let euclideanRingLazy = function (dictEuclideanRing) {
-	return new Data_EuclideanRing.EuclideanRing(function () {
+	return new data.EuclideanRing(function () {
 		return commutativeRingLazy(dictEuclideanRing.CommutativeRing0());
 	}, (function () {
-		let $46 = Data_EuclideanRing.degree(dictEuclideanRing);
+		let $46 = data.degree(dictEuclideanRing);
 		return function ($47) {
 			return $46(force($47));
 		};
 	})(), function (a) {
 		return function (b) {
 			return defer(function (v) {
-				return Data_EuclideanRing.div(dictEuclideanRing)(force(a))(force(b));
+				return data.div(dictEuclideanRing)(force(a))(force(b));
 			});
 		};
 	}, function (a) {
 		return function (b) {
 			return defer(function (v) {
-				return Data_EuclideanRing.mod(dictEuclideanRing)(force(a))(force(b));
+				return data.mod(dictEuclideanRing)(force(a))(force(b));
 			});
 		};
 	});

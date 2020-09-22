@@ -1,7 +1,7 @@
 const control = require("../control");
 let Data_Bounded = require("../Data.Bounded/index.js");
 let Data_Enum = require("../Data.Enum/index.js");
-let Data_EuclideanRing = require("../Data.EuclideanRing/index.js");
+let data = require("../data");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
@@ -822,7 +822,7 @@ let month = function (v) {
 };
 let isLeapYear = function (y) {
 	let y$prime = Data_Enum.fromEnum(boundedEnumYear)(y);
-	return Data_EuclideanRing.mod(Data_EuclideanRing.euclideanRingInt)(y$prime)(4) === 0 && (Data_EuclideanRing.mod(Data_EuclideanRing.euclideanRingInt)(y$prime)(400) === 0 || !(Data_EuclideanRing.mod(Data_EuclideanRing.euclideanRingInt)(y$prime)(100) === 0));
+	return data.mod(data.euclideanRingInt)(y$prime)(4) === 0 && (data.mod(data.euclideanRingInt)(y$prime)(400) === 0 || !(data.mod(data.euclideanRingInt)(y$prime)(100) === 0));
 };
 let lastDayOfMonth = function (y) {
 	return function (m) {

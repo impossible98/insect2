@@ -1,4 +1,4 @@
-let Data_EuclideanRing = require("../Data.EuclideanRing/index.js");
+const data = require("../data");
 let Data_Ordering = require("../Data.Ordering/index.js");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
 const record = require("../record");
@@ -87,12 +87,12 @@ let power = function (dictMonoid) {
             if (p === 1) {
                 return x;
             };
-            if (Data_EuclideanRing.mod(Data_EuclideanRing.euclideanRingInt)(p)(2) === 0) {
-                let x$prime = go(Data_EuclideanRing.div(Data_EuclideanRing.euclideanRingInt)(p)(2));
+            if (data.mod(data.euclideanRingInt)(p)(2) === 0) {
+                let x$prime = go(data.div(data.euclideanRingInt)(p)(2));
                 return Data_Semigroup.append(dictMonoid.Semigroup0())(x$prime)(x$prime);
             };
             if (true) {
-                let x$prime = go(Data_EuclideanRing.div(Data_EuclideanRing.euclideanRingInt)(p)(2));
+                let x$prime = go(data.div(data.euclideanRingInt)(p)(2));
                 return Data_Semigroup.append(dictMonoid.Semigroup0())(x$prime)(Data_Semigroup.append(dictMonoid.Semigroup0())(x$prime)(x));
             };
             throw new Error("Failed pattern match at Data.Monoid (line 65, column 3 - line 65, column 17): " + [ p.constructor.name ]);
