@@ -1,6 +1,6 @@
 const control = require("../control");
 let Control_Monad_Rec_Class = require("../Control.Monad.Rec.Class/index.js");
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_FoldableWithIndex = require("../Data.FoldableWithIndex/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
@@ -343,7 +343,7 @@ let assertOp = function (dictEq) {
 };
 let assertNotEquals = function (dictEq) {
 	return function (dictShow) {
-		return assertOp(dictEq)(dictShow)(Data_Eq.notEq(dictEq))(" == ");
+		return assertOp(dictEq)(dictShow)(data.notEq(dictEq))(" == ");
 	};
 };
 let assertLessThanEq = function (dictOrd) {
@@ -368,7 +368,7 @@ let assertGreaterThan = function (dictOrd) {
 };
 let assertEquals = function (dictEq) {
 	return function (dictShow) {
-		return assertOp(dictEq)(dictShow)(Data_Eq.eq(dictEq))(" /= ");
+		return assertOp(dictEq)(dictShow)(data.eq(dictEq))(" /= ");
 	};
 };
 module.exports = {

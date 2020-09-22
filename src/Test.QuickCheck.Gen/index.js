@@ -18,7 +18,7 @@ let Data_NonEmpty = require("../Data.NonEmpty/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
 let Data_Tuple = require("../Data.Tuple/index.js");
 let Data_Unfoldable = require("../Data.Unfoldable/index.js");
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_EuclideanRing = require("../Data.EuclideanRing/index.js");
 let Effect = require("../Effect/index.js");
 
@@ -218,7 +218,7 @@ let lcgPerturb = function (d) {
 	};
 };
 let lcgNext = lcgPerturb(toNumber(lcgC));
-let eqSeed = new Data_Eq.Eq(function (x) {
+let eqSeed = new data.Eq(function (x) {
 	return function (y) {
 		return x === y;
 	};

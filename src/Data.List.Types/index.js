@@ -2,7 +2,7 @@ const control = require("../control");
 let Control_MonadPlus = require("../Control.MonadPlus/index.js");
 let Control_MonadZero = require("../Control.MonadZero/index.js");
 let Control_Plus = require("../Control.Plus/index.js");
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_FoldableWithIndex = require("../Data.FoldableWithIndex/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
@@ -547,7 +547,7 @@ let extendList = new control.Extend(function () {
 		throw new Error("Failed pattern match at Data.List.Types (line 180, column 1 - line 187, column 42): " + [f.constructor.name, v.constructor.name]);
 	};
 });
-let eq1List = new Data_Eq.Eq1(function (dictEq) {
+let eq1List = new data.Eq1(function (dictEq) {
 	return function (xs) {
 		return function (ys) {
 			let go = function ($copy_v) {
@@ -569,7 +569,7 @@ let eq1List = new Data_Eq.Eq1(function (dictEq) {
 							if (v instanceof Cons && v1 instanceof Cons) {
 								$tco_var_v = v.value1;
 								$tco_var_v1 = v1.value1;
-								$copy_v2 = v2 && Data_Eq.eq(dictEq)(v1.value0)(v.value0);
+								$copy_v2 = v2 && data.eq(dictEq)(v1.value0)(v.value0);
 								return;
 							};
 							$tco_done = true;
@@ -587,7 +587,7 @@ let eq1List = new Data_Eq.Eq1(function (dictEq) {
 	};
 });
 let eqList = function (dictEq) {
-	return new Data_Eq.Eq(Data_Eq.eq1(eq1List)(dictEq));
+	return new data.Eq(data.eq1(eq1List)(dictEq));
 };
 let eqNonEmptyList = function (dictEq) {
 	return Data_NonEmpty.eqNonEmpty(eq1List)(dictEq);

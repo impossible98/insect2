@@ -1,6 +1,6 @@
 const control = require("../control");
 let Control_Plus = require("../Control.Plus/index.js");
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_FoldableWithIndex = require("../Data.FoldableWithIndex/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
@@ -233,9 +233,9 @@ let foldable1NonEmpty = function (dictFoldable) {
 };
 let eqNonEmpty = function (dictEq1) {
     return function (dictEq) {
-        return new Data_Eq.Eq(function (x) {
+        return new data.Eq(function (x) {
             return function (y) {
-                return Data_Eq.eq(dictEq)(x.value0)(y.value0) && Data_Eq.eq1(dictEq1)(dictEq)(x.value1)(y.value1);
+                return data.eq(dictEq)(x.value0)(y.value0) && data.eq1(dictEq1)(dictEq)(x.value1)(y.value1);
             };
         });
     };
@@ -259,8 +259,8 @@ let ordNonEmpty = function (dictOrd1) {
     };
 };
 let eq1NonEmpty = function (dictEq1) {
-    return new Data_Eq.Eq1(function (dictEq) {
-        return Data_Eq.eq(eqNonEmpty(dictEq1)(dictEq));
+    return new data.Eq1(function (dictEq) {
+        return data.eq(eqNonEmpty(dictEq1)(dictEq));
     });
 };
 let ord1NonEmpty = function (dictOrd1) {

@@ -1,7 +1,7 @@
 const control = require("../control");
 let Control_Monad_Error_Class = require("../Control.Monad.Error.Class/index.js");
 let Data_Either = require("../Data.Either/index.js");
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_Show = require("../Data.Show/index.js");
 let Effect_Aff = require("../Effect.Aff/index.js");
 let Effect_Exception = require("../Effect.Exception/index.js");
@@ -19,7 +19,7 @@ let equal$prime = function (dictEq) {
     return function (reason) {
         return function (expected) {
             return function (actual) {
-                let $12 = Data_Eq.eq(dictEq)(expected)(actual);
+                let $12 = data.eq(dictEq)(expected)(actual);
                 if ($12) {
                     return Test_Unit.success;
                 };
@@ -32,7 +32,7 @@ let equal = function (dictEq) {
     return function (dictShow) {
         return function (expected) {
             return function (actual) {
-                let $13 = Data_Eq.eq(dictEq)(expected)(actual);
+                let $13 = data.eq(dictEq)(expected)(actual);
                 if ($13) {
                     return Test_Unit.success;
                 };

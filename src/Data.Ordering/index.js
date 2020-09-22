@@ -1,4 +1,4 @@
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
 let Data_Show = require("../Data.Show/index.js");
 
@@ -62,7 +62,7 @@ let invert = function (v) {
     };
     throw new Error("Failed pattern match at Data.Ordering (line 33, column 1 - line 33, column 31): " + [ v.constructor.name ]);
 };
-let eqOrdering = new Data_Eq.Eq(function (v) {
+let eqOrdering = new data.Eq(function (v) {
     return function (v1) {
         if (v instanceof LT && v1 instanceof LT) {
             return true;

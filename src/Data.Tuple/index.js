@@ -5,7 +5,6 @@ let Data_Bitraversable = require("../Data.Bitraversable/index.js");
 let Data_BooleanAlgebra = require("../Data.BooleanAlgebra/index.js");
 let Data_Bounded = require("../Data.Bounded/index.js");
 let Data_Distributive = require("../Data.Distributive/index.js");
-let Data_Eq = require("../Data.Eq/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_FoldableWithIndex = require("../Data.FoldableWithIndex/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
@@ -155,7 +154,7 @@ let lookup = function (dictFoldable) {
         return function (a) {
             let $312 = Data_Newtype.unwrap(Data_Maybe_First.newtypeFirst);
             let $313 = Data_Foldable.foldMap(dictFoldable)(Data_Maybe_First.monoidFirst)(function (v) {
-                let $163 = Data_Eq.eq(dictEq)(a)(v.value0);
+                let $163 = data.eq(dictEq)(a)(v.value0);
                 if ($163) {
                     return new Data_Maybe.Just(v.value1);
                 };
@@ -316,9 +315,9 @@ let extendTuple = new control.Extend(function () {
 });
 let eqTuple = function (dictEq) {
     return function (dictEq1) {
-        return new Data_Eq.Eq(function (x) {
+        return new data.Eq(function (x) {
             return function (y) {
-                return Data_Eq.eq(dictEq)(x.value0)(y.value0) && Data_Eq.eq(dictEq1)(x.value1)(y.value1);
+                return data.eq(dictEq)(x.value0)(y.value0) && data.eq(dictEq1)(x.value1)(y.value1);
             };
         });
     };
@@ -342,8 +341,8 @@ let ordTuple = function (dictOrd) {
     };
 };
 let eq1Tuple = function (dictEq) {
-    return new Data_Eq.Eq1(function (dictEq1) {
-        return Data_Eq.eq(eqTuple(dictEq)(dictEq1));
+    return new data.Eq1(function (dictEq1) {
+        return data.eq(eqTuple(dictEq)(dictEq1));
     });
 };
 let ord1Tuple = function (dictOrd) {

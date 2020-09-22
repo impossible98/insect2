@@ -1,6 +1,5 @@
 const control = require("../control");
-
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_HeytingAlgebra = require("../Data.HeytingAlgebra/index.js");
 let Data_Monoid = require("../Data.Monoid/index.js");
@@ -65,8 +64,8 @@ let functorConj = new Data_Functor.Functor(function (f) {
 let eqConj = function (dictEq) {
     return dictEq;
 };
-let eq1Conj = new Data_Eq.Eq1(function (dictEq) {
-    return Data_Eq.eq(eqConj(dictEq));
+let eq1Conj = new data.Eq1(function (dictEq) {
+    return data.eq(eqConj(dictEq));
 });
 let ord1Conj = new Data_Ord.Ord1(function () {
     return eq1Conj;

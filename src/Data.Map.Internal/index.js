@@ -1,5 +1,5 @@
 const control = require("../control");
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_FoldableWithIndex = require("../Data.FoldableWithIndex/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
@@ -539,7 +539,7 @@ let isSubmap = function (dictOrd) {
         return function (m1) {
             return function (m2) {
                 let f = function (v) {
-                    return Data_Eq.eq(Data_Maybe.eqMaybe(dictEq))(lookup(dictOrd)(v.value0)(m2))(new Data_Maybe.Just(v.value1));
+                    return data.eq(Data_Maybe.eqMaybe(dictEq))(lookup(dictOrd)(v.value0)(m2))(new Data_Maybe.Just(v.value1));
                 };
                 return Data_Foldable.all(Data_List_Lazy_Types.foldableList)(Data_HeytingAlgebra.heytingAlgebraBoolean)(f)(toUnfoldable(Data_List_Lazy_Types.unfoldableList)(m1));
             };
@@ -1306,9 +1306,9 @@ let lookupLT = function (dictOrd) {
 };
 let eqMap = function (dictEq) {
     return function (dictEq1) {
-        return new Data_Eq.Eq(function (m1) {
+        return new data.Eq(function (m1) {
             return function (m2) {
-                return Data_Eq.eq(Data_Eq.eqArray(Data_Tuple.eqTuple(dictEq)(dictEq1)))(toAscArray(m1))(toAscArray(m2));
+                return data.eq(data.eqArray(Data_Tuple.eqTuple(dictEq)(dictEq1)))(toAscArray(m1))(toAscArray(m2));
             };
         });
     };
@@ -1325,8 +1325,8 @@ let ordMap = function (dictOrd) {
     };
 };
 let eq1Map = function (dictEq) {
-    return new Data_Eq.Eq1(function (dictEq1) {
-        return Data_Eq.eq(eqMap(dictEq)(dictEq1));
+    return new data.Eq1(function (dictEq1) {
+        return data.eq(eqMap(dictEq)(dictEq1));
     });
 };
 let ord1Map = function (dictOrd) {
@@ -1469,7 +1469,7 @@ let checkValid = function (tree) {
         };
         throw new Error("Failed pattern match at Data.Map.Internal (line 188, column 3 - line 188, column 36): " + [ v.constructor.name ]);
     };
-    return Data_List.length(Data_List.nub(Data_Eq.eqInt)(allHeights(tree))) === 1;
+    return Data_List.length(Data_List.nub(data.eqInt)(allHeights(tree))) === 1;
 };
 let asList = identity(categoryFn);
 let foldableWithIndexMap = new Data_FoldableWithIndex.FoldableWithIndex(function () {

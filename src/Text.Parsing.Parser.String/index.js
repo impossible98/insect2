@@ -1,7 +1,7 @@
 const control = require("../control");
 let Control_Monad_State_Class = require("../Control.Monad.State.Class/index.js");
 let Data_Array = require("../Data.Array/index.js");
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
@@ -142,14 +142,14 @@ let $$char = function (dictStringLike) {
 let noneOf = function (dictStringLike) {
     return function (dictMonad) {
         return function (ss) {
-            return Text_Parsing_Parser_Combinators.withErrorMessage(dictMonad)(satisfy(dictStringLike)(dictMonad)(Data_Functor.flip(Data_Foldable.notElem(Data_Foldable.foldableArray)(Data_Eq.eqChar))(ss)))("none of " + Data_Show.show(Data_Show.showArray(Data_Show.showChar))(ss));
+            return Text_Parsing_Parser_Combinators.withErrorMessage(dictMonad)(satisfy(dictStringLike)(dictMonad)(Data_Functor.flip(Data_Foldable.notElem(Data_Foldable.foldableArray)(data.eqChar))(ss)))("none of " + Data_Show.show(Data_Show.showArray(Data_Show.showChar))(ss));
         };
     };
 };
 let oneOf = function (dictStringLike) {
     return function (dictMonad) {
         return function (ss) {
-            return Text_Parsing_Parser_Combinators.withErrorMessage(dictMonad)(satisfy(dictStringLike)(dictMonad)(Data_Functor.flip(Data_Foldable.elem(Data_Foldable.foldableArray)(Data_Eq.eqChar))(ss)))("one of " + Data_Show.show(Data_Show.showArray(Data_Show.showChar))(ss));
+            return Text_Parsing_Parser_Combinators.withErrorMessage(dictMonad)(satisfy(dictStringLike)(dictMonad)(Data_Functor.flip(Data_Foldable.elem(Data_Foldable.foldableArray)(data.eqChar))(ss)))("one of " + Data_Show.show(Data_Show.showArray(Data_Show.showChar))(ss));
         };
     };
 };

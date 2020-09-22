@@ -1,5 +1,5 @@
 const control = require("../control");
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
@@ -37,8 +37,8 @@ let functorLast = new Data_Functor.Functor(function (f) {
 let eqLast = function (dictEq) {
     return dictEq;
 };
-let eq1Last = new Data_Eq.Eq1(function (dictEq) {
-    return Data_Eq.eq(eqLast(dictEq));
+let eq1Last = new data.Eq1(function (dictEq) {
+    return data.eq(eqLast(dictEq));
 });
 let ord1Last = new Data_Ord.Ord1(function () {
     return eq1Last;

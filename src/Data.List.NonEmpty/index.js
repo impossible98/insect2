@@ -1,5 +1,5 @@
 const control = require("../control");
-let Data_Eq = require("../Data.Eq/index.js");
+let data = require("../data");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_FunctorWithIndex = require("../Data.FunctorWithIndex/index.js");
 let Data_List = require("../Data.List/index.js");
@@ -389,14 +389,14 @@ let filter = function ($187) {
 let elemLastIndex = function (dictEq) {
     return function (x) {
         return findLastIndex(function (v) {
-            return Data_Eq.eq(dictEq)(v)(x);
+            return data.eq(dictEq)(v)(x);
         });
     };
 };
 let elemIndex = function (dictEq) {
     return function (x) {
         return findIndex(function (v) {
-            return Data_Eq.eq(dictEq)(v)(x);
+            return data.eq(dictEq)(v)(x);
         });
     };
 };

@@ -1,6 +1,6 @@
 const control = require("../control");
 let Data_Distributive = require("../Data.Distributive/index.js");
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_Monoid = require("../Data.Monoid/index.js");
@@ -107,9 +107,9 @@ let traversablePair = new Data_Traversable.Traversable(function () {
     };
 });
 let eqPair = function (dictEq) {
-    return new Data_Eq.Eq(function (x) {
+    return new data.Eq(function (x) {
         return function (y) {
-            return Data_Eq.eq(dictEq)(x.value0)(y.value0) && Data_Eq.eq(dictEq)(x.value1)(y.value1);
+            return data.eq(dictEq)(x.value0)(y.value0) && data.eq(dictEq)(x.value1)(y.value1);
         };
     });
 };

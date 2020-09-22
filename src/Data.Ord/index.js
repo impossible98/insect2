@@ -1,7 +1,6 @@
 let $foreign = require("./foreign.js");
-let Data_Eq = require("../Data.Eq/index.js");
-let Data_Ordering = require("../Data.Ordering/index.js");
 const data = require("../data");
+let Data_Ordering = require("../Data.Ordering/index.js");
 const record = require("../record");
 const type = require('../type');
 
@@ -41,24 +40,24 @@ let Ord = function (Eq0, compare) {
     this.compare = compare;
 };
 let ordVoid = new Ord(function () {
-    return Data_Eq.eqVoid;
+    return data.eqVoid;
 }, function (v) {
     return function (v1) {
         return Data_Ordering.EQ.value;
     };
 });
 let ordUnit = new Ord(function () {
-    return Data_Eq.eqUnit;
+    return data.eqUnit;
 }, function (v) {
     return function (v1) {
         return Data_Ordering.EQ.value;
     };
 });
 let ordString = new Ord(function () {
-    return Data_Eq.eqString;
+    return data.eqString;
 }, $foreign.ordStringImpl(Data_Ordering.LT.value)(Data_Ordering.EQ.value)(Data_Ordering.GT.value));
 let ordRecordNil = new OrdRecord(function () {
-    return Data_Eq.eqRowNil;
+    return data.eqRowNil;
 }, function (v) {
     return function (v1) {
         return function (v2) {
@@ -95,16 +94,16 @@ let ordOrdering = new Ord(function () {
     };
 });
 let ordNumber = new Ord(function () {
-    return Data_Eq.eqNumber;
+    return data.eqNumber;
 }, $foreign.ordNumberImpl(Data_Ordering.LT.value)(Data_Ordering.EQ.value)(Data_Ordering.GT.value));
 let ordInt = new Ord(function () {
-    return Data_Eq.eqInt;
+    return data.eqInt;
 }, $foreign.ordIntImpl(Data_Ordering.LT.value)(Data_Ordering.EQ.value)(Data_Ordering.GT.value));
 let ordChar = new Ord(function () {
-    return Data_Eq.eqChar;
+    return data.eqChar;
 }, $foreign.ordCharImpl(Data_Ordering.LT.value)(Data_Ordering.EQ.value)(Data_Ordering.GT.value));
 let ordBoolean = new Ord(function () {
-    return Data_Eq.eqBoolean;
+    return data.eqBoolean;
 }, $foreign.ordBooleanImpl(Data_Ordering.LT.value)(Data_Ordering.EQ.value)(Data_Ordering.GT.value));
 let compareRecord = function (dict) {
     return dict.compareRecord;
@@ -112,7 +111,7 @@ let compareRecord = function (dict) {
 let ordRecord = function (dictRowToList) {
     return function (dictOrdRecord) {
         return new Ord(function () {
-            return Data_Eq.eqRec()(dictOrdRecord.EqRecord0());
+            return data.eqRec()(dictOrdRecord.EqRecord0());
         }, compareRecord(dictOrdRecord)(type.RLProxy.value));
     };
 };
@@ -222,7 +221,7 @@ let min = function (dictOrd) {
 };
 let ordArray = function (dictOrd) {
     return new Ord(function () {
-        return Data_Eq.eqArray(dictOrd.Eq0());
+        return data.eqArray(dictOrd.Eq0());
     }, (function () {
         let toDelta = function (x) {
             return function (y) {
@@ -247,7 +246,7 @@ let ordArray = function (dictOrd) {
     })());
 };
 let ord1Array = new Ord1(function () {
-    return Data_Eq.eq1Array;
+    return data.eq1Array;
 }, function (dictOrd) {
     return compare(ordArray(dictOrd));
 });
@@ -256,13 +255,13 @@ let ordRecordCons = function (dictOrdRecord) {
         return function (dictIsSymbol) {
             return function (dictOrd) {
                 return new OrdRecord(function () {
-                    return Data_Eq.eqRowCons(dictOrdRecord.EqRecord0())()(dictIsSymbol)(dictOrd.Eq0());
+                    return data.eqRowCons(dictOrdRecord.EqRecord0())()(dictIsSymbol)(dictOrd.Eq0());
                 }, function (v) {
                     return function (ra) {
                         return function (rb) {
                             let key = reflectSymbol(dictIsSymbol)(SProxy.value);
                             let left = compare(dictOrd)(record.unsafeGet(key)(ra))(record.unsafeGet(key)(rb));
-                            let $49 = Data_Eq.notEq(Data_Ordering.eqOrdering)(left)(Data_Ordering.EQ.value);
+                            let $49 = data.notEq(Data_Ordering.eqOrdering)(left)(Data_Ordering.EQ.value);
                             if ($49) {
                                 return left;
                             };

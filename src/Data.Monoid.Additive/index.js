@@ -1,5 +1,5 @@
 const control = require("../control");
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
@@ -54,8 +54,8 @@ let functorAdditive = new Data_Functor.Functor(function (f) {
 let eqAdditive = function (dictEq) {
     return dictEq;
 };
-let eq1Additive = new Data_Eq.Eq1(function (dictEq) {
-    return Data_Eq.eq(eqAdditive(dictEq));
+let eq1Additive = new data.Eq1(function (dictEq) {
+    return data.eq(eqAdditive(dictEq));
 });
 let ord1Additive = new Data_Ord.Ord1(function () {
     return eq1Additive;

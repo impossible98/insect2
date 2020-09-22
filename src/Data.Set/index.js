@@ -3,9 +3,8 @@ let Control_Monad_Rec_Class = require("../Control.Monad.Rec.Class/index.js");
 let Control_Monad_ST_Internal = require("../Control.Monad.ST.Internal/index.js");
 let Data_Array = require("../Data.Array/index.js");
 let Data_Array_ST = require("../Data.Array.ST/index.js");
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
-
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_List = require("../Data.List/index.js");
 let Data_List_Types = require("../Data.List.Types/index.js");
@@ -112,9 +111,9 @@ let filter = function (dictOrd) {
     };
 };
 let eqSet = function (dictEq) {
-    return new Data_Eq.Eq(function (v) {
+    return new data.Eq(function (v) {
         return function (v1) {
-            return Data_Eq.eq(Data_Map_Internal.eqMap(dictEq)(Data_Eq.eqUnit))(v)(v1);
+            return data.eq(Data_Map_Internal.eqMap(dictEq)(data.eqUnit))(v)(v1);
         };
     });
 };
@@ -127,8 +126,8 @@ let ordSet = function (dictOrd) {
         };
     });
 };
-let eq1Set = new Data_Eq.Eq1(function (dictEq) {
-    return Data_Eq.eq(eqSet(dictEq));
+let eq1Set = new data.Eq1(function (dictEq) {
+    return data.eq(eqSet(dictEq));
 });
 let ord1Set = new Data_Ord.Ord1(function () {
     return eq1Set;
@@ -250,7 +249,7 @@ let subset = function (dictOrd) {
 let properSubset = function (dictOrd) {
     return function (s1) {
         return function (s2) {
-            return subset(dictOrd)(s1)(s2) && Data_Eq.notEq(eqSet(dictOrd.Eq0()))(s1)(s2);
+            return subset(dictOrd)(s1)(s2) && data.notEq(eqSet(dictOrd.Eq0()))(s1)(s2);
         };
     };
 };

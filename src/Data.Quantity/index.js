@@ -1,14 +1,13 @@
 const control = require("../control");
 let Data_Decimal = require("../Data.Decimal/index.js");
 let Data_Either = require("../Data.Either/index.js");
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_EuclideanRing = require("../Data.EuclideanRing/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_List_Types = require("../Data.List.Types/index.js");
 let Data_Number_Approximate = require("../Data.Number.Approximate/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
-const data = require("../data");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
 let Data_Show = require("../Data.Show/index.js");
 let Data_Tuple = require("../Data.Tuple/index.js");
@@ -108,7 +107,7 @@ let prettyDecimal = function (d) {
     return Data_Decimal.toString(Data_Decimal.toSignificantDigits(6)(d));
 };
 let prettyPrint$prime = function (v) {
-    if (Data_Eq.eq(Data_Units.eqDerivedUnit)(v.value1)(Data_Units.unity)) {
+    if (data.eq(Data_Units.eqDerivedUnit)(v.value1)(Data_Units.unity)) {
         return {
             number: prettyDecimal(v.value0),
             space: false,
@@ -116,7 +115,7 @@ let prettyPrint$prime = function (v) {
         };
     };
     if (true) {
-        let space = Data_Eq.notEq(Data_Units.eqDerivedUnit)(v.value1)(Data_Units_SI_Accepted.degree);
+        let space = data.notEq(Data_Units.eqDerivedUnit)(v.value1)(Data_Units_SI_Accepted.degree);
         return {
             number: prettyDecimal(v.value0),
             space: space,
@@ -149,17 +148,17 @@ let $$isFinite = function (v) {
 let errorMessage = function (v) {
     let baseRep = function (u) {
         let u$prime = Data_Tuple.fst(Data_Units.toStandardUnit(u));
-        let $77 = Data_Eq.eq(Data_Units.eqDerivedUnit)(u$prime)(Data_Units.unity);
+        let $77 = data.eq(Data_Units.eqDerivedUnit)(u$prime)(Data_Units.unity);
         if ($77) {
             return "";
         };
         return " (SI: '" + (Data_Units.toString(u$prime) + "')");
     };
-    let $78 = Data_Eq.eq(Data_Units.eqDerivedUnit)(v.value0)(Data_Units.unity);
+    let $78 = data.eq(Data_Units.eqDerivedUnit)(v.value0)(Data_Units.unity);
     if ($78) {
         return "Cannot convert quantity of unit '" + (Data_Units.toString(v.value1) + "' to a scalar");
     };
-    let $79 = Data_Eq.eq(Data_Units.eqDerivedUnit)(v.value1)(Data_Units.unity);
+    let $79 = data.eq(Data_Units.eqDerivedUnit)(v.value1)(Data_Units.unity);
     if ($79) {
         return "Cannot convert quantity of unit '" + (Data_Units.toString(v.value0) + "' to a scalar");
     };
@@ -174,15 +173,15 @@ let showResult = function (v) {
     };
     throw new Error("Failed pattern match at Data.Quantity (line 120, column 1 - line 120, column 54): " + [ v.constructor.name ]);
 };
-let eqConversionError = new Data_Eq.Eq(function (x) {
+let eqConversionError = new data.Eq(function (x) {
     return function (y) {
-        return Data_Eq.eq(Data_Units.eqDerivedUnit)(x.value0)(y.value0) && Data_Eq.eq(Data_Units.eqDerivedUnit)(x.value1)(y.value1);
+        return data.eq(Data_Units.eqDerivedUnit)(x.value0)(y.value0) && data.eq(Data_Units.eqDerivedUnit)(x.value1)(y.value1);
     };
 });
 let derivedUnit = function (v) {
     return v.value1;
 };
-let eqQuantity = new Data_Eq.Eq(function (q1) {
+let eqQuantity = new data.Eq(function (q1) {
     return function (q2) {
         let q2$prime = toStandard(q2);
         let u2 = derivedUnit(q2$prime);
@@ -190,22 +189,22 @@ let eqQuantity = new Data_Eq.Eq(function (q1) {
         let q1$prime = toStandard(q1);
         let u1 = derivedUnit(q1$prime);
         let v1 = value(q1$prime);
-        return Data_Eq.eq(Data_Decimal.eqDecimal)(v1)(v2) && Data_Eq.eq(Data_Units.eqDerivedUnit)(u1)(u2) || Data_Eq.eq(Data_Decimal.eqDecimal)(v1)(zero(Data_Decimal.semiringDecimal)) && Data_Eq.eq(Data_Decimal.eqDecimal)(v2)(zero(Data_Decimal.semiringDecimal));
+        return data.eq(Data_Decimal.eqDecimal)(v1)(v2) && data.eq(Data_Units.eqDerivedUnit)(u1)(u2) || data.eq(Data_Decimal.eqDecimal)(v1)(zero(Data_Decimal.semiringDecimal)) && data.eq(Data_Decimal.eqDecimal)(v2)(zero(Data_Decimal.semiringDecimal));
     };
 });
 let convert = function (to) {
     return function (v) {
-        if (Data_Eq.eq(Data_Units.eqDerivedUnit)(to)(v.value1)) {
+        if (data.eq(Data_Units.eqDerivedUnit)(to)(v.value1)) {
             return new Data_Either.Right(new Quantity(v.value0, to));
         };
-        if (Data_Eq.eq(Data_Decimal.eqDecimal)(v.value0)(zero(Data_Decimal.semiringDecimal))) {
+        if (data.eq(Data_Decimal.eqDecimal)(v.value0)(zero(Data_Decimal.semiringDecimal))) {
             return new Data_Either.Right(new Quantity(zero(Data_Decimal.semiringDecimal), to));
         };
         if (true) {
             let v1 = Data_Units.toStandardUnit(to);
             let q$prime = toStandard(v);
             let from$prime = derivedUnit(q$prime);
-            let $97 = Data_Eq.eq(Data_Units.eqDerivedUnit)(from$prime)(v1.value0);
+            let $97 = data.eq(Data_Units.eqDerivedUnit)(from$prime)(v1.value0);
             if ($97) {
                 return Data_Either.Right.create(new Quantity(Data_EuclideanRing.div(Data_Decimal.euclideanRingDecimal)(q$prime.value0)(v1.value1), to));
             };
@@ -217,10 +216,10 @@ let convert = function (to) {
 let convertTo = Data_Functor.flip(convert);
 let qAdd = function (v) {
     return function (v1) {
-        if (Data_Eq.eq(Data_Decimal.eqDecimal)(v.value0)(zero(Data_Decimal.semiringDecimal))) {
+        if (data.eq(Data_Decimal.eqDecimal)(v.value0)(zero(Data_Decimal.semiringDecimal))) {
             return control.pure(Data_Either.applicativeEither)(v1);
         };
-        if (Data_Eq.eq(Data_Decimal.eqDecimal)(v1.value0)(zero(Data_Decimal.semiringDecimal))) {
+        if (data.eq(Data_Decimal.eqDecimal)(v1.value0)(zero(Data_Decimal.semiringDecimal))) {
             return control.pure(Data_Either.applicativeEither)(v);
         };
         if (true) {
@@ -250,7 +249,7 @@ let toScalar$prime = function (q) {
 let fullSimplify = function (v) {
     let v1 = toScalar$prime(v);
     if (v1 instanceof Data_Either.Right) {
-        let $120 = Data_Eq.notEq(Data_Units.eqDerivedUnit)(Data_Units.removePrefix(v.value1))(Data_Units_SI_Accepted.degree) && Data_Eq.notEq(Data_Units.eqDerivedUnit)(Data_Units.removePrefix(v.value1))(Data_Units_SI_Derived.radian);
+        let $120 = data.notEq(Data_Units.eqDerivedUnit)(Data_Units.removePrefix(v.value1))(Data_Units_SI_Accepted.degree) && data.notEq(Data_Units.eqDerivedUnit)(Data_Units.removePrefix(v.value1))(Data_Units_SI_Derived.radian);
         if ($120) {
             return new Quantity(v1.value0, Data_Units.unity);
         };
@@ -290,7 +289,7 @@ let approximatelyEqual = function (tol) {
             let v2 = Data_Decimal.toNumber(value(q2));
             let q1 = toStandard(q1$prime);
             let v1 = Data_Decimal.toNumber(value(q1));
-            return Data_Eq.eq(Data_Units.eqDerivedUnit)(derivedUnit(q1))(derivedUnit(q2)) && Data_Number_Approximate.eqRelative(tol)(v1)(v2);
+            return data.eq(Data_Units.eqDerivedUnit)(derivedUnit(q1))(derivedUnit(q2)) && Data_Number_Approximate.eqRelative(tol)(v1)(v2);
         };
     };
 };

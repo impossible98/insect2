@@ -1,6 +1,6 @@
 const control = require("../control");
 let Control_Monad_Trans_Class = require("../Control.Monad.Trans.Class/index.js");
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
 
@@ -87,9 +87,9 @@ let extendYoneda = function (dictExtend) {
 };
 let eqYoneda = function (dictEq1) {
     return function (dictEq) {
-        return new Data_Eq.Eq(function (x) {
+        return new data.Eq(function (x) {
             return function (y) {
-                return Data_Eq.eq1(dictEq1)(dictEq)(lowerYoneda(x))(lowerYoneda(y));
+                return data.eq1(dictEq1)(dictEq)(lowerYoneda(x))(lowerYoneda(y));
             };
         });
     };
@@ -106,8 +106,8 @@ let ordYoneda = function (dictOrd1) {
     };
 };
 let eq1Yoneda = function (dictEq1) {
-    return new Data_Eq.Eq1(function (dictEq) {
-        return Data_Eq.eq(eqYoneda(dictEq1)(dictEq));
+    return new data.Eq1(function (dictEq) {
+        return data.eq(eqYoneda(dictEq1)(dictEq));
     });
 };
 let ord1Yoneda = function (dictOrd1) {

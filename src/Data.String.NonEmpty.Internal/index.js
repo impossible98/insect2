@@ -1,5 +1,5 @@
 const control = require("../control");
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Monoid = require("../Data.Monoid/index.js");
@@ -130,7 +130,7 @@ let unsafeFromString = function (dictPartial) {
         return $52(fromString($53));
     };
 };
-let eqNonEmptyString = Data_Eq.eqString;
+let eqNonEmptyString = data.eqString;
 let eqNonEmptyReplacement = eqNonEmptyString;
 let contains = function ($54) {
     return liftS(Data_String_CodeUnits.contains($54));

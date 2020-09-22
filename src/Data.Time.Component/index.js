@@ -1,6 +1,6 @@
 let Data_Bounded = require("../Data.Bounded/index.js");
 let Data_Enum = require("../Data.Enum/index.js");
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
 let Data_Show = require("../Data.Show/index.js");
@@ -32,10 +32,10 @@ let ordSecond = Data_Ord.ordInt;
 let ordMinute = Data_Ord.ordInt;
 let ordMillisecond = Data_Ord.ordInt;
 let ordHour = Data_Ord.ordInt;
-let eqSecond = Data_Eq.eqInt;
-let eqMinute = Data_Eq.eqInt;
-let eqMillisecond = Data_Eq.eqInt;
-let eqHour = Data_Eq.eqInt;
+let eqSecond = data.eqInt;
+let eqMinute = data.eqInt;
+let eqMillisecond = data.eqInt;
+let eqHour = data.eqInt;
 let boundedSecond = new Data_Bounded.Bounded(function () {
     return ordSecond;
 }, 0, 59);

@@ -7,8 +7,7 @@ let Effect_Aff = require("../Effect.Aff/index.js");
 let Effect_Class = require("../Effect.Class/index.js");
 let Test_QuickCheck = require("../Test.QuickCheck/index.js");
 let Test_Unit = require("../Test.Unit/index.js");
-
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_EuclideanRing = require("../Data.EuclideanRing/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
@@ -125,7 +124,7 @@ let lcgPerturb = function (d) {
 	};
 };
 let lcgNext = lcgPerturb(toNumber(lcgC));
-let eqSeed = new Data_Eq.Eq(function (x) {
+let eqSeed = new data.Eq(function (x) {
 	return function (y) {
 		return x === y;
 	};

@@ -1,5 +1,5 @@
 
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
@@ -146,11 +146,11 @@ let negateDuration = function (dictDuration) {
         return $56($57($58($59)));
     };
 };
-let eqSeconds = Data_Eq.eqNumber;
-let eqMinutes = Data_Eq.eqNumber;
-let eqMilliseconds = Data_Eq.eqNumber;
-let eqHours = Data_Eq.eqNumber;
-let eqDays = Data_Eq.eqNumber;
+let eqSeconds = data.eqNumber;
+let eqMinutes = data.eqNumber;
+let eqMilliseconds = data.eqNumber;
+let eqHours = data.eqNumber;
+let eqDays = data.eqNumber;
 let durationSeconds = new Duration(Data_Newtype.over(newtypeSeconds)(newtypeMilliseconds)(Seconds)(function (v) {
     return v * 1000.0;
 }), Data_Newtype.over(newtypeMilliseconds)(newtypeSeconds)(Milliseconds)(function (v) {
