@@ -1,5 +1,5 @@
 
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Maybe_First = require("../Data.Maybe.First/index.js");
 let Data_Maybe_Last = require("../Data.Maybe.Last/index.js");
@@ -32,51 +32,51 @@ let mapWithIndex = function (dict) {
 };
 let mapDefault = function (dictFunctorWithIndex) {
     return function (f) {
-        return mapWithIndex(dictFunctorWithIndex)(Data_Functor._const(f));
+        return mapWithIndex(dictFunctorWithIndex)(data._const(f));
     };
 };
 let functorWithIndexMultiplicative = new FunctorWithIndex(function () {
     return Data_Monoid_Multiplicative.functorMultiplicative;
 }, function (f) {
-    return Data_Functor.map(Data_Monoid_Multiplicative.functorMultiplicative)(f({}));
+    return data.map(Data_Monoid_Multiplicative.functorMultiplicative)(f({}));
 });
 let functorWithIndexMaybe = new FunctorWithIndex(function () {
     return Data_Maybe.functorMaybe;
 }, function (f) {
-    return Data_Functor.map(Data_Maybe.functorMaybe)(f({}));
+    return data.map(Data_Maybe.functorMaybe)(f({}));
 });
 let functorWithIndexLast = new FunctorWithIndex(function () {
     return Data_Maybe_Last.functorLast;
 }, function (f) {
-    return Data_Functor.map(Data_Maybe_Last.functorLast)(f({}));
+    return data.map(Data_Maybe_Last.functorLast)(f({}));
 });
 let functorWithIndexFirst = new FunctorWithIndex(function () {
     return Data_Maybe_First.functorFirst;
 }, function (f) {
-    return Data_Functor.map(Data_Maybe_First.functorFirst)(f({}));
+    return data.map(Data_Maybe_First.functorFirst)(f({}));
 });
 let functorWithIndexDual = new FunctorWithIndex(function () {
     return Data_Monoid_Dual.functorDual;
 }, function (f) {
-    return Data_Functor.map(Data_Monoid_Dual.functorDual)(f({}));
+    return data.map(Data_Monoid_Dual.functorDual)(f({}));
 });
 let functorWithIndexDisj = new FunctorWithIndex(function () {
     return Data_Monoid_Disj.functorDisj;
 }, function (f) {
-    return Data_Functor.map(Data_Monoid_Disj.functorDisj)(f({}));
+    return data.map(Data_Monoid_Disj.functorDisj)(f({}));
 });
 let functorWithIndexConj = new FunctorWithIndex(function () {
     return Data_Monoid_Conj.functorConj;
 }, function (f) {
-    return Data_Functor.map(Data_Monoid_Conj.functorConj)(f({}));
+    return data.map(Data_Monoid_Conj.functorConj)(f({}));
 });
 let functorWithIndexArray = new FunctorWithIndex(function () {
-    return Data_Functor.functorArray;
+    return data.functorArray;
 }, mapWithIndexArray);
 let functorWithIndexAdditive = new FunctorWithIndex(function () {
     return Data_Monoid_Additive.functorAdditive;
 }, function (f) {
-    return Data_Functor.map(Data_Monoid_Additive.functorAdditive)(f({}));
+    return data.map(Data_Monoid_Additive.functorAdditive)(f({}));
 });
 module.exports = {
     FunctorWithIndex: FunctorWithIndex,

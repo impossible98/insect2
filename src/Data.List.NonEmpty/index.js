@@ -1,6 +1,5 @@
 const control = require("../control");
 const data = require("../data");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_FunctorWithIndex = require("../Data.FunctorWithIndex/index.js");
 let Data_List = require("../Data.List/index.js");
 let Data_List_Types = require("../Data.List.Types/index.js");
@@ -117,7 +116,7 @@ let updateAt = function (i) {
                 return new Data_Maybe.Just(new Data_NonEmpty.NonEmpty(a, v.value1));
             };
             if (true) {
-                return Data_Functor.map(Data_Maybe.functorMaybe)(function ($161) {
+                return data.map(Data_Maybe.functorMaybe)(function ($161) {
                     return Data_List_Types.NonEmptyList((function (v1) {
                         return new Data_NonEmpty.NonEmpty(v.value0, v1);
                     })($161));
@@ -128,7 +127,7 @@ let updateAt = function (i) {
     };
 };
 let unzip = function (ts) {
-    return new Data_Tuple.Tuple(Data_Functor.map(Data_List_Types.functorNonEmptyList)(Data_Tuple.fst)(ts), Data_Functor.map(Data_List_Types.functorNonEmptyList)(Data_Tuple.snd)(ts));
+    return new Data_Tuple.Tuple(data.map(Data_List_Types.functorNonEmptyList)(Data_Tuple.fst)(ts), data.map(Data_List_Types.functorNonEmptyList)(Data_Tuple.snd)(ts));
 };
 let unsnoc = function (v) {
     let v1 = Data_List.unsnoc(v.value1);
@@ -166,7 +165,7 @@ let toList = function (v) {
 };
 let toUnfoldable = function (dictUnfoldable) {
     let $164 = Data_Unfoldable.unfoldr(dictUnfoldable)(function (xs) {
-        return Data_Functor.map(Data_Maybe.functorMaybe)(function (rec) {
+        return data.map(Data_Maybe.functorMaybe)(function (rec) {
             return new Data_Tuple.Tuple(rec.head, rec.tail);
         })(Data_List.uncons(xs));
     });
@@ -227,7 +226,7 @@ let modifyAt = function (i) {
                 return new Data_Maybe.Just(new Data_NonEmpty.NonEmpty(f(v.value0), v.value1));
             };
             if (true) {
-                return Data_Functor.map(Data_Maybe.functorMaybe)(function ($172) {
+                return data.map(Data_Maybe.functorMaybe)(function ($172) {
                     return Data_List_Types.NonEmptyList((function (v1) {
                         return new Data_NonEmpty.NonEmpty(v.value0, v1);
                     })($172));
@@ -280,7 +279,7 @@ let insertAt = function (i) {
                 return new Data_Maybe.Just(new Data_NonEmpty.NonEmpty(a, new Data_List_Types.Cons(v.value0, v.value1)));
             };
             if (true) {
-                return Data_Functor.map(Data_Maybe.functorMaybe)(function ($180) {
+                return data.map(Data_Maybe.functorMaybe)(function ($180) {
                     return Data_List_Types.NonEmptyList((function (v1) {
                         return new Data_NonEmpty.NonEmpty(v.value0, v1);
                     })($180));
@@ -370,7 +369,7 @@ let findIndex = function (f) {
             return new Data_Maybe.Just(0);
         };
         if (true) {
-            return Data_Functor.map(Data_Maybe.functorMaybe)(function (v1) {
+            return data.map(Data_Maybe.functorMaybe)(function (v1) {
                 return v1 + 1 | 0;
             })(Data_List.findIndex(f)(v.value1));
         };
@@ -416,7 +415,7 @@ let cons = function (y) {
         return new Data_NonEmpty.NonEmpty(y, new Data_List_Types.Cons(v.value0, v.value1));
     };
 };
-let concatMap = Data_Functor.flip(control.bind(Data_List_Types.bindNonEmptyList));
+let concatMap = data.flip(control.bind(Data_List_Types.bindNonEmptyList));
 let concat = function (v) {
     return control.bind(Data_List_Types.bindNonEmptyList)(v)(identity(categoryFn));
 };

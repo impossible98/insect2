@@ -4,7 +4,6 @@ let Data_Either = require("../Data.Either/index.js");
 const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_FoldableWithIndex = require("../Data.FoldableWithIndex/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_FunctorWithIndex = require("../Data.FunctorWithIndex/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
@@ -32,7 +31,7 @@ let lift2 = function (dictApply) {
 	return function (f) {
 		return function (a) {
 			return function (b) {
-				return apply(dictApply)(Data_Functor.map(dictApply.Functor0())(f)(a))(b);
+				return apply(dictApply)(data.map(dictApply.Functor0())(f)(a))(b);
 			};
 		};
 	};
@@ -59,9 +58,9 @@ let newtypeProduct = new Data_Newtype.Newtype(function (n) {
 }, Product);
 let functorProduct = function (dictFunctor) {
     return function (dictFunctor1) {
-        return new Data_Functor.Functor(function (f) {
+        return new data.Functor(function (f) {
             return function (v) {
-                return Data_Bifunctor.bimap(Data_Tuple.bifunctorTuple)(Data_Functor.map(dictFunctor)(f))(Data_Functor.map(dictFunctor1)(f))(v);
+                return Data_Bifunctor.bimap(Data_Tuple.bifunctorTuple)(data.map(dictFunctor)(f))(data.map(dictFunctor1)(f))(v);
             };
         });
     };

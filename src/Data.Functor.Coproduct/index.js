@@ -4,7 +4,6 @@ let Data_Either = require("../Data.Either/index.js");
 const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_FoldableWithIndex = require("../Data.FoldableWithIndex/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_FunctorWithIndex = require("../Data.FunctorWithIndex/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
@@ -41,9 +40,9 @@ let left = function (fa) {
 };
 let functorCoproduct = function (dictFunctor) {
 	return function (dictFunctor1) {
-		return new Data_Functor.Functor(function (f) {
+		return new data.Functor(function (f) {
 			return function (v) {
-				return Data_Bifunctor.bimap(Data_Either.bifunctorEither)(Data_Functor.map(dictFunctor)(f))(Data_Functor.map(dictFunctor1)(f))(v);
+				return Data_Bifunctor.bimap(Data_Either.bifunctorEither)(data.map(dictFunctor)(f))(data.map(dictFunctor1)(f))(v);
 			};
 		});
 	};
@@ -216,7 +215,7 @@ let traversableCoproduct = function (dictTraversable) {
 			return functorCoproduct(dictTraversable.Functor0())(dictTraversable1.Functor0());
 		}, function (dictApplicative) {
 			return coproduct((function () {
-				let $98 = Data_Functor.map((dictApplicative.Apply0()).Functor0())(function ($101) {
+				let $98 = data.map((dictApplicative.Apply0()).Functor0())(function ($101) {
 					return Coproduct(Data_Either.Left.create($101));
 				});
 				let $99 = Data_Traversable.sequence(dictTraversable)(dictApplicative);
@@ -224,7 +223,7 @@ let traversableCoproduct = function (dictTraversable) {
 					return $98($99($100));
 				};
 			})())((function () {
-				let $102 = Data_Functor.map((dictApplicative.Apply0()).Functor0())(function ($105) {
+				let $102 = data.map((dictApplicative.Apply0()).Functor0())(function ($105) {
 					return Coproduct(Data_Either.Right.create($105));
 				});
 				let $103 = Data_Traversable.sequence(dictTraversable1)(dictApplicative);
@@ -235,7 +234,7 @@ let traversableCoproduct = function (dictTraversable) {
 		}, function (dictApplicative) {
 			return function (f) {
 				return coproduct((function () {
-					let $106 = Data_Functor.map((dictApplicative.Apply0()).Functor0())(function ($109) {
+					let $106 = data.map((dictApplicative.Apply0()).Functor0())(function ($109) {
 						return Coproduct(Data_Either.Left.create($109));
 					});
 					let $107 = Data_Traversable.traverse(dictTraversable)(dictApplicative)(f);
@@ -243,7 +242,7 @@ let traversableCoproduct = function (dictTraversable) {
 						return $106($107($108));
 					};
 				})())((function () {
-					let $110 = Data_Functor.map((dictApplicative.Apply0()).Functor0())(function ($113) {
+					let $110 = data.map((dictApplicative.Apply0()).Functor0())(function ($113) {
 						return Coproduct(Data_Either.Right.create($113));
 					});
 					let $111 = Data_Traversable.traverse(dictTraversable1)(dictApplicative)(f);
@@ -266,7 +265,7 @@ let traversableWithIndexCoproduct = function (dictTraversableWithIndex) {
 		}, function (dictApplicative) {
 			return function (f) {
 				return coproduct((function () {
-					let $114 = Data_Functor.map((dictApplicative.Apply0()).Functor0())(function ($117) {
+					let $114 = data.map((dictApplicative.Apply0()).Functor0())(function ($117) {
 						return Coproduct(Data_Either.Left.create($117));
 					});
 					let $115 = Data_TraversableWithIndex.traverseWithIndex(dictTraversableWithIndex)(dictApplicative)(function ($118) {
@@ -276,7 +275,7 @@ let traversableWithIndexCoproduct = function (dictTraversableWithIndex) {
 						return $114($115($116));
 					};
 				})())((function () {
-					let $119 = Data_Functor.map((dictApplicative.Apply0()).Functor0())(function ($122) {
+					let $119 = data.map((dictApplicative.Apply0()).Functor0())(function ($122) {
 						return Coproduct(Data_Either.Right.create($122));
 					});
 					let $120 = Data_TraversableWithIndex.traverseWithIndex(dictTraversableWithIndex1)(dictApplicative)(function ($123) {

@@ -5,7 +5,7 @@ let Data_Bitraversable = require("../Data.Bitraversable/index.js");
 let Data_Bounded = require("../Data.Bounded/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_FoldableWithIndex = require("../Data.FoldableWithIndex/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Functor_Invariant = require("../Data.Functor.Invariant/index.js");
 let Data_FunctorWithIndex = require("../Data.FunctorWithIndex/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
@@ -100,7 +100,7 @@ let note$prime = function (f) {
 let note = function (a) {
 	return Data_Maybe.maybe(new Left(a))(Right.create);
 };
-let functorEither = new Data_Functor.Functor(function (f) {
+let functorEither = new data.Functor(function (f) {
 	return function (m) {
 		if (m instanceof Left) {
 			return new Left(m.value0);
@@ -114,7 +114,7 @@ let functorEither = new Data_Functor.Functor(function (f) {
 let functorWithIndexEither = new Data_FunctorWithIndex.FunctorWithIndex(function () {
 	return functorEither;
 }, function (f) {
-	return Data_Functor.map(functorEither)(f({}));
+	return data.map(functorEither)(f({}));
 });
 let invariantEither = new Data_Functor_Invariant.Invariant(Data_Functor_Invariant.imapF(functorEither));
 let fromRight = function (dictPartial) {
@@ -219,7 +219,7 @@ let traversableEither = new Data_Traversable.Traversable(function () {
 			return control.pure(dictApplicative)(new Left(v.value0));
 		};
 		if (v instanceof Right) {
-			return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Right.create)(v.value0);
+			return data.map((dictApplicative.Apply0()).Functor0())(Right.create)(v.value0);
 		};
 		throw new Error("Failed pattern match at Data.Either (line 211, column 1 - line 215, column 36): " + [v.constructor.name]);
 	};
@@ -230,7 +230,7 @@ let traversableEither = new Data_Traversable.Traversable(function () {
 				return control.pure(dictApplicative)(new Left(v1.value0));
 			};
 			if (v1 instanceof Right) {
-				return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Right.create)(v(v1.value0));
+				return data.map((dictApplicative.Apply0()).Functor0())(Right.create)(v(v1.value0));
 			};
 			throw new Error("Failed pattern match at Data.Either (line 211, column 1 - line 215, column 36): " + [v.constructor.name, v1.constructor.name]);
 		};
@@ -249,7 +249,7 @@ let traversableWithIndexEither = new Data_TraversableWithIndex.TraversableWithIn
 				return control.pure(dictApplicative)(new Left(v1.value0));
 			};
 			if (v1 instanceof Right) {
-				return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Right.create)(v()(v1.value0));
+				return data.map((dictApplicative.Apply0()).Functor0())(Right.create)(v()(v1.value0));
 			};
 			throw new Error("Failed pattern match at Data.Either (line 217, column 1 - line 219, column 53): " + [v.constructor.name, v1.constructor.name]);
 		};
@@ -328,13 +328,13 @@ let either = function (v) {
 		};
 	};
 };
-let hush = either(Data_Functor._const(Data_Maybe.Nothing.value))(Data_Maybe.Just.create);
-let isLeft = either(Data_Functor._const(true))(Data_Functor._const(false));
-let isRight = either(Data_Functor._const(false))(Data_Functor._const(true));
+let hush = either(data._const(Data_Maybe.Nothing.value))(Data_Maybe.Just.create);
+let isLeft = either(data._const(true))(data._const(false));
+let isRight = either(data._const(false))(data._const(true));
 let choose = function (dictAlt) {
 	return function (a) {
 		return function (b) {
-			return alt(dictAlt)(Data_Functor.map(dictAlt.Functor0())(Left.create)(a))(Data_Functor.map(dictAlt.Functor0())(Right.create)(b));
+			return alt(dictAlt)(data.map(dictAlt.Functor0())(Left.create)(a))(data.map(dictAlt.Functor0())(Right.create)(b));
 		};
 	};
 };
@@ -408,10 +408,10 @@ let bitraversableEither = new Data_Bitraversable.Bitraversable(function () {
 }, function (dictApplicative) {
 	return function (v) {
 		if (v instanceof Left) {
-			return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Left.create)(v.value0);
+			return data.map((dictApplicative.Apply0()).Functor0())(Left.create)(v.value0);
 		};
 		if (v instanceof Right) {
-			return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Right.create)(v.value0);
+			return data.map((dictApplicative.Apply0()).Functor0())(Right.create)(v.value0);
 		};
 		throw new Error("Failed pattern match at Data.Either (line 221, column 1 - line 225, column 37): " + [v.constructor.name]);
 	};
@@ -420,10 +420,10 @@ let bitraversableEither = new Data_Bitraversable.Bitraversable(function () {
 		return function (v1) {
 			return function (v2) {
 				if (v2 instanceof Left) {
-					return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Left.create)(v(v2.value0));
+					return data.map((dictApplicative.Apply0()).Functor0())(Left.create)(v(v2.value0));
 				};
 				if (v2 instanceof Right) {
-					return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Right.create)(v1(v2.value0));
+					return data.map((dictApplicative.Apply0()).Functor0())(Right.create)(v1(v2.value0));
 				};
 				throw new Error("Failed pattern match at Data.Either (line 221, column 1 - line 225, column 37): " + [v.constructor.name, v1.constructor.name, v2.constructor.name]);
 			};
@@ -438,7 +438,7 @@ let applyEither = new Apply(function () {
 			return new Left(v.value0);
 		};
 		if (v instanceof Right) {
-			return Data_Functor.map(functorEither)(v.value0)(v1);
+			return data.map(functorEither)(v.value0)(v1);
 		};
 		throw new Error("Failed pattern match at Data.Either (line 82, column 1 - line 84, column 30): " + [v.constructor.name, v1.constructor.name]);
 	};
@@ -457,7 +457,7 @@ let bindEither = new control.Bind(function () {
 let semigroupEither = function (dictSemigroup) {
 	return new Data_Semigroup.Semigroup(function (x) {
 		return function (y) {
-			return apply(applyEither)(Data_Functor.map(functorEither)(Data_Semigroup.append(dictSemigroup))(x))(y);
+			return apply(applyEither)(data.map(functorEither)(Data_Semigroup.append(dictSemigroup))(x))(y);
 		};
 	});
 };

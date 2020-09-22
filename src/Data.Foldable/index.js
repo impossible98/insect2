@@ -1,6 +1,5 @@
 const control = require("../control");
 const data = require("../data");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_HeytingAlgebra = require("../Data.HeytingAlgebra/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Monoid = require("../Data.Monoid/index.js");
@@ -71,7 +70,7 @@ let apply = function (dict) {
 let applySecond = function (dictApply) {
 	return function (a) {
 		return function (b) {
-			return apply(dictApply)(Data_Functor.map(dictApply.Functor0())(Data_Functor._const(identity(categoryFn)))(a))(b);
+			return apply(dictApply)(data.map(dictApply.Functor0())(data._const(identity(categoryFn)))(a))(b);
 		};
 	};
 };
@@ -186,7 +185,7 @@ let traverse_ = function (dictApplicative) {
 };
 let for_ = function (dictApplicative) {
 	return function (dictFoldable) {
-		return Data_Functor.flip(traverse_(dictApplicative)(dictFoldable));
+		return data.flip(traverse_(dictApplicative)(dictFoldable));
 	};
 };
 let sequence_ = function (dictApplicative) {
@@ -530,7 +529,7 @@ let foldlDefault = function (dictFoldable) {
 		return function (u) {
 			return function (xs) {
 				return Data_Newtype.unwrap(Data_Newtype.newtypeEndo)(Data_Newtype.unwrap(Data_Newtype.newtypeDual)(foldMap(dictFoldable)(Data_Monoid_Dual.monoidDual(Data_Monoid_Endo.monoidEndo(categoryFn)))((function () {
-					let $201 = Data_Functor.flip(c);
+					let $201 = data.flip(c);
 					return function ($202) {
 						return Data_Monoid_Dual.Dual(Data_Monoid_Endo.Endo($201($202)));
 					};
@@ -579,7 +578,7 @@ let foldM = function (dictFoldable) {
 			return function (a0) {
 				return foldl(dictFoldable)(function (ma) {
 					return function (b) {
-						return control.bind(dictMonad.Bind1())(ma)(Data_Functor.flip(f)(b));
+						return control.bind(dictMonad.Bind1())(ma)(data.flip(f)(b));
 					};
 				})(control.pure(dictMonad.Applicative0())(a0));
 			};
@@ -619,7 +618,7 @@ let find = function (dictFoldable) {
 };
 let any = function (dictFoldable) {
 	return function (dictHeytingAlgebra) {
-		return Data_Newtype.alaF(Data_Functor.functorFn)(Data_Functor.functorFn)(Data_Newtype.newtypeDisj)(Data_Newtype.newtypeDisj)(Data_Monoid_Disj.Disj)(foldMap(dictFoldable)(Data_Monoid_Disj.monoidDisj(dictHeytingAlgebra)));
+		return Data_Newtype.alaF(data.functorFn)(data.functorFn)(Data_Newtype.newtypeDisj)(Data_Newtype.newtypeDisj)(Data_Monoid_Disj.Disj)(foldMap(dictFoldable)(Data_Monoid_Disj.monoidDisj(dictHeytingAlgebra)));
 	};
 };
 let elem = function (dictFoldable) {
@@ -649,7 +648,7 @@ let or = function (dictFoldable) {
 };
 let all = function (dictFoldable) {
 	return function (dictHeytingAlgebra) {
-		return Data_Newtype.alaF(Data_Functor.functorFn)(Data_Functor.functorFn)(Data_Newtype.newtypeConj)(Data_Newtype.newtypeConj)(Data_Monoid_Conj.Conj)(foldMap(dictFoldable)(Data_Monoid_Conj.monoidConj(dictHeytingAlgebra)));
+		return Data_Newtype.alaF(data.functorFn)(data.functorFn)(Data_Newtype.newtypeConj)(Data_Newtype.newtypeConj)(Data_Monoid_Conj.Conj)(foldMap(dictFoldable)(Data_Monoid_Conj.monoidConj(dictHeytingAlgebra)));
 	};
 };
 let and = function (dictFoldable) {

@@ -1,7 +1,7 @@
 const control = require("../control");
 let Control_MonadZero = require("../Control.MonadZero/index.js");
 let Data_Bounded = require("../Data.Bounded/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Functor_Invariant = require("../Data.Functor.Invariant/index.js");
 let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
@@ -125,7 +125,7 @@ function semigroupMaybe(dictSemigroup) {
 
 function optional(dictAlternative) {
 	return (a) => {
-		return dict((dictAlternative.Plus1()).Alt0())(Data_Functor.map(((dictAlternative.Plus1()).Alt0()).Functor0())(Just.create)(a))(control.pure(dictAlternative.Applicative0())(Nothing.value));
+		return dict((dictAlternative.Plus1()).Alt0())(data.map(((dictAlternative.Plus1()).Alt0()).Functor0())(Just.create)(a))(control.pure(dictAlternative.Applicative0())(Nothing.value));
 	};
 }
 
@@ -164,10 +164,10 @@ function maybe(v) {
 	};
 }
 
-let isNothing = maybe(true)(Data_Functor._const(false));
-let isJust = maybe(false)(Data_Functor._const(true));
+let isNothing = maybe(true)(data._const(false));
+let isJust = maybe(false)(data._const(true));
 
-let functorMaybe = new Data_Functor.Functor((v) => {
+let functorMaybe = new data.Functor((v) => {
 	return (v1) => {
 		if (v1 instanceof Just) {
 			return new Just(v(v1.value0));
@@ -272,7 +272,7 @@ let applyMaybe = new Apply(function () {
 }, (v) => {
 	return (v1) => {
 		if (v instanceof Just) {
-			return Data_Functor.map(functorMaybe)(v.value0)(v1);
+			return data.map(functorMaybe)(v.value0)(v1);
 		};
 		if (v instanceof Nothing) {
 			return Nothing.value;

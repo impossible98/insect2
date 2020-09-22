@@ -4,7 +4,6 @@ let Control_MonadZero = require("../Control.MonadZero/index.js");
 const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_FoldableWithIndex = require("../Data.FoldableWithIndex/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_FunctorWithIndex = require("../Data.FunctorWithIndex/index.js");
 let Data_Lazy = require("../Data.Lazy/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
@@ -158,7 +157,7 @@ let semigroupList = new Data_Semigroup.Semigroup(function (xs) {
             };
             throw new Error("Failed pattern match at Data.List.Lazy.Types (line 98, column 5 - line 98, column 21): " + [ v.constructor.name ]);
         };
-        return Data_Functor.map(Data_Lazy.functorLazy)(go)(Data_Newtype.unwrap(newtypeList)(xs));
+        return data.map(Data_Lazy.functorLazy)(go)(Data_Newtype.unwrap(newtypeList)(xs));
     };
 });
 let showList = function (dictShow) {
@@ -188,23 +187,23 @@ let lazyList = new control.Lazy(function (f) {
         return step(f($217));
     }));
 });
-let functorList = new Data_Functor.Functor(function (f) {
+let functorList = new data.Functor(function (f) {
     return function (xs) {
         let go = function (v) {
             if (v instanceof Nil) {
                 return Nil.value;
             };
             if (v instanceof Cons) {
-                return new Cons(f(v.value0), Data_Functor.map(functorList)(f)(v.value1));
+                return new Cons(f(v.value0), data.map(functorList)(f)(v.value1));
             };
             throw new Error("Failed pattern match at Data.List.Lazy.Types (line 107, column 5 - line 107, column 17): " + [ v.constructor.name ]);
         };
-        return Data_Functor.map(Data_Lazy.functorLazy)(go)(Data_Newtype.unwrap(newtypeList)(xs));
+        return data.map(Data_Lazy.functorLazy)(go)(Data_Newtype.unwrap(newtypeList)(xs));
     };
 });
-let functorNonEmptyList = new Data_Functor.Functor(function (f) {
+let functorNonEmptyList = new data.Functor(function (f) {
     return function (v) {
-        return Data_Functor.map(Data_Lazy.functorLazy)(Data_Functor.map(Data_NonEmpty.functorNonEmpty(functorList))(f))(v);
+        return data.map(Data_Lazy.functorLazy)(data.map(Data_NonEmpty.functorNonEmpty(functorList))(f))(v);
     };
 });
 let eq1List = new data.Eq1(function (dictEq) {
@@ -341,8 +340,8 @@ let foldableList = new Data_Foldable.Foldable(function (dictMonoid) {
 }, function (op) {
     return function (z) {
         return function (xs) {
-            let rev = Data_Foldable.foldl(foldableList)(Data_Functor.flip(cons))(nil);
-            return Data_Foldable.foldl(foldableList)(Data_Functor.flip(op))(z)(rev(xs));
+            let rev = Data_Foldable.foldl(foldableList)(data.flip(cons))(nil);
+            return Data_Foldable.foldl(foldableList)(data.flip(op))(z)(rev(xs));
         };
     };
 });
@@ -543,7 +542,7 @@ let traversableList = new Data_Traversable.Traversable(function () {
     return function (f) {
         return Data_Foldable.foldr(foldableList)(function (a) {
             return function (b) {
-                return apply(dictApplicative.Apply0())(Data_Functor.map((dictApplicative.Apply0()).Functor0())(cons)(f(a)))(b);
+                return apply(dictApplicative.Apply0())(data.map((dictApplicative.Apply0()).Functor0())(cons)(f(a)))(b);
             };
         })(control.pure(dictApplicative)(nil));
     };
@@ -554,7 +553,7 @@ let traversableNonEmptyList = new Data_Traversable.Traversable(function () {
     return functorNonEmptyList;
 }, function (dictApplicative) {
     return function (v) {
-        return Data_Functor.map((dictApplicative.Apply0()).Functor0())(function (xxs) {
+        return data.map((dictApplicative.Apply0()).Functor0())(function (xxs) {
             return NonEmptyList(Data_Lazy.defer(function (v1) {
                 return xxs;
             }));
@@ -563,7 +562,7 @@ let traversableNonEmptyList = new Data_Traversable.Traversable(function () {
 }, function (dictApplicative) {
     return function (f) {
         return function (v) {
-            return Data_Functor.map((dictApplicative.Apply0()).Functor0())(function (xxs) {
+            return data.map((dictApplicative.Apply0()).Functor0())(function (xxs) {
                 return NonEmptyList(Data_Lazy.defer(function (v1) {
                     return xxs;
                 }));
@@ -582,7 +581,7 @@ let traversableWithIndexList = new Data_TraversableWithIndex.TraversableWithInde
         return Data_FoldableWithIndex.foldrWithIndex(foldableWithIndexList)(function (i) {
             return function (a) {
                 return function (b) {
-                    return apply(dictApplicative.Apply0())(Data_Functor.map((dictApplicative.Apply0()).Functor0())(cons)(f(i)(a)))(b);
+                    return apply(dictApplicative.Apply0())(data.map((dictApplicative.Apply0()).Functor0())(cons)(f(i)(a)))(b);
                 };
             };
         })(control.pure(dictApplicative)(nil));
@@ -597,7 +596,7 @@ let traversableWithIndexNonEmptyList = new Data_TraversableWithIndex.Traversable
 }, function (dictApplicative) {
     return function (f) {
         return function (v) {
-            return Data_Functor.map((dictApplicative.Apply0()).Functor0())(function (xxs) {
+            return data.map((dictApplicative.Apply0()).Functor0())(function (xxs) {
                 return NonEmptyList(Data_Lazy.defer(function (v1) {
                     return xxs;
                 }));
@@ -676,7 +675,7 @@ let bindList = new control.Bind(function () {
             };
             throw new Error("Failed pattern match at Data.List.Lazy.Types (line 175, column 5 - line 175, column 17): " + [ v.constructor.name ]);
         };
-        return Data_Functor.map(Data_Lazy.functorLazy)(go)(Data_Newtype.unwrap(newtypeList)(xs));
+        return data.map(Data_Lazy.functorLazy)(go)(Data_Newtype.unwrap(newtypeList)(xs));
     };
 });
 let applyList = new Apply(function () {

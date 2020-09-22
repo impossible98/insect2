@@ -4,7 +4,6 @@ let Data_Bifunctor = require("../Data.Bifunctor/index.js");
 const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
 
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_FunctorWithIndex = require("../Data.FunctorWithIndex/index.js");
 let Data_HeytingAlgebra = require("../Data.HeytingAlgebra/index.js");
 let Data_List_Types = require("../Data.List.Types/index.js");
@@ -68,7 +67,7 @@ let updateAt = function (v) {
 				return new Data_Maybe.Just(new Data_List_Types.Cons(v1, v2.value1));
 			};
 			if (v2 instanceof Data_List_Types.Cons) {
-				return Data_Functor.map(Data_Maybe.functorMaybe)(function (v3) {
+				return data.map(Data_Maybe.functorMaybe)(function (v3) {
 					return new Data_List_Types.Cons(v2.value0, v3);
 				})(updateAt(v - 1 | 0)(v1)(v2.value1));
 			};
@@ -95,7 +94,7 @@ let uncons = function (v) {
 };
 let toUnfoldable = function (dictUnfoldable) {
 	return Data_Unfoldable.unfoldr(dictUnfoldable)(function (xs) {
-		return Data_Functor.map(Data_Maybe.functorMaybe)(function (rec) {
+		return data.map(Data_Maybe.functorMaybe)(function (rec) {
 			return new Data_Tuple.Tuple(rec.head, rec.tail);
 		})(uncons(xs));
 	});
@@ -395,7 +394,7 @@ let unsnoc = function (lst) {
 			return $tco_result;
 		};
 	};
-	return Data_Functor.map(Data_Maybe.functorMaybe)(function (h) {
+	return data.map(Data_Maybe.functorMaybe)(function (h) {
 		return {
 			init: reverse(h.revInit),
 			last: h.last
@@ -570,7 +569,7 @@ let manyRec = function (dictMonadRec) {
 	return function (dictAlternative) {
 		return function (p) {
 			let go = function (acc) {
-				return control.bind((dictMonadRec.Monad0()).Bind1())(alt((dictAlternative.Plus1()).Alt0())(Data_Functor.map(((dictAlternative.Plus1()).Alt0()).Functor0())(Control_Monad_Rec_Class.Loop.create)(p))(control.pure(dictAlternative.Applicative0())(new Control_Monad_Rec_Class.Done())))(function (aa) {
+				return control.bind((dictMonadRec.Monad0()).Bind1())(alt((dictAlternative.Plus1()).Alt0())(data.map(((dictAlternative.Plus1()).Alt0()).Functor0())(Control_Monad_Rec_Class.Loop.create)(p))(control.pure(dictAlternative.Applicative0())(new Control_Monad_Rec_Class.Done())))(function (aa) {
 					return control.pure(dictAlternative.Applicative0())(Data_Bifunctor.bimap(Control_Monad_Rec_Class.bifunctorStep)(function (v) {
 						return new Data_List_Types.Cons(v, acc);
 					})(function (v) {
@@ -585,14 +584,14 @@ let manyRec = function (dictMonadRec) {
 let someRec = function (dictMonadRec) {
 	return function (dictAlternative) {
 		return function (v) {
-			return apply((dictAlternative.Applicative0()).Apply0())(Data_Functor.map(((dictAlternative.Plus1()).Alt0()).Functor0())(Data_List_Types.Cons.create)(v))(manyRec(dictMonadRec)(dictAlternative)(v));
+			return apply((dictAlternative.Applicative0()).Apply0())(data.map(((dictAlternative.Plus1()).Alt0()).Functor0())(Data_List_Types.Cons.create)(v))(manyRec(dictMonadRec)(dictAlternative)(v));
 		};
 	};
 };
 let some = function (dictAlternative) {
 	return function (dictLazy) {
 		return function (v) {
-			return apply((dictAlternative.Applicative0()).Apply0())(Data_Functor.map(((dictAlternative.Plus1()).Alt0()).Functor0())(Data_List_Types.Cons.create)(v))(control.defer(dictLazy)(function (v1) {
+			return apply((dictAlternative.Applicative0()).Apply0())(data.map(((dictAlternative.Plus1()).Alt0()).Functor0())(Data_List_Types.Cons.create)(v))(control.defer(dictLazy)(function (v1) {
 				return many(dictAlternative)(dictLazy)(v);
 			}));
 		};
@@ -654,7 +653,7 @@ let insertAt = function (v) {
 				return new Data_Maybe.Just(new Data_List_Types.Cons(v1, v2));
 			};
 			if (v2 instanceof Data_List_Types.Cons) {
-				return Data_Functor.map(Data_Maybe.functorMaybe)(function (v3) {
+				return data.map(Data_Maybe.functorMaybe)(function (v3) {
 					return new Data_List_Types.Cons(v2.value0, v3);
 				})(insertAt(v - 1 | 0)(v1)(v2.value1));
 			};
@@ -666,7 +665,7 @@ let insert = function (dictOrd) {
 	return insertBy(Data_Ord.compare(dictOrd));
 };
 let init = function (lst) {
-	return Data_Functor.map(Data_Maybe.functorMaybe)(function (v) {
+	return data.map(Data_Maybe.functorMaybe)(function (v) {
 		return v.init;
 	})(unsnoc(lst));
 };
@@ -794,7 +793,7 @@ let findIndex = function (fn) {
 };
 let findLastIndex = function (fn) {
 	return function (xs) {
-		return Data_Functor.map(Data_Maybe.functorMaybe)(function (v) {
+		return data.map(Data_Maybe.functorMaybe)(function (v) {
 			return (length(xs) - 1 | 0) - v | 0;
 		})(findIndex(fn)(reverse(xs)));
 	};
@@ -1000,7 +999,7 @@ let deleteBy = function (v) {
 let unionBy = function (eq) {
 	return function (xs) {
 		return function (ys) {
-			return Data_Semigroup.append(Data_List_Types.semigroupList)(xs)(Data_Foldable.foldl(Data_List_Types.foldableList)(Data_Functor.flip(deleteBy(eq)))(nubBy(eq)(ys))(xs));
+			return Data_Semigroup.append(Data_List_Types.semigroupList)(xs)(Data_Foldable.foldl(Data_List_Types.foldableList)(data.flip(deleteBy(eq)))(nubBy(eq)(ys))(xs));
 		};
 	};
 };
@@ -1013,7 +1012,7 @@ let deleteAt = function (v) {
 			return new Data_Maybe.Just(v1.value1);
 		};
 		if (v1 instanceof Data_List_Types.Cons) {
-			return Data_Functor.map(Data_Maybe.functorMaybe)(function (v2) {
+			return data.map(Data_Maybe.functorMaybe)(function (v2) {
 				return new Data_List_Types.Cons(v1.value0, v2);
 			})(deleteAt(v - 1 | 0)(v1.value1));
 		};
@@ -1024,9 +1023,9 @@ let $$delete = function (dictEq) {
 	return deleteBy(data.eq(dictEq));
 };
 let difference = function (dictEq) {
-	return Data_Foldable.foldl(Data_List_Types.foldableList)(Data_Functor.flip($$delete(dictEq)));
+	return Data_Foldable.foldl(Data_List_Types.foldableList)(data.flip($$delete(dictEq)));
 };
-let concatMap = Data_Functor.flip(control.bind(Data_List_Types.bindList));
+let concatMap = data.flip(control.bind(Data_List_Types.bindList));
 let concat = function (v) {
 	return control.bind(Data_List_Types.bindList)(v)(identity(categoryFn));
 };
@@ -1047,7 +1046,7 @@ let alterAt = function (v) {
 				})());
 			};
 			if (v2 instanceof Data_List_Types.Cons) {
-				return Data_Functor.map(Data_Maybe.functorMaybe)(function (v3) {
+				return data.map(Data_Maybe.functorMaybe)(function (v3) {
 					return new Data_List_Types.Cons(v2.value0, v3);
 				})(alterAt(v - 1 | 0)(v1)(v2.value1));
 			};

@@ -2,7 +2,6 @@ const control = require("../control");
 const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_FoldableWithIndex = require("../Data.FoldableWithIndex/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_FunctorWithIndex = require("../Data.FunctorWithIndex/index.js");
 let Data_HeytingAlgebra = require("../Data.HeytingAlgebra/index.js");
 let Data_List = require("../Data.List/index.js");
@@ -552,16 +551,16 @@ let isEmpty = function (v) {
     };
     return false;
 };
-let functorMap = new Data_Functor.Functor(function (v) {
+let functorMap = new data.Functor(function (v) {
     return function (v1) {
         if (v1 instanceof Leaf) {
             return Leaf.value;
         };
         if (v1 instanceof Two) {
-            return new Two(Data_Functor.map(functorMap)(v)(v1.value0), v1.value1, v(v1.value2), Data_Functor.map(functorMap)(v)(v1.value3));
+            return new Two(data.map(functorMap)(v)(v1.value0), v1.value1, v(v1.value2), data.map(functorMap)(v)(v1.value3));
         };
         if (v1 instanceof Three) {
-            return new Three(Data_Functor.map(functorMap)(v)(v1.value0), v1.value1, v(v1.value2), Data_Functor.map(functorMap)(v)(v1.value3), v1.value4, v(v1.value5), Data_Functor.map(functorMap)(v)(v1.value6));
+            return new Three(data.map(functorMap)(v)(v1.value0), v1.value1, v(v1.value2), data.map(functorMap)(v)(v1.value3), v1.value4, v(v1.value5), data.map(functorMap)(v)(v1.value6));
         };
         throw new Error("Failed pattern match at Data.Map.Internal (line 96, column 1 - line 99, column 110): " + [ v.constructor.name, v1.constructor.name ]);
     };
@@ -1019,10 +1018,10 @@ let traversableMap = new Data_Traversable.Traversable(function () {
                 return control.pure(dictApplicative)(Leaf.value);
             };
             if (v instanceof Two) {
-                return apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(Data_Functor.map((dictApplicative.Apply0()).Functor0())(Two.create)(Data_Traversable.traverse(traversableMap)(dictApplicative)(f)(v.value0)))(control.pure(dictApplicative)(v.value1)))(f(v.value2)))(Data_Traversable.traverse(traversableMap)(dictApplicative)(f)(v.value3));
+                return apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(data.map((dictApplicative.Apply0()).Functor0())(Two.create)(Data_Traversable.traverse(traversableMap)(dictApplicative)(f)(v.value0)))(control.pure(dictApplicative)(v.value1)))(f(v.value2)))(Data_Traversable.traverse(traversableMap)(dictApplicative)(f)(v.value3));
             };
             if (v instanceof Three) {
-                return apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(Data_Functor.map((dictApplicative.Apply0()).Functor0())(Three.create)(Data_Traversable.traverse(traversableMap)(dictApplicative)(f)(v.value0)))(control.pure(dictApplicative)(v.value1)))(f(v.value2)))(Data_Traversable.traverse(traversableMap)(dictApplicative)(f)(v.value3)))(control.pure(dictApplicative)(v.value4)))(f(v.value5)))(Data_Traversable.traverse(traversableMap)(dictApplicative)(f)(v.value6));
+                return apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(data.map((dictApplicative.Apply0()).Functor0())(Three.create)(Data_Traversable.traverse(traversableMap)(dictApplicative)(f)(v.value0)))(control.pure(dictApplicative)(v.value1)))(f(v.value2)))(Data_Traversable.traverse(traversableMap)(dictApplicative)(f)(v.value3)))(control.pure(dictApplicative)(v.value4)))(f(v.value5)))(Data_Traversable.traverse(traversableMap)(dictApplicative)(f)(v.value6));
             };
             throw new Error("Failed pattern match at Data.Map.Internal (line 119, column 1 - line 134, column 31): " + [ f.constructor.name, v.constructor.name ]);
         };
@@ -1040,7 +1039,7 @@ let foldSubmap = function (dictOrd) {
                             };
                         };
                         if (kmin instanceof Data_Maybe.Nothing) {
-                            return Data_Functor._const(false);
+                            return data._const(false);
                         };
                         throw new Error("Failed pattern match at Data.Map.Internal (line 319, column 7 - line 323, column 22): " + [ kmin.constructor.name ]);
                     })();
@@ -1051,7 +1050,7 @@ let foldSubmap = function (dictOrd) {
                             };
                         };
                         if (kmax instanceof Data_Maybe.Nothing) {
-                            return Data_Functor._const(false);
+                            return data._const(false);
                         };
                         throw new Error("Failed pattern match at Data.Map.Internal (line 326, column 7 - line 330, column 22): " + [ kmax.constructor.name ]);
                     })();
@@ -1072,7 +1071,7 @@ let foldSubmap = function (dictOrd) {
                             };
                         };
                         if (kmin instanceof Data_Maybe.Nothing && kmax instanceof Data_Maybe.Nothing) {
-                            return Data_Functor._const(true);
+                            return data._const(true);
                         };
                         throw new Error("Failed pattern match at Data.Map.Internal (line 333, column 7 - line 341, column 21): " + [ kmin.constructor.name, kmax.constructor.name ]);
                     })();
@@ -1358,13 +1357,13 @@ let filterWithKey = function (dictOrd) {
 };
 let filter = function (dictOrd) {
     return function (predicate) {
-        return filterWithKey(dictOrd)(Data_Functor._const(predicate));
+        return filterWithKey(dictOrd)(data._const(predicate));
     };
 };
 let filterKeys = function (dictOrd) {
     return function (predicate) {
         return filterWithKey(dictOrd)(function ($762) {
-            return Data_Functor._const(predicate($762));
+            return data._const(predicate($762));
         });
     };
 };
@@ -1436,7 +1435,7 @@ let intersectionWith = function (dictOrd) {
     };
 };
 let intersection = function (dictOrd) {
-    return intersectionWith(dictOrd)(Data_Functor._const);
+    return intersectionWith(dictOrd)(data._const);
 };
 let $$delete = function (dictOrd) {
     return function (k) {
@@ -1448,7 +1447,7 @@ let $$delete = function (dictOrd) {
 let difference = function (dictOrd) {
     return function (m1) {
         return function (m2) {
-            return Data_Foldable.foldl(Data_List_Types.foldableList)(Data_Functor.flip($$delete(dictOrd)))(m1)(keys(m2));
+            return Data_Foldable.foldl(Data_List_Types.foldableList)(data.flip($$delete(dictOrd)))(m1)(keys(m2));
         };
     };
 };
@@ -1458,12 +1457,12 @@ let checkValid = function (tree) {
             return control.pure(Data_List_Types.applicativeList)(0);
         };
         if (v instanceof Two) {
-            return Data_Functor.map(Data_List_Types.functorList)(function (n) {
+            return data.map(Data_List_Types.functorList)(function (n) {
                 return n + 1 | 0;
             })(Data_Semigroup.append(Data_List_Types.semigroupList)(allHeights(v.value0))(allHeights(v.value3)));
         };
         if (v instanceof Three) {
-            return Data_Functor.map(Data_List_Types.functorList)(function (n) {
+            return data.map(Data_List_Types.functorList)(function (n) {
                 return n + 1 | 0;
             })(Data_Semigroup.append(Data_List_Types.semigroupList)(allHeights(v.value0))(Data_Semigroup.append(Data_List_Types.semigroupList)(allHeights(v.value3))(allHeights(v.value6))));
         };
@@ -1484,7 +1483,7 @@ let foldableWithIndexMap = new Data_FoldableWithIndex.FoldableWithIndex(function
     return function (z) {
         return function (m) {
             return Data_Foldable.foldl(Data_List_Types.foldableList)((function () {
-                let $763 = Data_Functor.flip(f);
+                let $763 = data.flip(f);
                 return function ($764) {
                     return Data_Tuple.uncurry($763($764));
                 };
@@ -1514,7 +1513,7 @@ let mapMaybeWithKey = function (dictOrd) {
 let mapMaybe = function (dictOrd) {
     let $765 = mapMaybeWithKey(dictOrd);
     return function ($766) {
-        return $765(Data_Functor._const($766));
+        return $765(data._const($766));
     };
 };
 let traversableWithIndexMap = new Data_TraversableWithIndex.TraversableWithIndex(function () {
@@ -1530,10 +1529,10 @@ let traversableWithIndexMap = new Data_TraversableWithIndex.TraversableWithIndex
                 return control.pure(dictApplicative)(Leaf.value);
             };
             if (v instanceof Two) {
-                return apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(Data_Functor.map((dictApplicative.Apply0()).Functor0())(Two.create)(Data_TraversableWithIndex.traverseWithIndex(traversableWithIndexMap)(dictApplicative)(f)(v.value0)))(control.pure(dictApplicative)(v.value1)))(f(v.value1)(v.value2)))(Data_TraversableWithIndex.traverseWithIndex(traversableWithIndexMap)(dictApplicative)(f)(v.value3));
+                return apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(data.map((dictApplicative.Apply0()).Functor0())(Two.create)(Data_TraversableWithIndex.traverseWithIndex(traversableWithIndexMap)(dictApplicative)(f)(v.value0)))(control.pure(dictApplicative)(v.value1)))(f(v.value1)(v.value2)))(Data_TraversableWithIndex.traverseWithIndex(traversableWithIndexMap)(dictApplicative)(f)(v.value3));
             };
             if (v instanceof Three) {
-                return apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(Data_Functor.map((dictApplicative.Apply0()).Functor0())(Three.create)(Data_TraversableWithIndex.traverseWithIndex(traversableWithIndexMap)(dictApplicative)(f)(v.value0)))(control.pure(dictApplicative)(v.value1)))(f(v.value1)(v.value2)))(Data_TraversableWithIndex.traverseWithIndex(traversableWithIndexMap)(dictApplicative)(f)(v.value3)))(control.pure(dictApplicative)(v.value4)))(f(v.value4)(v.value5)))(Data_TraversableWithIndex.traverseWithIndex(traversableWithIndexMap)(dictApplicative)(f)(v.value6));
+                return apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(apply(dictApplicative.Apply0())(data.map((dictApplicative.Apply0()).Functor0())(Three.create)(Data_TraversableWithIndex.traverseWithIndex(traversableWithIndexMap)(dictApplicative)(f)(v.value0)))(control.pure(dictApplicative)(v.value1)))(f(v.value1)(v.value2)))(Data_TraversableWithIndex.traverseWithIndex(traversableWithIndexMap)(dictApplicative)(f)(v.value3)))(control.pure(dictApplicative)(v.value4)))(f(v.value4)(v.value5)))(Data_TraversableWithIndex.traverseWithIndex(traversableWithIndexMap)(dictApplicative)(f)(v.value6));
             };
             throw new Error("Failed pattern match at Data.Map.Internal (line 136, column 1 - line 150, column 40): " + [ f.constructor.name, v.constructor.name ]);
         };
@@ -1582,7 +1581,7 @@ let insertWith = function (dictOrd) {
         return function (k) {
             return function (v) {
                 return alter(dictOrd)((function () {
-                    let $767 = Data_Maybe.maybe(v)(Data_Functor.flip(f)(v));
+                    let $767 = Data_Maybe.maybe(v)(data.flip(f)(v));
                     return function ($768) {
                         return Data_Maybe.Just.create($767($768));
                     };
@@ -1611,7 +1610,7 @@ let unionWith = function (dictOrd) {
     };
 };
 let union = function (dictOrd) {
-    return unionWith(dictOrd)(Data_Functor._const);
+    return unionWith(dictOrd)(data._const);
 };
 let semigroupMap = function (dictOrd) {
     return new Data_Semigroup.Semigroup(union(dictOrd));

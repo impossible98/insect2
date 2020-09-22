@@ -9,7 +9,7 @@ let Data_Monoid_Dual = require("../Data.Monoid.Dual/index.js");
 let Data_Monoid_Endo = require("../Data.Monoid.Endo/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 
 
 class Control {
@@ -51,7 +51,7 @@ let apply = function (dict) {
 let applySecond = function (dictApply) {
 	return function (a) {
 		return function (b) {
-			return apply(dictApply)(Data_Functor.map(dictApply.Functor0())(Data_Functor._const(identity(categoryFn)))(a))(b);
+			return apply(dictApply)(data.map(dictApply.Functor0())(data._const(identity(categoryFn)))(a))(b);
 		};
 	};
 };
@@ -95,13 +95,13 @@ let traverseWithIndex_ = function (dictApplicative) {
 
 let forWithIndex_ = function (dictApplicative) {
     return function (dictFoldableWithIndex) {
-        return Data_Functor.flip(traverseWithIndex_(dictApplicative)(dictFoldableWithIndex));
+        return data.flip(traverseWithIndex_(dictApplicative)(dictFoldableWithIndex));
     };
 };
 
 let foldrDefault = function (dictFoldableWithIndex) {
     return function (f) {
-        return foldrWithIndex(dictFoldableWithIndex)(Data_Functor._const(f));
+        return foldrWithIndex(dictFoldableWithIndex)(data._const(f));
     };
 };
 
@@ -111,7 +111,7 @@ let foldlWithIndex = function (dict) {
 
 let foldlDefault = function (dictFoldableWithIndex) {
     return function (f) {
-        return foldlWithIndex(dictFoldableWithIndex)(Data_Functor._const(f));
+        return foldlWithIndex(dictFoldableWithIndex)(data._const(f));
     };
 };
 let foldableWithIndexMultiplicative = new FoldableWithIndex(function () {
@@ -209,7 +209,7 @@ let foldWithIndexM = function (dictFoldableWithIndex) {
                 return foldlWithIndex(dictFoldableWithIndex)(function (i) {
                     return function (ma) {
                         return function (b) {
-                            return control.bind(dictMonad.Bind1())(ma)(Data_Functor.flip(f(i))(b));
+                            return control.bind(dictMonad.Bind1())(ma)(data.flip(f(i))(b));
                         };
                     };
                 })(control.pure(dictMonad.Applicative0())(a0));
@@ -280,7 +280,7 @@ let foldlWithIndexDefault = function (dictFoldableWithIndex) {
         return function (u) {
             return function (xs) {
                 return Data_Newtype.unwrap(Data_Newtype.newtypeEndo)(Data_Newtype.unwrap(Data_Newtype.newtypeDual)(foldMapWithIndex(dictFoldableWithIndex)(Data_Monoid_Dual.monoidDual(Data_Monoid_Endo.monoidEndo(categoryFn)))(function (i) {
-                    let $55 = Data_Functor.flip(c(i));
+                    let $55 = data.flip(c(i));
                     return function ($56) {
                         return Data_Monoid_Dual.Dual(Data_Monoid_Endo.Endo($55($56)));
                     };
@@ -324,7 +324,7 @@ let surroundMapWithIndex = function (dictFoldableWithIndex) {
 let foldMapDefault = function (dictFoldableWithIndex) {
     return function (dictMonoid) {
         return function (f) {
-            return foldMapWithIndex(dictFoldableWithIndex)(dictMonoid)(Data_Functor._const(f));
+            return foldMapWithIndex(dictFoldableWithIndex)(dictMonoid)(data._const(f));
         };
     };
 };

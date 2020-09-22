@@ -1,5 +1,5 @@
 const control = require("../control");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Lazy = require("../Data.Lazy/index.js");
 let Data_List_Lazy = require("../Data.List.Lazy/index.js");
 let Data_List_Lazy_Types = require("../Data.List.Lazy.Types/index.js");
@@ -21,7 +21,7 @@ let toList = function (v) {
 };
 let toUnfoldable = function (dictUnfoldable) {
     let $54 = Data_Unfoldable.unfoldr(dictUnfoldable)(function (xs) {
-        return Data_Functor.map(Data_Maybe.functorMaybe)(function (rec) {
+        return data.map(Data_Maybe.functorMaybe)(function (rec) {
             return new Data_Tuple.Tuple(rec.head, rec.tail);
         })(Data_List_Lazy.uncons(xs));
     });
@@ -82,7 +82,7 @@ let fromFoldable = function (dictFoldable) {
         return fromList($56($57));
     };
 };
-let concatMap = Data_Functor.flip(control.bind(Data_List_Lazy_Types.bindNonEmptyList));
+let concatMap = data.flip(control.bind(Data_List_Lazy_Types.bindNonEmptyList));
 let appendFoldable = function (dictFoldable) {
     return function (nel) {
         return function (ys) {

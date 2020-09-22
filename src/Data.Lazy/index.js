@@ -4,7 +4,6 @@ let Data_Bounded = require("../Data.Bounded/index.js");
 const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_FoldableWithIndex = require("../Data.FoldableWithIndex/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_Functor_Invariant = require("../Data.Functor.Invariant/index.js");
 let Data_FunctorWithIndex = require("../Data.FunctorWithIndex/index.js");
 let Data_HeytingAlgebra = require("../Data.HeytingAlgebra/index.js");
@@ -126,7 +125,7 @@ let lazyLazy = new control.Lazy(function (f) {
 		return force(f({}));
 	});
 });
-let functorLazy = new Data_Functor.Functor(function (f) {
+let functorLazy = new data.Functor(function (f) {
 	return function (l) {
 		return defer(function (v) {
 			return f(force(l));
@@ -136,7 +135,7 @@ let functorLazy = new Data_Functor.Functor(function (f) {
 let functorWithIndexLazy = new Data_FunctorWithIndex.FunctorWithIndex(function () {
 	return functorLazy;
 }, function (f) {
-	return Data_Functor.map(functorLazy)(f({}));
+	return data.map(functorLazy)(f({}));
 });
 let invariantLazy = new Data_Functor_Invariant.Invariant(Data_Functor_Invariant.imapF(functorLazy));
 let foldableLazy = new Data_Foldable.Foldable(function (dictMonoid) {
@@ -175,15 +174,15 @@ let traversableLazy = new Data_Traversable.Traversable(function () {
 	return functorLazy;
 }, function (dictApplicative) {
 	return function (l) {
-		return Data_Functor.map((dictApplicative.Apply0()).Functor0())(function ($42) {
-			return defer(Data_Functor._const($42));
+		return data.map((dictApplicative.Apply0()).Functor0())(function ($42) {
+			return defer(data._const($42));
 		})(force(l));
 	};
 }, function (dictApplicative) {
 	return function (f) {
 		return function (l) {
-			return Data_Functor.map((dictApplicative.Apply0()).Functor0())(function ($43) {
-				return defer(Data_Functor._const($43));
+			return data.map((dictApplicative.Apply0()).Functor0())(function ($43) {
+				return defer(data._const($43));
 			})(f(force(l)));
 		};
 	};
@@ -216,15 +215,15 @@ let traversable1Lazy = new Data_Semigroup_Traversable.Traversable1(function () {
 	return traversableLazy;
 }, function (dictApply) {
 	return function (l) {
-		return Data_Functor.map(dictApply.Functor0())(function ($44) {
-			return defer(Data_Functor._const($44));
+		return data.map(dictApply.Functor0())(function ($44) {
+			return defer(data._const($44));
 		})(force(l));
 	};
 }, function (dictApply) {
 	return function (f) {
 		return function (l) {
-			return Data_Functor.map(dictApply.Functor0())(function ($45) {
-				return defer(Data_Functor._const($45));
+			return data.map(dictApply.Functor0())(function ($45) {
+				return defer(data._const($45));
 			})(f(force(l)));
 		};
 	};
@@ -322,20 +321,20 @@ let bindLazy = new control.Bind(function () {
 let heytingAlgebraLazy = function (dictHeytingAlgebra) {
 	return new Data_HeytingAlgebra.HeytingAlgebra(function (a) {
 		return function (b) {
-			return apply(applyLazy)(Data_Functor.map(functorLazy)(Data_HeytingAlgebra.conj(dictHeytingAlgebra))(a))(b);
+			return apply(applyLazy)(data.map(functorLazy)(Data_HeytingAlgebra.conj(dictHeytingAlgebra))(a))(b);
 		};
 	}, function (a) {
 		return function (b) {
-			return apply(applyLazy)(Data_Functor.map(functorLazy)(Data_HeytingAlgebra.disj(dictHeytingAlgebra))(a))(b);
+			return apply(applyLazy)(data.map(functorLazy)(Data_HeytingAlgebra.disj(dictHeytingAlgebra))(a))(b);
 		};
 	}, defer(function (v) {
 		return Data_HeytingAlgebra.ff(dictHeytingAlgebra);
 	}), function (a) {
 		return function (b) {
-			return apply(applyLazy)(Data_Functor.map(functorLazy)(Data_HeytingAlgebra.implies(dictHeytingAlgebra))(a))(b);
+			return apply(applyLazy)(data.map(functorLazy)(Data_HeytingAlgebra.implies(dictHeytingAlgebra))(a))(b);
 		};
 	}, function (a) {
-		return Data_Functor.map(functorLazy)(Data_HeytingAlgebra.not(dictHeytingAlgebra))(a);
+		return data.map(functorLazy)(Data_HeytingAlgebra.not(dictHeytingAlgebra))(a);
 	}, defer(function (v) {
 		return Data_HeytingAlgebra.tt(dictHeytingAlgebra);
 	}));

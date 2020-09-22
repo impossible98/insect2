@@ -2,7 +2,6 @@ const control = require("../control");
 const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_FoldableWithIndex = require("../Data.FoldableWithIndex/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_Functor_Invariant = require("../Data.Functor.Invariant/index.js");
 let Data_FunctorWithIndex = require("../Data.FunctorWithIndex/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
@@ -60,7 +59,7 @@ let lazyIdentity = function (dictLazy) {
 let heytingAlgebraIdentity = function (dictHeytingAlgebra) {
     return dictHeytingAlgebra;
 };
-let functorIdentity = new Data_Functor.Functor(function (f) {
+let functorIdentity = new data.Functor(function (f) {
     return function (m) {
         return f(m);
     };
@@ -119,12 +118,12 @@ let traversableIdentity = new Data_Traversable.Traversable(function () {
     return functorIdentity;
 }, function (dictApplicative) {
     return function (v) {
-        return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Identity)(v);
+        return data.map((dictApplicative.Apply0()).Functor0())(Identity)(v);
     };
 }, function (dictApplicative) {
     return function (f) {
         return function (v) {
-            return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Identity)(f(v));
+            return data.map((dictApplicative.Apply0()).Functor0())(Identity)(f(v));
         };
     };
 });
@@ -137,7 +136,7 @@ let traversableWithIndexIdentity = new Data_TraversableWithIndex.TraversableWith
 }, function (dictApplicative) {
     return function (f) {
         return function (v) {
-            return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Identity)(f({})(v));
+            return data.map((dictApplicative.Apply0()).Functor0())(Identity)(f({})(v));
         };
     };
 });
@@ -160,12 +159,12 @@ let traversable1Identity = new Data_Semigroup_Traversable.Traversable1(function 
     return traversableIdentity;
 }, function (dictApply) {
     return function (v) {
-        return Data_Functor.map(dictApply.Functor0())(Identity)(v);
+        return data.map(dictApply.Functor0())(Identity)(v);
     };
 }, function (dictApply) {
     return function (f) {
         return function (v) {
-            return Data_Functor.map(dictApply.Functor0())(Identity)(f(v));
+            return data.map(dictApply.Functor0())(Identity)(f(v));
         };
     };
 });

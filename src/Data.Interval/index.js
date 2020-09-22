@@ -4,7 +4,6 @@ let Data_Bifunctor = require("../Data.Bifunctor/index.js");
 let Data_Bitraversable = require("../Data.Bitraversable/index.js");
 const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
 let Data_Ordering = require("../Data.Ordering/index.js");
@@ -133,7 +132,7 @@ let showRecurringInterval = function (dictShow) {
 let over = function (dictFunctor) {
     return function (f) {
         return function (v) {
-            return Data_Functor.map(dictFunctor)(RecurringInterval.create(v.value0))(f(v.value1));
+            return data.map(dictFunctor)(RecurringInterval.create(v.value0))(f(v.value1));
         };
     };
 };
@@ -313,7 +312,7 @@ let bifunctorRecurringInterval = new Data_Bifunctor.Bifunctor(function (f) {
         };
     };
 });
-let functorInterval = new Data_Functor.Functor(Data_Bifunctor.bimap(bifunctorInterval)(identity(categoryFn)));
+let functorInterval = new data.Functor(Data_Bifunctor.bimap(bifunctorInterval)(identity(categoryFn)));
 let extendInterval = new control.Extend(function () {
     return functorInterval;
 }, function (f) {
@@ -333,16 +332,16 @@ let extendInterval = new control.Extend(function () {
         throw new Error("Failed pattern match at Data.Interval (line 111, column 1 - line 115, column 45): " + [ f.constructor.name, v.constructor.name ]);
     };
 });
-let functorRecurringInterval = new Data_Functor.Functor(function (f) {
+let functorRecurringInterval = new data.Functor(function (f) {
     return function (v) {
-        return new RecurringInterval(v.value0, Data_Functor.map(functorInterval)(f)(v.value1));
+        return new RecurringInterval(v.value0, data.map(functorInterval)(f)(v.value1));
     };
 });
 let extendRecurringInterval = new control.Extend(function () {
     return functorRecurringInterval;
 }, function (f) {
     return function (v) {
-        return new RecurringInterval(v.value0, control.extend(extendInterval)(Data_Functor._const(f(v)))(v.value1));
+        return new RecurringInterval(v.value0, control.extend(extendInterval)(data._const(f(v)))(v.value1));
     };
 });
 let traversableInterval = new Data_Traversable.Traversable(function () {
@@ -355,13 +354,13 @@ let traversableInterval = new Data_Traversable.Traversable(function () {
     return function (v) {
         return function (v1) {
             if (v1 instanceof StartEnd) {
-                return apply(dictApplicative.Apply0())(Data_Functor.map((dictApplicative.Apply0()).Functor0())(StartEnd.create)(v(v1.value0)))(v(v1.value1));
+                return apply(dictApplicative.Apply0())(data.map((dictApplicative.Apply0()).Functor0())(StartEnd.create)(v(v1.value0)))(v(v1.value1));
             };
             if (v1 instanceof DurationEnd) {
-                return Data_Functor.mapFlipped((dictApplicative.Apply0()).Functor0())(v(v1.value1))(DurationEnd.create(v1.value0));
+                return data.mapFlipped((dictApplicative.Apply0()).Functor0())(v(v1.value1))(DurationEnd.create(v1.value0));
             };
             if (v1 instanceof StartDuration) {
-                return Data_Functor.mapFlipped((dictApplicative.Apply0()).Functor0())(v(v1.value0))(function (v2) {
+                return data.mapFlipped((dictApplicative.Apply0()).Functor0())(v(v1.value0))(function (v2) {
                     return new StartDuration(v2, v1.value1);
                 });
             };
@@ -442,16 +441,16 @@ let bitraversableInterval = new Data_Bitraversable.Bitraversable(function () {
         return function (v1) {
             return function (v2) {
                 if (v2 instanceof StartEnd) {
-                    return apply(dictApplicative.Apply0())(Data_Functor.map((dictApplicative.Apply0()).Functor0())(StartEnd.create)(v1(v2.value0)))(v1(v2.value1));
+                    return apply(dictApplicative.Apply0())(data.map((dictApplicative.Apply0()).Functor0())(StartEnd.create)(v1(v2.value0)))(v1(v2.value1));
                 };
                 if (v2 instanceof DurationEnd) {
-                    return apply(dictApplicative.Apply0())(Data_Functor.map((dictApplicative.Apply0()).Functor0())(DurationEnd.create)(v(v2.value0)))(v1(v2.value1));
+                    return apply(dictApplicative.Apply0())(data.map((dictApplicative.Apply0()).Functor0())(DurationEnd.create)(v(v2.value0)))(v1(v2.value1));
                 };
                 if (v2 instanceof StartDuration) {
-                    return apply(dictApplicative.Apply0())(Data_Functor.map((dictApplicative.Apply0()).Functor0())(StartDuration.create)(v1(v2.value0)))(v(v2.value1));
+                    return apply(dictApplicative.Apply0())(data.map((dictApplicative.Apply0()).Functor0())(StartDuration.create)(v1(v2.value0)))(v(v2.value1));
                 };
                 if (v2 instanceof DurationOnly) {
-                    return Data_Functor.map((dictApplicative.Apply0()).Functor0())(DurationOnly.create)(v(v2.value0));
+                    return data.map((dictApplicative.Apply0()).Functor0())(DurationOnly.create)(v(v2.value0));
                 };
                 throw new Error("Failed pattern match at Data.Interval (line 104, column 1 - line 109, column 33): " + [ v.constructor.name, v1.constructor.name, v2.constructor.name ]);
             };

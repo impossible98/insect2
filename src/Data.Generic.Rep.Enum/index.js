@@ -1,7 +1,6 @@
 let Data_Enum = require("../Data.Enum/index.js");
 let data = require("../data");
 
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_Generic_Rep = require("../Data.Generic.Rep/index.js");
 let Data_Generic_Rep_Bounded = require("../Data.Generic.Rep.Bounded/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
@@ -26,7 +25,7 @@ let genericToEnum$prime = function (dict) {
 };
 let genericToEnum = function (dictGeneric) {
     return function (dictGenericBoundedEnum) {
-        let $90 = Data_Functor.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.to(dictGeneric));
+        let $90 = data.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.to(dictGeneric));
         let $91 = genericToEnum$prime(dictGenericBoundedEnum);
         return function ($92) {
             return $90($91($92));
@@ -38,7 +37,7 @@ let genericSucc$prime = function (dict) {
 };
 let genericSucc = function (dictGeneric) {
     return function (dictGenericEnum) {
-        let $93 = Data_Functor.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.to(dictGeneric));
+        let $93 = data.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.to(dictGeneric));
         let $94 = genericSucc$prime(dictGenericEnum);
         let $95 = Data_Generic_Rep.from(dictGeneric);
         return function ($96) {
@@ -51,7 +50,7 @@ let genericPred$prime = function (dict) {
 };
 let genericPred = function (dictGeneric) {
     return function (dictGenericEnum) {
-        let $97 = Data_Functor.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.to(dictGeneric));
+        let $97 = data.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.to(dictGeneric));
         let $98 = genericPred$prime(dictGenericEnum);
         let $99 = Data_Generic_Rep.from(dictGeneric);
         return function ($100) {
@@ -77,7 +76,7 @@ let genericEnumSum = function (dictGenericEnum) {
             return function (dictGenericBottom) {
                 return new GenericEnum(function (v) {
                     if (v instanceof Data_Generic_Rep.Inl) {
-                        return Data_Functor.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.Inl.create)(genericPred$prime(dictGenericEnum)(v.value0));
+                        return data.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.Inl.create)(genericPred$prime(dictGenericEnum)(v.value0));
                     };
                     if (v instanceof Data_Generic_Rep.Inr) {
                         let v1 = genericPred$prime(dictGenericEnum1)(v.value0);
@@ -102,7 +101,7 @@ let genericEnumSum = function (dictGenericEnum) {
                         throw new Error("Failed pattern match at Data.Generic.Rep.Enum (line 34, column 14 - line 36, column 31): " + [ v1.constructor.name ]);
                     };
                     if (v instanceof Data_Generic_Rep.Inr) {
-                        return Data_Functor.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.Inr.create)(genericSucc$prime(dictGenericEnum1)(v.value0));
+                        return data.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.Inr.create)(genericSucc$prime(dictGenericEnum1)(v.value0));
                     };
                     throw new Error("Failed pattern match at Data.Generic.Rep.Enum (line 33, column 18 - line 37, column 36): " + [ v.constructor.name ]);
                 });
@@ -122,7 +121,7 @@ let genericEnumProduct = function (dictGenericEnum) {
                                 return Data_Maybe.Just.create(new Data_Generic_Rep.Product(v.value0, v1.value0));
                             };
                             if (v1 instanceof Data_Maybe.Nothing) {
-                                return Data_Functor.map(Data_Maybe.functorMaybe)(Data_Functor.flip(Data_Generic_Rep.Product.create)(Data_Generic_Rep_Bounded["genericTop'"](dictGenericTop1)))(genericPred$prime(dictGenericEnum)(v.value0));
+                                return data.map(Data_Maybe.functorMaybe)(data.flip(Data_Generic_Rep.Product.create)(Data_Generic_Rep_Bounded["genericTop'"](dictGenericTop1)))(genericPred$prime(dictGenericEnum)(v.value0));
                             };
                             throw new Error("Failed pattern match at Data.Generic.Rep.Enum (line 40, column 32 - line 42, column 59): " + [ v1.constructor.name ]);
                         }, function (v) {
@@ -131,7 +130,7 @@ let genericEnumProduct = function (dictGenericEnum) {
                                 return Data_Maybe.Just.create(new Data_Generic_Rep.Product(v.value0, v1.value0));
                             };
                             if (v1 instanceof Data_Maybe.Nothing) {
-                                return Data_Functor.map(Data_Maybe.functorMaybe)(Data_Functor.flip(Data_Generic_Rep.Product.create)(Data_Generic_Rep_Bounded["genericBottom'"](dictGenericBottom1)))(genericSucc$prime(dictGenericEnum)(v.value0));
+                                return data.map(Data_Maybe.functorMaybe)(data.flip(Data_Generic_Rep.Product.create)(Data_Generic_Rep_Bounded["genericBottom'"](dictGenericBottom1)))(genericSucc$prime(dictGenericEnum)(v.value0));
                             };
                             throw new Error("Failed pattern match at Data.Generic.Rep.Enum (line 43, column 32 - line 45, column 62): " + [ v1.constructor.name ]);
                         });
@@ -148,16 +147,16 @@ let genericEnumNoArguments = new GenericEnum(function (v) {
 });
 let genericEnumConstructor = function (dictGenericEnum) {
     return new GenericEnum(function (v) {
-        return Data_Functor.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.Constructor)(genericPred$prime(dictGenericEnum)(v));
+        return data.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.Constructor)(genericPred$prime(dictGenericEnum)(v));
     }, function (v) {
-        return Data_Functor.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.Constructor)(genericSucc$prime(dictGenericEnum)(v));
+        return data.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.Constructor)(genericSucc$prime(dictGenericEnum)(v));
     });
 };
 let genericEnumArgument = function (dictEnum) {
     return new GenericEnum(function (v) {
-        return Data_Functor.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.Argument)(Data_Enum.pred(dictEnum)(v));
+        return data.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.Argument)(Data_Enum.pred(dictEnum)(v));
     }, function (v) {
-        return Data_Functor.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.Argument)(Data_Enum.succ(dictEnum)(v));
+        return data.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.Argument)(Data_Enum.succ(dictEnum)(v));
     });
 };
 let genericCardinality$prime = function (dict) {
@@ -181,10 +180,10 @@ let genericBoundedEnumSum = function (dictGenericBoundedEnum) {
         }, function (n) {
             let to = function (v) {
                 if (n >= 0 && n < v) {
-                    return Data_Functor.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.Inl.create)(genericToEnum$prime(dictGenericBoundedEnum)(n));
+                    return data.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.Inl.create)(genericToEnum$prime(dictGenericBoundedEnum)(n));
                 };
                 if (true) {
-                    return Data_Functor.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.Inr.create)(genericToEnum$prime(dictGenericBoundedEnum1)(n - v | 0));
+                    return data.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.Inr.create)(genericToEnum$prime(dictGenericBoundedEnum1)(n - v | 0));
                 };
                 throw new Error("Failed pattern match at Data.Generic.Rep.Enum (line 83, column 5 - line 83, column 43): " + [ v.constructor.name ]);
             };
@@ -203,7 +202,7 @@ let genericBoundedEnumProduct = function (dictGenericBoundedEnum) {
             return from(genericCardinality$prime(dictGenericBoundedEnum1));
         })(), function (n) {
             let to = function (v) {
-                return apply(Data_Maybe.applyMaybe)(Data_Functor.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.Product.create)(genericToEnum$prime(dictGenericBoundedEnum)(data.div(data.euclideanRingInt)(n)(v))))(genericToEnum$prime(dictGenericBoundedEnum1)(data.mod(data.euclideanRingInt)(n)(v)));
+                return apply(Data_Maybe.applyMaybe)(data.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.Product.create)(genericToEnum$prime(dictGenericBoundedEnum)(data.div(data.euclideanRingInt)(n)(v))))(genericToEnum$prime(dictGenericBoundedEnum1)(data.mod(data.euclideanRingInt)(n)(v)));
             };
             return to(genericCardinality$prime(dictGenericBoundedEnum1));
         });
@@ -222,14 +221,14 @@ let genericBoundedEnumConstructor = function (dictGenericBoundedEnum) {
     return new GenericBoundedEnum(Data_Newtype.unwrap(Data_Enum.newtypeCardinality)(genericCardinality$prime(dictGenericBoundedEnum)), function (v) {
         return genericFromEnum$prime(dictGenericBoundedEnum)(v);
     }, function (i) {
-        return Data_Functor.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.Constructor)(genericToEnum$prime(dictGenericBoundedEnum)(i));
+        return data.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.Constructor)(genericToEnum$prime(dictGenericBoundedEnum)(i));
     });
 };
 let genericBoundedEnumArgument = function (dictBoundedEnum) {
     return new GenericBoundedEnum(Data_Newtype.unwrap(Data_Enum.newtypeCardinality)(Data_Enum.cardinality(dictBoundedEnum)), function (v) {
         return Data_Enum.fromEnum(dictBoundedEnum)(v);
     }, function (i) {
-        return Data_Functor.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.Argument)(Data_Enum.toEnum(dictBoundedEnum)(i));
+        return data.map(Data_Maybe.functorMaybe)(Data_Generic_Rep.Argument)(Data_Enum.toEnum(dictBoundedEnum)(i));
     });
 };
 

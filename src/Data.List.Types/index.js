@@ -4,7 +4,6 @@ let Control_MonadZero = require("../Control.MonadZero/index.js");
 const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_FoldableWithIndex = require("../Data.FoldableWithIndex/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_FunctorWithIndex = require("../Data.FunctorWithIndex/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Monoid = require("../Data.Monoid/index.js");
@@ -112,7 +111,7 @@ let lift2 = function (dictApply) {
 	return function (f) {
 		return function (a) {
 			return function (b) {
-				return apply(dictApply)(Data_Functor.map(dictApply.Functor0())(f)(a))(b);
+				return apply(dictApply)(data.map(dictApply.Functor0())(f)(a))(b);
 			};
 		};
 	};
@@ -203,7 +202,7 @@ let listMap = function (f) {
 	};
 	return chunkedRevMap(Nil.value);
 };
-let functorList = new Data_Functor.Functor(listMap);
+let functorList = new data.Functor(listMap);
 let functorNonEmptyList = Data_NonEmpty.functorNonEmpty(functorList);
 let foldableList = new Data_Foldable.Foldable(function (dictMonoid) {
 	return function (f) {
@@ -241,8 +240,8 @@ let foldableList = new Data_Foldable.Foldable(function (dictMonoid) {
 	return go;
 }, function (f) {
 	return function (b) {
-		let rev = Data_Foldable.foldl(foldableList)(Data_Functor.flip(Cons.create))(Nil.value);
-		let $204 = Data_Foldable.foldl(foldableList)(Data_Functor.flip(f))(b);
+		let rev = Data_Foldable.foldl(foldableList)(data.flip(Cons.create))(Nil.value);
+		let $204 = Data_Foldable.foldl(foldableList)(data.flip(f))(b);
 		return function ($205) {
 			return $204(rev($205));
 		};
@@ -370,7 +369,7 @@ let showList = function (dictShow) {
 		if (v instanceof Nil) {
 			return "Nil";
 		};
-		return "(" + (Data_Foldable.intercalate(foldableList)(Data_Monoid.monoidString)(" : ")(Data_Functor.map(functorList)(Data_Show.show(dictShow))(v)) + " : Nil)");
+		return "(" + (Data_Foldable.intercalate(foldableList)(Data_Monoid.monoidString)(" : ")(data.map(functorList)(Data_Show.show(dictShow))(v)) + " : Nil)");
 	});
 };
 let showNonEmptyList = function (dictShow) {
@@ -386,9 +385,9 @@ let traversableList = new Data_Traversable.Traversable(function () {
 	return Data_Traversable.traverse(traversableList)(dictApplicative)(identity(categoryFn));
 }, function (dictApplicative) {
 	return function (f) {
-		let $219 = Data_Functor.map((dictApplicative.Apply0()).Functor0())(Data_Foldable.foldl(foldableList)(Data_Functor.flip(Cons.create))(Nil.value));
+		let $219 = data.map((dictApplicative.Apply0()).Functor0())(Data_Foldable.foldl(foldableList)(data.flip(Cons.create))(Nil.value));
 		let $220 = Data_Foldable.foldl(foldableList)(function (acc) {
-			let $222 = lift2(dictApplicative.Apply0())(Data_Functor.flip(Cons.create))(acc);
+			let $222 = lift2(dictApplicative.Apply0())(data.flip(Cons.create))(acc);
 			return function ($223) {
 				return $222(f($223));
 			};
@@ -407,11 +406,11 @@ let traversableWithIndexList = new Data_TraversableWithIndex.TraversableWithInde
 	return traversableList;
 }, function (dictApplicative) {
 	return function (f) {
-		let rev = Data_Foldable.foldl(foldableList)(Data_Functor.flip(Cons.create))(Nil.value);
-		let $224 = Data_Functor.map((dictApplicative.Apply0()).Functor0())(rev);
+		let rev = Data_Foldable.foldl(foldableList)(data.flip(Cons.create))(Nil.value);
+		let $224 = data.map((dictApplicative.Apply0()).Functor0())(rev);
 		let $225 = Data_FoldableWithIndex.foldlWithIndex(foldableWithIndexList)(function (i) {
 			return function (acc) {
-				let $227 = lift2(dictApplicative.Apply0())(Data_Functor.flip(Cons.create))(acc);
+				let $227 = lift2(dictApplicative.Apply0())(data.flip(Cons.create))(acc);
 				let $228 = f(i);
 				return function ($229) {
 					return $227($228($229));
@@ -432,7 +431,7 @@ let traversableWithIndexNonEmptyList = new Data_TraversableWithIndex.Traversable
 }, function (dictApplicative) {
 	return function (f) {
 		return function (v) {
-			return Data_Functor.map((dictApplicative.Apply0()).Functor0())(NonEmptyList)(Data_TraversableWithIndex.traverseWithIndex(Data_NonEmpty.traversableWithIndexNonEmpty(traversableWithIndexList))(dictApplicative)((function () {
+			return data.map((dictApplicative.Apply0()).Functor0())(NonEmptyList)(Data_TraversableWithIndex.traverseWithIndex(Data_NonEmpty.traversableWithIndexNonEmpty(traversableWithIndexList))(dictApplicative)((function () {
 				let $230 = Data_Maybe.maybe(0)(add(semiringInt)(1));
 				return function ($231) {
 					return f($230($231));
@@ -457,7 +456,7 @@ let unfoldable1List = new Data_Unfoldable1.Unfoldable1(function (f) {
 					};
 					if (v.value1 instanceof Data_Maybe.Nothing) {
 						$tco_done = true;
-						return Data_Foldable.foldl(foldableList)(Data_Functor.flip(Cons.create))(Nil.value)(new Cons(v.value0, memo));
+						return Data_Foldable.foldl(foldableList)(data.flip(Cons.create))(Nil.value)(new Cons(v.value0, memo));
 					};
 					throw new Error("Failed pattern match at Data.List.Types (line 133, column 22 - line 135, column 61): " + [v.constructor.name]);
 				};
@@ -483,7 +482,7 @@ let unfoldableList = new Data_Unfoldable.Unfoldable(function () {
 					let v = f(source);
 					if (v instanceof Data_Maybe.Nothing) {
 						$tco_done = true;
-						return Data_Foldable.foldl(foldableList)(Data_Functor.flip(Cons.create))(Nil.value)(memo);
+						return Data_Foldable.foldl(foldableList)(data.flip(Cons.create))(Nil.value)(memo);
 					};
 					if (v instanceof Data_Maybe.Just) {
 						$tco_var_source = v.value0.value1;
@@ -657,7 +656,7 @@ let applyList = new Apply(function () {
 			return Nil.value;
 		};
 		if (v instanceof Cons) {
-			return Data_Semigroup.append(semigroupList)(Data_Functor.map(functorList)(v.value0)(v1))(apply(applyList)(v.value1)(v1));
+			return Data_Semigroup.append(semigroupList)(data.map(functorList)(v.value0)(v1))(apply(applyList)(v.value1)(v1));
 		};
 		throw new Error("Failed pattern match at Data.List.Types (line 155, column 1 - line 157, column 48): " + [v.constructor.name, v1.constructor.name]);
 	};
@@ -746,13 +745,13 @@ let traversable1NonEmptyList = new Data_Semigroup_Traversable.Traversable1(funct
 }, function (dictApply) {
 	return function (f) {
 		return function (v) {
-			return Data_Functor.mapFlipped(dictApply.Functor0())(Data_Foldable.foldl(foldableList)(function (acc) {
-				let $235 = lift2(dictApply)(Data_Functor.flip(nelCons))(acc);
+			return data.mapFlipped(dictApply.Functor0())(Data_Foldable.foldl(foldableList)(function (acc) {
+				let $235 = lift2(dictApply)(data.flip(nelCons))(acc);
 				return function ($236) {
 					return $235(f($236));
 				};
-			})(Data_Functor.map(dictApply.Functor0())(control.pure(applicativeNonEmptyList))(f(v.value0)))(v.value1))(function (v1) {
-				return Data_Foldable.foldl(foldableList)(Data_Functor.flip(nelCons))(control.pure(applicativeNonEmptyList)(v1.value0))(v1.value1);
+			})(data.map(dictApply.Functor0())(control.pure(applicativeNonEmptyList))(f(v.value0)))(v.value1))(function (v1) {
+				return Data_Foldable.foldl(foldableList)(data.flip(nelCons))(control.pure(applicativeNonEmptyList)(v1.value0))(v1.value1);
 			});
 		};
 	};
