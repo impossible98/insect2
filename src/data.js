@@ -3,60 +3,59 @@ let type = require("./type");
 
 
 let SProxy = (function () {
-	function SProxy() {
+	function SProxy() { };
 
-	};
 	SProxy.value = new SProxy();
+
 	return SProxy;
 })();
 
-let reflectSymbol = function (dict) {
-	return dict.reflectSymbol;
-};
 
-let intAdd = function (x) {
+
+function intAdd(x) {
 	return function (y) {
 		return x + y | 0;
 	};
-};
+}
 
-let intMul = function (x) {
+function intMul(x) {
 	return function (y) {
 		return x * y | 0;
 	};
-};
+}
 
-let numAdd = function (n1) {
+function numAdd(n1) {
 	return function (n2) {
 		return n1 + n2;
 	};
-};
+}
 
-let numMul = function (n1) {
+function numMul(n1) {
 	return function (n2) {
 		return n1 * n2;
 	};
-};
+}
 
+class SemiringRecord {
+	constructor(addRecord, mulRecord, oneRecord, zeroRecord) {
+		this.addRecord = addRecord;
+		this.mulRecord = mulRecord;
+		this.oneRecord = oneRecord;
+		this.zeroRecord = zeroRecord;
+	}
+}
 
-let SemiringRecord = function (addRecord, mulRecord, oneRecord, zeroRecord) {
-	this.addRecord = addRecord;
-	this.mulRecord = mulRecord;
-	this.oneRecord = oneRecord;
-	this.zeroRecord = zeroRecord;
-};
 let Semiring = function (add, mul, one, zero) {
 	this.add = add;
 	this.mul = mul;
 	this.one = one;
 	this.zero = zero;
 };
-let zeroRecord = function (dict) {
-	return dict.zeroRecord;
-};
-let zero = function (dict) {
-	return dict.zero;
-};
+
+function dict(arg) {
+	return arg.dict;
+}
+
 let semiringUnit = new Semiring(function (v) {
 	return function (v1) {
 		return {};
@@ -66,6 +65,7 @@ let semiringUnit = new Semiring(function (v) {
 		return {};
 	};
 }, {}, {});
+
 let semiringRecordNil = new SemiringRecord(function (v) {
 	return function (v1) {
 		return function (v2) {
@@ -92,9 +92,7 @@ let semiringInt = new Semiring(intAdd, intMul, 1, 0);
 let oneRecord = function (dict) {
 	return dict.oneRecord;
 };
-let one = function (dict) {
-	return dict.one;
-};
+
 let mulRecord = function (dict) {
 	return dict.mulRecord;
 };
@@ -106,17 +104,15 @@ let addRecord = function (dict) {
 };
 let semiringRecord = function (dictRowToList) {
 	return function (dictSemiringRecord) {
-		return new Semiring(addRecord(dictSemiringRecord)(type.RLProxy.value), mulRecord(dictSemiringRecord)(type.RLProxy.value), oneRecord(dictSemiringRecord)(type.RLProxy.value)(type.RProxy.value), zeroRecord(dictSemiringRecord)(type.RLProxy.value)(type.RProxy.value));
+		return new Semiring(addRecord(dictSemiringRecord)(type.RLProxy.value), mulRecord(dictSemiringRecord)(type.RLProxy.value), oneRecord(dictSemiringRecord)(type.RLProxy.value)(type.RProxy.value), dict(dictSemiringRecord)(type.RLProxy.value)(type.RProxy.value));
 	};
 };
-let add = function (dict) {
-	return dict.add;
-};
+
 let semiringFn = function (dictSemiring) {
 	return new Semiring(function (f) {
 		return function (g) {
 			return function (x) {
-				return add(dictSemiring)(f(x))(g(x));
+				return dict(dictSemiring)(f(x))(g(x));
 			};
 		};
 	}, function (f) {
@@ -126,9 +122,9 @@ let semiringFn = function (dictSemiring) {
 			};
 		};
 	}, function (v) {
-		return one(dictSemiring);
+		return dict(dictSemiring);
 	}, function (v) {
-		return zero(dictSemiring);
+		return dict(dictSemiring);
 	});
 };
 
@@ -190,7 +186,7 @@ let ringRecordCons = function (dictIsSymbol) {
 					return function (ra) {
 						return function (rb) {
 							let tail = subRecord(dictRingRecord)(type.RLProxy.value)(ra)(rb);
-							let key = reflectSymbol(dictIsSymbol)(SProxy.value);
+							let key = dict(dictIsSymbol)(SProxy.value);
 							let insert = record.unsafeSet(key);
 							let get = record.unsafeGet(key);
 							return insert(sub(dictRing)(get(ra))(get(rb)))(tail);
@@ -227,7 +223,7 @@ let ringFn = function (dictRing) {
 };
 let negate = function (dictRing) {
 	return function (a) {
-		return sub(dictRing)(zero(dictRing.Semiring0()))(a);
+		return sub(dictRing)(dict(dictRing.Semiring0()))(a);
 	};
 };
 
