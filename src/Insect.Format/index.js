@@ -34,70 +34,61 @@ let categoryFn = new Category(() => {
 	return x;
 });
 
-
 let Normal = (() => {
-	function Normal() {
-
-	};
+	function Normal() {};
 	Normal.value = new Normal();
 	return Normal;
 })();
 
 let Optional = (() => {
-	function Optional() {
-
-	};
+	function Optional() {};
 	Optional.value = new Optional();
 	return Optional;
 })();
 
 let FTText = (() => {
-	function FTText() {
-
-	};
+	function FTText() {};
 	FTText.value = new FTText();
 	return FTText;
 })();
-let FTEmphasized = (() => {
-	function FTEmphasized() {
 
-	};
+let FTEmphasized = (() => {
+	function FTEmphasized() {};
 	FTEmphasized.value = new FTEmphasized();
 	return FTEmphasized;
 })();
-let FTError = (() => {
-	function FTError() {
 
-	};
+let FTError = (() => {
+	function FTError() {};
 	FTError.value = new FTError();
 	return FTError;
 })();
-let FTValue = (() => {
-	function FTValue() {
 
-	};
+let FTValue = (() => {
+	function FTValue() {};
 	FTValue.value = new FTValue();
 	return FTValue;
 })();
-let FTIdentifier = (() => {
-	function FTIdentifier() {
 
-	};
+let FTIdentifier = (() => {
+	function FTIdentifier() {};
+
 	FTIdentifier.value = new FTIdentifier();
 	return FTIdentifier;
 })();
-let FTFunction = (() => {
-	function FTFunction() {
 
-	};
+let FTFunction = (() => {
+	function FTFunction() {};
+
 	FTFunction.value = new FTFunction();
 	return FTFunction;
 })();
-let FTUnit = (() => {
-	function FTUnit() {
 
-	};
+let FTUnit = (() => {
+	function FTUnit() {};
+
 	FTUnit.value = new FTUnit();
+
 	return FTUnit;
 })();
 
@@ -124,6 +115,7 @@ let ident = Formatted.create(Normal.value)(FTIdentifier.value);
 let _function = Formatted.create(Normal.value)(FTFunction.value);
 let error = Formatted.create(Normal.value)(FTError.value);
 let emph = Formatted.create(Normal.value)(FTEmphasized.value);
+
 let nl = text("\x0a");
 
 function uncurry(fmt) {

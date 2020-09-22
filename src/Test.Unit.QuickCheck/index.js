@@ -97,7 +97,7 @@ let mkSeed = function (x) {
 	};
 	return ensureBetween(seedMin)(seedMax)(x);
 };
-let randomSeed = Data_Functor.map(Effect.functorEffect)(mkSeed)(.randomInt(seedMin)(seedMax));
+let randomSeed = Data_Functor.map(Effect.functorEffect)(mkSeed)(randomInt(seedMin)(seedMax));
 let lcgC = 0;
 let lcgA = 48271;
 
