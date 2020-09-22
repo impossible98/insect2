@@ -1,5 +1,5 @@
 const control = require("../control");
-let data = require("../data");
+const data = require('../data');
 
 
 class Control {

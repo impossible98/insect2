@@ -2,7 +2,7 @@ let $foreign = require("./foreign.js");
 
 const control = require("../control");
 let Data_Either = require("../Data.Either/index.js");
-let data = require("../data");
+const data = require('../data');
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Show = require("../Data.Show/index.js");
 let Effect = require("../Effect/index.js");

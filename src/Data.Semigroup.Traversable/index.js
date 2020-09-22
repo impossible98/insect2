@@ -1,5 +1,5 @@
 
-let data = require("../data");
+const data = require('../data');
 let Data_Monoid_Dual = require("../Data.Monoid.Dual/index.js");
 let Data_Monoid_Multiplicative = require("../Data.Monoid.Multiplicative/index.js");
 let Data_Semigroup_Foldable = require("../Data.Semigroup.Foldable/index.js");

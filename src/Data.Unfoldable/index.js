@@ -1,6 +1,6 @@
 let $foreign = require("./foreign.js");
 
-let data = require("../data");
+const data = require('../data');
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Traversable = require("../Data.Traversable/index.js");
 let Data_Tuple = require("../Data.Tuple/index.js");

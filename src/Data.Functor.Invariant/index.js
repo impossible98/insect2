@@ -1,5 +1,5 @@
 
-let data = require("../data");
+const data = require('../data');
 
 let Invariant = function (imap) {
     this.imap = imap;

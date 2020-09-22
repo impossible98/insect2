@@ -1,6 +1,6 @@
 let Data_Array = require("../Data.Array/index.js");
 let Data_Bounded = require("../Data.Bounded/index.js");
-let data = require("../data");
+const data = require('../data');
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Ordering = require("../Data.Ordering/index.js");
 let Data_Show = require("../Data.Show/index.js");

@@ -1,6 +1,6 @@
 const control = require("../control");
 
-let data = require("../data");
+const data = require('../data');
 let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
 

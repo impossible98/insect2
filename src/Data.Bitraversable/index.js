@@ -6,7 +6,7 @@ let Data_Bifunctor_Flip = require("../Data.Bifunctor.Flip/index.js");
 let Data_Bifunctor_Joker = require("../Data.Bifunctor.Joker/index.js");
 let Data_Bifunctor_Product = require("../Data.Bifunctor.Product/index.js");
 let Data_Bifunctor_Wrap = require("../Data.Bifunctor.Wrap/index.js");
-let data = require("../data");
+const data = require('../data');
 let Data_Traversable = require("../Data.Traversable/index.js");
 
 

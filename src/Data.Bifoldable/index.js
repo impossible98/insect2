@@ -7,7 +7,7 @@ let Data_Monoid_Dual = require("../Data.Monoid.Dual/index.js");
 let Data_Monoid_Endo = require("../Data.Monoid.Endo/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
-let data = require("../data");
+const data = require('../data');
 
 
 class Control {

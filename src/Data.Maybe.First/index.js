@@ -5,7 +5,7 @@ let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
 let Data_Show = require("../Data.Show/index.js");
-let data = require("../data");
+const data = require('../data');
 
 
 class Alt {

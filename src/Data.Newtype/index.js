@@ -1,4 +1,4 @@
-let data = require("../data");
+const data = require('../data');
 let Data_Monoid_Additive = require("../Data.Monoid.Additive/index.js");
 let Data_Monoid_Conj = require("../Data.Monoid.Conj/index.js");
 let Data_Monoid_Disj = require("../Data.Monoid.Disj/index.js");

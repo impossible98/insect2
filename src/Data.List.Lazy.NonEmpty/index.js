@@ -1,5 +1,5 @@
 const control = require("../control");
-let data = require("../data");
+const data = require('../data');
 let Data_Lazy = require("../Data.Lazy/index.js");
 let Data_List_Lazy = require("../Data.List.Lazy/index.js");
 let Data_List_Lazy_Types = require("../Data.List.Lazy.Types/index.js");

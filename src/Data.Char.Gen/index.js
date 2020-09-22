@@ -3,7 +3,7 @@ let Control_Monad_Gen_Class = require("../Control.Monad.Gen.Class/index.js");
 let Data_Bounded = require("../Data.Bounded/index.js");
 let Data_Enum = require("../Data.Enum/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let data = require("../data");
+const data = require('../data');
 let Data_NonEmpty = require("../Data.NonEmpty/index.js");
 
 

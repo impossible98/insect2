@@ -1,6 +1,6 @@
 let Control_Monad_ST_Internal = require("../Control.Monad.ST.Internal/index.js");
 let Data_Array_ST = require("../Data.Array.ST/index.js");
-let data = require("../data");
+const data = require('../data');
 let Data_HeytingAlgebra = require("../Data.HeytingAlgebra/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 

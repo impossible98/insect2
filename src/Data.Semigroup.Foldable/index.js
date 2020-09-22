@@ -1,6 +1,6 @@
 let Data_Foldable = require("../Data.Foldable/index.js");
 
-let data = require("../data");
+const data = require('../data');
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Ord_Max = require("../Data.Ord.Max/index.js");
 let Data_Ord_Min = require("../Data.Ord.Min/index.js");

@@ -1,6 +1,6 @@
 let Data_Decimal = require("../Data.Decimal/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let data = require("../data");
+const data = require('../data');
 let Data_List = require("../Data.List/index.js");
 let Data_List_NonEmpty = require("../Data.List.NonEmpty/index.js");
 let Data_List_Types = require("../Data.List.Types/index.js");

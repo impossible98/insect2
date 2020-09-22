@@ -8,7 +8,7 @@ let Data_Either = require("../Data.Either/index.js");
 let Data_Enum = require("../Data.Enum/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
 
-let data = require("../data");
+const data = require('../data');
 let Data_Generic_Rep = require("../Data.Generic.Rep/index.js");
 let Data_Identity = require("../Data.Identity/index.js");
 let Data_Lazy = require("../Data.Lazy/index.js");

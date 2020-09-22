@@ -1,4 +1,4 @@
-let data = require("../data");
+const data = require('../data');
 let Data_Void = require("../Data.Void/index.js");
 
 

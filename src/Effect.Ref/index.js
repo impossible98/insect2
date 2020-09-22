@@ -1,6 +1,6 @@
 let $foreign = require("./foreign.js");
 
-let data = require("../data");
+const data = require('../data');
 let Effect = require("../Effect/index.js");
 
 

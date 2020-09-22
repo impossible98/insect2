@@ -1,5 +1,5 @@
 let Data_Enum = require("../Data.Enum/index.js");
-let data = require("../data");
+const data = require('../data');
 
 let Data_Generic_Rep = require("../Data.Generic.Rep/index.js");
 let Data_Generic_Rep_Bounded = require("../Data.Generic.Rep.Bounded/index.js");

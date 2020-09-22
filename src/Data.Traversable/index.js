@@ -2,7 +2,7 @@ let $foreign = require("./foreign.js");
 
 const control = require("../control");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let data = require("../data");
+const data = require('../data');
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Maybe_First = require("../Data.Maybe.First/index.js");
 let Data_Maybe_Last = require("../Data.Maybe.Last/index.js");

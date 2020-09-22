@@ -1,4 +1,4 @@
-let data = require("../data");
+const data = require('../data');
 let Data_Identity = require("../Data.Identity/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 

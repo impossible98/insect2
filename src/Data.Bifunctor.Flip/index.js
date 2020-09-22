@@ -1,6 +1,6 @@
 const control = require("../control");
 let Data_Bifunctor = require("../Data.Bifunctor/index.js");
-let data = require("../data");
+const data = require('../data');
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Show = require("../Data.Show/index.js");
 let Flip = function (x) {

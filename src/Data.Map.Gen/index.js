@@ -2,7 +2,7 @@ const control = require("../control");
 let Control_Monad_Gen = require("../Control.Monad.Gen/index.js");
 let Control_Monad_Gen_Class = require("../Control.Monad.Gen.Class/index.js");
 
-let data = require("../data");
+const data = require('../data');
 let Data_List_Types = require("../Data.List.Types/index.js");
 let Data_Map_Internal = require("../Data.Map.Internal/index.js");
 let Data_Tuple = require("../Data.Tuple/index.js");

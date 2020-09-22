@@ -1,6 +1,6 @@
 const control = require("../control");
 let Data_Either = require("../Data.Either/index.js");
-let data = require("../data");
+const data = require('../data');
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Effect = require("../Effect/index.js");
 let Effect_Exception = require("../Effect.Exception/index.js");
