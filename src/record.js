@@ -1,95 +1,105 @@
-let type = require("./type");
+const type = require('./type');
 
 
 function eq(dict) {
 	return dict.eq;
 }
 
-let unsafeHas = function (label) {
-	return function (rec) {
+function unsafeHas(label) {
+	return (rec) => {
 		return {}.hasOwnProperty.call(rec, label);
 	};
-};
+}
 
-let unsafeGet = function (label) {
-	return function (rec) {
+function unsafeGet(label) {
+	return (rec) => {
 		return rec[label];
 	};
-};
+}
 
-let unsafeSet = function (label) {
-	return function (value) {
-		return function (rec) {
+function unsafeSet(label) {
+	return (value) => {
+		return (rec) => {
 			let copy = {};
+
 			for (let key in rec) {
 				if ({}.hasOwnProperty.call(rec, key)) {
 					copy[key] = rec[key];
 				}
 			}
+
 			copy[label] = value;
+
 			return copy;
 		};
 	};
-};
+}
 
-let unsafeDelete = function (label) {
-	return function (rec) {
+function unsafeDelete(label) {
+	return (rec) => {
 		let copy = {};
+
 		for (let key in rec) {
 			if (key !== label && {}.hasOwnProperty.call(rec, key)) {
 				copy[key] = rec[key];
 			}
 		}
+
 		return copy;
 	};
-};
+}
 
 let SProxy = (() => {
-	function SProxy() {
+	function SProxy() { };
 
-	};
 	SProxy.value = new SProxy();
+
 	return SProxy;
 })();
 
-let reflectSymbol = function (dict) {
+function reflectSymbol(dict) {
 	return dict.reflectSymbol;
-};
+}
 
-
-let EqualFields = function (equalFields) {
-	this.equalFields = equalFields;
-};
+class EqualFields {
+	constructor(equalFields) {
+		this.equalFields = equalFields;
+	}
+}
 
 function unsafeUnionFn(r1, r2) {
 	let copy = {};
+
 	for (let k1 in r2) {
 		if ({}.hasOwnProperty.call(r2, k1)) {
 			copy[k1] = r2[k1];
 		}
 	}
+
 	for (let k2 in r1) {
 		if ({}.hasOwnProperty.call(r1, k2)) {
 			copy[k2] = r1[k2];
 		}
 	}
+
 	return copy;
 }
 
-let union = ()=> {
+function union() {
 	return function (l) {
 		return function (r) {
 			return unsafeUnionFn(l, r);
 		};
 	};
-};
-let set = function (dictIsSymbol) {
-	return ()=> {
-		return ()=> {
+}
+
+function set(arg) {
+	return () => {
+		return () => {
 			return function (l) {
 				return function (b) {
 					return function (r) {
-						return unsafeSet(reflectSymbol(dictIsSymbol)(l))(b)(r);
+						return unsafeSet(reflectSymbol(arg)(l))(b)(r);
 					};
 				};
 			};
@@ -101,69 +111,76 @@ function nub() {
 	return (arg) => { return arg; };
 }
 
-let merge = function (dictUnion) {
-	return function (dictNub) {
+function merge() {
+	return () => {
 		return function (l) {
 			return function (r) {
 				return unsafeUnionFn(l, r);
 			};
 		};
 	};
-};
-let insert = function (dictIsSymbol) {
-	return ()=> {
-		return ()=> {
+}
+
+function insert(arg) {
+	return () => {
+		return () => {
 			return function (l) {
 				return function (a) {
 					return function (r) {
-						return unsafeSet(reflectSymbol(dictIsSymbol)(l))(a)(r);
+						return unsafeSet(reflectSymbol(arg)(l))(a)(r);
 					};
 				};
 			};
 		};
 	};
-};
-let get = function (dictIsSymbol) {
-	return ()=> {
+}
+
+function get(arg) {
+	return () => {
 		return function (l) {
 			return function (r) {
-				return unsafeGet(reflectSymbol(dictIsSymbol)(l))(r);
+				return unsafeGet(reflectSymbol(arg)(l))(r);
 			};
 		};
 	};
-};
-let modify = function (dictIsSymbol) {
-	return ()=> {
-		return ()=> {
+}
+
+function modify(arg) {
+	return () => {
+		return () => {
 			return function (l) {
 				return function (f) {
 					return function (r) {
-						return set(dictIsSymbol)()()(l)(f(get(dictIsSymbol)()(l)(r)))(r);
+						return set(arg)()()(l)(f(get(arg)()(l)(r)))(r);
 					};
 				};
 			};
 		};
 	};
-};
-let equalFieldsNil = new EqualFields(function (v) {
-	return function (v1) {
-		return function (v2) {
+}
+
+let equalFieldsNil = new EqualFields((v) => {
+	return (v1) => {
+		return (v2) => {
 			return true;
 		};
 	};
 });
-let equalFields = function (dict) {
+
+function equalFields(dict) {
 	return dict.equalFields;
-};
-let equalFieldsCons = function (dictIsSymbol) {
+}
+
+function equalFieldsCons(arg) {
 	return function (dictEq) {
-		return function (dictCons) {
+		return () => {
 			return function (dictEqualFields) {
-				return new EqualFields(function (v) {
-					return function (a) {
-						return function (b) {
-							let get$prime = get(dictIsSymbol)()(SProxy.value);
+				return new EqualFields((v) => {
+					return (a) => {
+						return (b) => {
+							let get$prime = get(arg)()(SProxy.value);
 							let equalRest = equalFields(dictEqualFields)(type.RLProxy.value);
+
 							return eq(dictEq)(get$prime(a))(get$prime(b)) && equalRest(a)(b);
 						};
 					};
@@ -171,8 +188,9 @@ let equalFieldsCons = function (dictIsSymbol) {
 			};
 		};
 	};
-};
-let equal = function (dictRowToList) {
+}
+
+function equal() {
 	return function (dictEqualFields) {
 		return function (a) {
 			return function (b) {
@@ -180,37 +198,40 @@ let equal = function (dictRowToList) {
 			};
 		};
 	};
-};
-let disjointUnion = function (dictUnion) {
-	return function (dictNub) {
+}
+
+function disjointUnion() {
+	return () => {
 		return function (l) {
 			return function (r) {
 				return unsafeUnionFn(l, r);
 			};
 		};
 	};
-};
-let $$delete = function (dictIsSymbol) {
-	return function (dictLacks) {
-		return function (dictCons) {
+}
+
+function $$delete(arg) {
+	return () => {
+		return () => {
 			return function (l) {
 				return function (r) {
-					return unsafeDelete(reflectSymbol(dictIsSymbol)(l))(r);
+					return unsafeDelete(reflectSymbol(arg)(l))(r);
 				};
 			};
 		};
 	};
-};
-let rename = function (dictIsSymbol) {
-	return function (dictIsSymbol1) {
-		return ()=> {
-			return ()=> {
-				return ()=> {
-					return ()=> {
+}
+
+function rename(arg) {
+	return (dictIsSymbol1) => {
+		return () => {
+			return () => {
+				return () => {
+					return () => {
 						return function (prev) {
 							return function (next) {
 								return function (record) {
-									return insert(dictIsSymbol1)()()(next)(get(dictIsSymbol)()(prev)(record))($$delete(dictIsSymbol)()()(prev)(record));
+									return insert(dictIsSymbol1)()()(next)(get(arg)()(prev)(record))($$delete(arg)()()(prev)(record));
 								};
 							};
 						};
@@ -219,14 +240,14 @@ let rename = function (dictIsSymbol) {
 			};
 		};
 	};
-};
+}
 
 module.exports = {
 	get: get,
 	set: set,
 	modify: modify,
 	insert: insert,
-	"delete": $$delete,
+	'delete': $$delete,
 	rename: rename,
 	equal: equal,
 	merge: merge,

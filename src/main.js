@@ -10,7 +10,7 @@ const Insect = require('./Insect/index');
 function createInterface(options) {
 	fs.createFileSync(options['path']);
 
-	let history = fs.readFileSync(options['path'], "utf8").toString().split("\n").slice(0, -1).reverse().slice(0, options['maxLength']);
+	let history = fs.readFileSync(options['path'], 'utf8').toString().split('\n').slice(0, -1).reverse().slice(0, options['maxLength']);
 
 	readline.kHistorySize = Math.max(readline.kHistorySize, options['maxLength']);
 
@@ -27,7 +27,7 @@ function createInterface(options) {
 		let line = oldAddHistory.call(rl);
 
 		if (line.length > 0 && line != last) {
-			fs.appendFileSync(options['path'], line + "\n");
+			fs.appendFileSync(options['path'], line + '\n');
 		}
 
 		return line;
@@ -48,12 +48,11 @@ function usage() {
 }
 
 function runInsect(fmt, line) {
-	if (line.trim() === "" || line.trim()[0] === "#") {
+	if (line.trim() === '' || line.trim()[0] === '#') {
 		return undefined;
 	}
 
 	let res = Insect.repl(fmt)(insectEnv)(line);
-
 	insectEnv = res.newEnv;
 
 	return res;
@@ -63,19 +62,21 @@ if (process.argv.length >= 4) {
 	usage();
 } else if (process.argv.length == 3) {
 	const arg = process.argv[2];
-	if (arg === "-h" || arg === "--help") {
+
+	if (arg === '-h' || arg === '--help') {
 		usage();
 	} else {
 		let res = runInsect(Insect.fmtPlain, arg);
-		if (res.msgType === "value" || res.msgType === "info") {
+
+		if (res.msgType === 'value' || res.msgType === 'info') {
 			console.log(res.msg);
-		} else if (res.msgType === "error") {
+		} else if (res.msgType === 'error') {
 			console.error(res.msg);
 		}
+
 		process.exit(0);
 	}
 }
-
 
 if (process.stdin.isTTY) {
 	createInterface({
@@ -83,11 +84,10 @@ if (process.stdin.isTTY) {
 		output: process.stdout,
 		path: path.join(os.homedir(), '.config', 'insect', 'insect_history.txt'),
 		completer: (line) => {
-			let keywords =
-				Insect.identifiers(insectEnv)
-					.concat(Insect.functions(insectEnv))
-					.concat(Insect.supportedUnits)
-					.concat(Insect.commands);
+			let keywords = Insect.identifiers(insectEnv)
+				.concat(Insect.functions(insectEnv))
+				.concat(Insect.supportedUnits)
+				.concat(Insect.commands);
 
 			if (line.trim() !== '') {
 				let words = line.split(/\b/);
@@ -122,7 +122,9 @@ if (process.stdin.isTTY) {
 		}
 	});
 } else {
-	const lineReader = require("line-reader");
+	const lineReader = require('line-reader');
+
+
 	lineReader.eachLine(process.stdin, (line) => {
 		let res = runInsect(Insect.fmtPlain, line);
 		if (res) {
