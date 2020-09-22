@@ -2,6 +2,48 @@ let record = require("./record");
 let type = require("./type");
 
 
+let CommutativeRingRecord = function (RingRecord0) {
+    this.RingRecord0 = RingRecord0;
+};
+let CommutativeRing = function (Ring0) {
+    this.Ring0 = Ring0;
+};
+let commutativeRingUnit = new CommutativeRing(function () {
+    return data.ringUnit;
+});
+let commutativeRingRecordNil = new CommutativeRingRecord(function () {
+    return data.ringRecordNil;
+});
+let commutativeRingRecordCons = function (dictIsSymbol) {
+    return function (dictCons) {
+        return function (dictCommutativeRingRecord) {
+            return function (dictCommutativeRing) {
+                return new CommutativeRingRecord(function () {
+                    return data.ringRecordCons(dictIsSymbol)()(dictCommutativeRingRecord.RingRecord0())(dictCommutativeRing.Ring0());
+                });
+            };
+        };
+    };
+};
+let commutativeRingRecord = function (dictRowToList) {
+    return function (dictCommutativeRingRecord) {
+        return new CommutativeRing(function () {
+            return data.ringRecord()(dictCommutativeRingRecord.RingRecord0());
+        });
+    };
+};
+let commutativeRingNumber = new CommutativeRing(function () {
+    return data.ringNumber;
+});
+let commutativeRingInt = new CommutativeRing(function () {
+    return data.ringInt;
+});
+let commutativeRingFn = function (dictCommutativeRing) {
+    return new CommutativeRing(function () {
+        return data.ringFn(dictCommutativeRing.Ring0());
+    });
+};
+
 
 class Data4 {
 	constructor(arg, arg2, arg3, arg4) {
@@ -225,5 +267,14 @@ module.exports = {
 	ringFn: ringFn,
 	ringRecord: ringRecord,
 	ringRecordNil: ringRecordNil,
-	ringRecordCons: ringRecordCons
+	ringRecordCons: ringRecordCons,
+	CommutativeRing: CommutativeRing,
+    CommutativeRingRecord: CommutativeRingRecord,
+    commutativeRingInt: commutativeRingInt,
+    commutativeRingNumber: commutativeRingNumber,
+    commutativeRingUnit: commutativeRingUnit,
+    commutativeRingFn: commutativeRingFn,
+    commutativeRingRecord: commutativeRingRecord,
+    commutativeRingRecordNil: commutativeRingRecordNil,
+    commutativeRingRecordCons: commutativeRingRecordCons
 };

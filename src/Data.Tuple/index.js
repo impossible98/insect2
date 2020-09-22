@@ -4,7 +4,6 @@ let Data_Bifunctor = require("../Data.Bifunctor/index.js");
 let Data_Bitraversable = require("../Data.Bitraversable/index.js");
 let Data_BooleanAlgebra = require("../Data.BooleanAlgebra/index.js");
 let Data_Bounded = require("../Data.Bounded/index.js");
-let Data_CommutativeRing = require("../Data.CommutativeRing/index.js");
 let Data_Distributive = require("../Data.Distributive/index.js");
 let Data_Eq = require("../Data.Eq/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
@@ -379,7 +378,7 @@ let comonadTuple = new control.Comonad(function () {
 }, snd);
 let commutativeRingTuple = function (dictCommutativeRing) {
     return function (dictCommutativeRing1) {
-        return new Data_CommutativeRing.CommutativeRing(function () {
+        return new data.CommutativeRing(function () {
             return ringTuple(dictCommutativeRing.Ring0())(dictCommutativeRing1.Ring0());
         });
     };

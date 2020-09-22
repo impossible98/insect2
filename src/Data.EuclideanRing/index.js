@@ -1,4 +1,4 @@
-let Data_CommutativeRing = require("../Data.CommutativeRing/index.js");
+let data = require("../data");
 let Data_Eq = require("../Data.Eq/index.js");
 
 
@@ -76,7 +76,7 @@ let gcd = function ($copy_dictEq) {
 	};
 };
 let euclideanRingNumber = new EuclideanRing(function () {
-	return Data_CommutativeRing.commutativeRingNumber;
+	return data.commutativeRingNumber;
 }, function (v) {
 	return 1;
 }, numDiv, function (v) {
@@ -85,7 +85,7 @@ let euclideanRingNumber = new EuclideanRing(function () {
 	};
 });
 let euclideanRingInt = new EuclideanRing(function () {
-	return Data_CommutativeRing.commutativeRingInt;
+	return data.commutativeRingInt;
 }, intDegree, intDiv, intMod);
 let div = function (dict) {
 	return dict.div;

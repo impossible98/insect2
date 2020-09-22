@@ -1,7 +1,6 @@
 const control = require("../control");
 let Data_BooleanAlgebra = require("../Data.BooleanAlgebra/index.js");
 let Data_Bounded = require("../Data.Bounded/index.js");
-let Data_CommutativeRing = require("../Data.CommutativeRing/index.js");
 let Data_Eq = require("../Data.Eq/index.js");
 let Data_EuclideanRing = require("../Data.EuclideanRing/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
@@ -269,7 +268,7 @@ let comonadLazy = new control.Comonad(function () {
 	return extendLazy;
 }, force);
 let commutativeRingLazy = function (dictCommutativeRing) {
-	return new Data_CommutativeRing.CommutativeRing(function () {
+	return new data.CommutativeRing(function () {
 		return ringLazy(dictCommutativeRing.Ring0());
 	});
 };

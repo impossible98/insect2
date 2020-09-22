@@ -1,5 +1,5 @@
 let Data_Bounded = require("../Data.Bounded/index.js");
-let Data_CommutativeRing = require("../Data.CommutativeRing/index.js");
+let data = require("../data");
 let Data_DivisionRing = require("../Data.DivisionRing/index.js");
 let Data_Eq = require("../Data.Eq/index.js");
 let Data_EuclideanRing = require("../Data.EuclideanRing/index.js");
@@ -265,7 +265,7 @@ let divisionRingParity = new Data_DivisionRing.DivisionRing(function () {
 	return ringParity;
 }, dict(categoryFn));
 
-let commutativeRingParity = new Data_CommutativeRing.CommutativeRing(function () {
+let commutativeRingParity = new data.CommutativeRing(function () {
 	return ringParity;
 });
 

@@ -1,10 +1,9 @@
 let $foreign = require("./foreign.js");
-let Data_CommutativeRing = require("../Data.CommutativeRing/index.js");
+let data = require("../data");
 let Data_EuclideanRing = require("../Data.EuclideanRing/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
 let Data_Ordering = require("../Data.Ordering/index.js");
-const data = require("../data");
 let Data_Show = require("../Data.Show/index.js");
 
 
@@ -62,7 +61,7 @@ let ordDecimal = new Data_Ord.Ord(function () {
     };
 });
 
-let commutativeRingDecimal = new Data_CommutativeRing.CommutativeRing(function () {
+let commutativeRingDecimal = new data.CommutativeRing(function () {
     return ringDecimal;
 });
 
