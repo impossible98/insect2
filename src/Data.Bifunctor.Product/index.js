@@ -1,4 +1,4 @@
-let control = require("../control");
+const control = require("../control");
 let Data_Bifunctor = require("../Data.Bifunctor/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
 let Data_Ordering = require("../Data.Ordering/index.js");

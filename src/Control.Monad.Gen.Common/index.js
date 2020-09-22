@@ -1,4 +1,4 @@
-let control = require("../control");
+const control = require("../control");
 let Control_Monad_Gen = require("../Control.Monad.Gen/index.js");
 let Control_Monad_Gen_Class = require("../Control.Monad.Gen.Class/index.js");
 let Data_Either = require("../Data.Either/index.js");

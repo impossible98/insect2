@@ -1,4 +1,4 @@
-let control = require("../control");
+const control = require("../control");
 let Control_Monad_State_Class = require("../Control.Monad.State.Class/index.js");
 let Data_Array = require("../Data.Array/index.js");
 let Data_Eq = require("../Data.Eq/index.js");
@@ -11,7 +11,7 @@ let Data_String_CodePoints = require("../Data.String.CodePoints/index.js");
 let Data_String_CodeUnits = require("../Data.String.CodeUnits/index.js");
 let Data_String_Common = require("../Data.String.Common/index.js");
 let Data_String_Pattern = require("../Data.String.Pattern/index.js");
-let text = require("../text");
+const text = require("../text");
 let Text_Parsing_Parser_Combinators = require("../Text.Parsing.Parser.Combinators/index.js");
 let Data_EuclideanRing = require("../Data.EuclideanRing/index.js");
 

@@ -1,4 +1,4 @@
-let control = require("../control");
+const control = require("../control");
 let Data_Distributive = require("../Data.Distributive/index.js");
 let Data_Eq = require("../Data.Eq/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");

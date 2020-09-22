@@ -1,5 +1,5 @@
 let $foreign = require("./foreign.js");
-let control = require("../control");
+const control = require("../control");
 let Control_Monad_Rec_Class = require("../Control.Monad.Rec.Class/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
 

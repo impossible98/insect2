@@ -1,4 +1,4 @@
-let control = require("../control");
+const control = require("../control");
 let Control_Monad_Gen_Class = require("../Control.Monad.Gen.Class/index.js");
 let Control_Monad_Gen_Common = require("../Control.Monad.Gen.Common/index.js");
 let Data_Array_NonEmpty = require("../Data.Array.NonEmpty/index.js");
@@ -24,9 +24,9 @@ let Data_String_NonEmpty_CodeUnits = require("../Data.String.NonEmpty.CodeUnits/
 let Data_String_NonEmpty_Internal = require("../Data.String.NonEmpty.Internal/index.js");
 let Data_String_Pattern = require("../Data.String.Pattern/index.js");
 let Data_Tuple = require("../Data.Tuple/index.js");
-let record = require("../record");
+const record = require("../record");
 let Test_QuickCheck_Gen = require("../Test.QuickCheck.Gen/index.js");
-let type = require("../type");
+const type = require('../type');
 
 
 class Control {

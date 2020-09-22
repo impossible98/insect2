@@ -1,4 +1,4 @@
-let control = require("../control");
+const control = require("../control");
 let Control_Monad_Except_Trans = require("../Control.Monad.Except.Trans/index.js");
 let Control_Monad_State_Trans = require("../Control.Monad.State.Trans/index.js");
 let Control_Plus = require("../Control.Plus/index.js");
@@ -10,7 +10,7 @@ let Data_List_Types = require("../Data.List.Types/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Tuple = require("../Data.Tuple/index.js");
-let text = require("../text");
+const text = require("../text");
 
 
 class Control {

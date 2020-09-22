@@ -1,4 +1,4 @@
-let control = require("../control");
+const control = require("../control");
 let Data_Eq = require("../Data.Eq/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_Monoid = require("../Data.Monoid/index.js");

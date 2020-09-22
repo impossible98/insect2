@@ -12,7 +12,7 @@ let Data_Tuple = require("../Data.Tuple/index.js");
 let Data_Bounded = require("../Data.Bounded/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
-let data = require("../data");
+const data = require("../data");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
 let Data_Show = require("../Data.Show/index.js");
 

@@ -5,7 +5,7 @@ let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
 let Data_Show = require("../Data.Show/index.js");
-let control = require("../control");
+const control = require("../control");
 let Data_Functor = require("../Data.Functor/index.js");
 
 

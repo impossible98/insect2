@@ -1,4 +1,4 @@
-let data = require("../data");
+const data = require("../data");
 
 
 let mul = function (dict) {

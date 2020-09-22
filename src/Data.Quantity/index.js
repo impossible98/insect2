@@ -1,4 +1,4 @@
-let control = require("../control");
+const control = require("../control");
 let Data_Decimal = require("../Data.Decimal/index.js");
 let Data_Either = require("../Data.Either/index.js");
 let Data_Eq = require("../Data.Eq/index.js");
@@ -8,7 +8,7 @@ let Data_Functor = require("../Data.Functor/index.js");
 let Data_List_Types = require("../Data.List.Types/index.js");
 let Data_Number_Approximate = require("../Data.Number.Approximate/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
-let data = require("../data");
+const data = require("../data");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
 let Data_Show = require("../Data.Show/index.js");
 let Data_Tuple = require("../Data.Tuple/index.js");

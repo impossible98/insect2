@@ -1,6 +1,6 @@
 let $foreign = require("./foreign.js");
 
-let control = require("../control");
+const control = require("../control");
 let Control_Monad_ST_Internal = require("../Control.Monad.ST.Internal/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Ord = require("../Data.Ord/index.js");

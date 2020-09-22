@@ -1,4 +1,4 @@
-let control = require("../control");
+const control = require("../control");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_FunctorWithIndex = require("../Data.FunctorWithIndex/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");

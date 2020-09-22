@@ -1,5 +1,5 @@
 let Data_Generic_Rep = require("../Data.Generic.Rep/index.js");
-let data = require("../data");
+const data = require("../data");
 
 
 let GenericRing = function (genericSub$prime) {

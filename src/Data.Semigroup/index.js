@@ -1,6 +1,6 @@
 let Data_Void = require("../Data.Void/index.js");
-let record = require("../record");
-let type = require("../type");
+const record = require("../record");
+const type = require('../type');
 
 
 let SProxy = (function () {

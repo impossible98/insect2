@@ -1,4 +1,4 @@
-let control = require("../control");
+const control = require("../control");
 let Data_Array = require("../Data.Array/index.js");
 let Data_Decimal = require("../Data.Decimal/index.js");
 let Data_Either = require("../Data.Either/index.js");
@@ -26,7 +26,7 @@ let Data_Units_SI_Derived = require("../Data.Units.SI.Derived/index.js");
 let Data_Units_Time = require("../Data.Units.Time/index.js");
 let Data_Units_USCustomary = require("../Data.Units.USCustomary/index.js");
 let Insect_Language = require("../Insect.Language/index.js");
-let text = require("../text");
+const text = require("../text");
 let Text_Parsing_Parser_Combinators = require("../Text.Parsing.Parser.Combinators/index.js");
 let Text_Parsing_Parser_String = require("../Text.Parsing.Parser.String/index.js");
 let Text_Parsing_Parser_Token = require("../Text.Parsing.Parser.Token/index.js");

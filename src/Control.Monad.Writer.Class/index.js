@@ -1,4 +1,4 @@
-let control = require("../control");
+const control = require("../control");
 let Data_Tuple = require("../Data.Tuple/index.js");
 
 

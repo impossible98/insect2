@@ -1,4 +1,4 @@
-let control = require("../control");
+const control = require("../control");
 let Data_Bifunctor = require("../Data.Bifunctor/index.js");
 let Data_Either = require("../Data.Either/index.js");
 let Data_Functor = require("../Data.Functor/index.js");

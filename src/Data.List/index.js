@@ -1,4 +1,4 @@
-let control = require("../control");
+const control = require("../control");
 let Control_Monad_Rec_Class = require("../Control.Monad.Rec.Class/index.js");
 let Data_Bifunctor = require("../Data.Bifunctor/index.js");
 let Data_Eq = require("../Data.Eq/index.js");

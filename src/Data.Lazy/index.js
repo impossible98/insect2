@@ -1,4 +1,4 @@
-let control = require("../control");
+const control = require("../control");
 let Data_BooleanAlgebra = require("../Data.BooleanAlgebra/index.js");
 let Data_Bounded = require("../Data.Bounded/index.js");
 let Data_CommutativeRing = require("../Data.CommutativeRing/index.js");
@@ -12,7 +12,7 @@ let Data_FunctorWithIndex = require("../Data.FunctorWithIndex/index.js");
 let Data_HeytingAlgebra = require("../Data.HeytingAlgebra/index.js");
 let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
-let data = require("../data");
+const data = require("../data");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
 let Data_Semigroup_Foldable = require("../Data.Semigroup.Foldable/index.js");
 let Data_Semigroup_Traversable = require("../Data.Semigroup.Traversable/index.js");

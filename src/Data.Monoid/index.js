@@ -1,8 +1,8 @@
 let Data_EuclideanRing = require("../Data.EuclideanRing/index.js");
 let Data_Ordering = require("../Data.Ordering/index.js");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
-let record = require("../record");
-let type = require("../type");
+const record = require("../record");
+const type = require('../type');
 
 
 let SProxy = (function () {

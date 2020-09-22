@@ -1,4 +1,4 @@
-let control = require("../control");
+const control = require("../control");
 let Data_Bifoldable = require("../Data.Bifoldable/index.js");
 let Data_Bifunctor = require("../Data.Bifunctor/index.js");
 let Data_Bitraversable = require("../Data.Bitraversable/index.js");
@@ -19,14 +19,14 @@ let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
 let Data_Ordering = require("../Data.Ordering/index.js");
-let data = require("../data");
+const data = require("../data");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
 let Data_Semigroup_Foldable = require("../Data.Semigroup.Foldable/index.js");
 let Data_Semigroup_Traversable = require("../Data.Semigroup.Traversable/index.js");
 let Data_Show = require("../Data.Show/index.js");
 let Data_Traversable = require("../Data.Traversable/index.js");
 let Data_TraversableWithIndex = require("../Data.TraversableWithIndex/index.js");
-let type = require("../type");
+const type = require('../type');
 
 
 

@@ -1,4 +1,4 @@
-let control = require("../control");
+const control = require("../control");
 let Control_MonadZero = require("../Control.MonadZero/index.js");
 let Control_Plus = require("../Control.Plus/index.js");
 let Data_Bounded = require("../Data.Bounded/index.js");

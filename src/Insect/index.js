@@ -1,4 +1,4 @@
-let control = require("../control");
+const control = require("../control");
 let Data_Array = require("../Data.Array/index.js");
 let Data_Either = require("../Data.Either/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
@@ -21,7 +21,7 @@ let Data_Quantity_Physics = require("../Data.Quantity.Physics/index.js");
 let Data_Tuple = require("../Data.Tuple/index.js");
 let Data_Units_SI = require("../Data.Units.SI/index.js");
 let Insect_Language = require("../Insect.Language/index.js");
-let text = require("../text");
+const text = require("../text");
 
 
 let offsetFahrenheit = 459.67;
