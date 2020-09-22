@@ -2,7 +2,6 @@ const control = require("../control");
 let Data_Distributive = require("../Data.Distributive/index.js");
 const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
 let Data_Ordering = require("../Data.Ordering/index.js");
@@ -64,7 +63,7 @@ let monoidPair = function (dictMonoid) {
         return semigroupPair(dictMonoid.Semigroup0());
     }, new Pair(Data_Monoid.mempty(dictMonoid), Data_Monoid.mempty(dictMonoid)));
 };
-let functorPair = new Data_Functor.Functor(function (f) {
+let functorPair = new data.Functor(function (f) {
     return function (v) {
         return new Pair(f(v.value0), f(v.value1));
     };
@@ -97,12 +96,12 @@ let traversablePair = new Data_Traversable.Traversable(function () {
     return functorPair;
 }, function (dictApplicative) {
     return function (v) {
-        return apply(dictApplicative.Apply0())(Data_Functor.map((dictApplicative.Apply0()).Functor0())(Pair.create)(v.value0))(v.value1);
+        return apply(dictApplicative.Apply0())(data.map((dictApplicative.Apply0()).Functor0())(Pair.create)(v.value0))(v.value1);
     };
 }, function (dictApplicative) {
     return function (f) {
         return function (v) {
-            return apply(dictApplicative.Apply0())(Data_Functor.map((dictApplicative.Apply0()).Functor0())(Pair.create)(f(v.value0)))(f(v.value1));
+            return apply(dictApplicative.Apply0())(data.map((dictApplicative.Apply0()).Functor0())(Pair.create)(f(v.value0)))(f(v.value1));
         };
     };
 });
@@ -134,16 +133,16 @@ let distributivePair = new Data_Distributive.Distributive(function () {
 }, function (dictFunctor) {
     return function (f) {
         return function (xs) {
-            return new Pair(Data_Functor.map(dictFunctor)(function ($111) {
+            return new Pair(data.map(dictFunctor)(function ($111) {
                 return fst(f($111));
-            })(xs), Data_Functor.map(dictFunctor)(function ($112) {
+            })(xs), data.map(dictFunctor)(function ($112) {
                 return snd(f($112));
             })(xs));
         };
     };
 }, function (dictFunctor) {
     return function (xs) {
-        return new Pair(Data_Functor.map(dictFunctor)(fst)(xs), Data_Functor.map(dictFunctor)(snd)(xs));
+        return new Pair(data.map(dictFunctor)(fst)(xs), data.map(dictFunctor)(snd)(xs));
     };
 });
 let curry = function (f) {
@@ -154,7 +153,7 @@ let curry = function (f) {
     };
 };
 let arbitraryPair = function (dictArbitrary) {
-    return new Test_QuickCheck_Arbitrary.Arbitrary(apply(Test_QuickCheck_Gen.applyGen)(Data_Functor.map(Test_QuickCheck_Gen.functorGen)(Pair.create)(Test_QuickCheck_Arbitrary.arbitrary(dictArbitrary)))(Test_QuickCheck_Arbitrary.arbitrary(dictArbitrary)));
+    return new Test_QuickCheck_Arbitrary.Arbitrary(apply(Test_QuickCheck_Gen.applyGen)(data.map(Test_QuickCheck_Gen.functorGen)(Pair.create)(Test_QuickCheck_Arbitrary.arbitrary(dictArbitrary)))(Test_QuickCheck_Arbitrary.arbitrary(dictArbitrary)));
 };
 let applyPair = new Apply(function () {
     return functorPair;

@@ -2,7 +2,6 @@ const control = require("../control");
 const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_FoldableWithIndex = require("../Data.FoldableWithIndex/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_FunctorWithIndex = require("../Data.FunctorWithIndex/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
@@ -72,7 +71,7 @@ let NonEmpty = (function () {
 let unfoldable1NonEmpty = function (dictUnfoldable) {
     return new Data_Unfoldable1.Unfoldable1(function (f) {
         return function (b) {
-            return Data_Tuple.uncurry(NonEmpty.create)(Data_Functor.map(Data_Tuple.functorTuple)(Data_Unfoldable.unfoldr(dictUnfoldable)(Data_Functor.map(Data_Maybe.functorMaybe)(f)))(f(b)));
+            return Data_Tuple.uncurry(NonEmpty.create)(data.map(Data_Tuple.functorTuple)(Data_Unfoldable.unfoldr(dictUnfoldable)(data.map(Data_Maybe.functorMaybe)(f)))(f(b)));
         };
     });
 };
@@ -100,9 +99,9 @@ let head = function (v) {
     return v.value0;
 };
 let functorNonEmpty = function (dictFunctor) {
-    return new Data_Functor.Functor(function (f) {
+    return new data.Functor(function (f) {
         return function (m) {
-            return new NonEmpty(f(m.value0), Data_Functor.map(dictFunctor)(f)(m.value1));
+            return new NonEmpty(f(m.value0), data.map(dictFunctor)(f)(m.value1));
         };
     });
 };
@@ -186,12 +185,12 @@ let traversableNonEmpty = function (dictTraversable) {
         return functorNonEmpty(dictTraversable.Functor0());
     }, function (dictApplicative) {
         return function (v) {
-            return apply(dictApplicative.Apply0())(Data_Functor.map((dictApplicative.Apply0()).Functor0())(NonEmpty.create)(v.value0))(Data_Traversable.sequence(dictTraversable)(dictApplicative)(v.value1));
+            return apply(dictApplicative.Apply0())(data.map((dictApplicative.Apply0()).Functor0())(NonEmpty.create)(v.value0))(Data_Traversable.sequence(dictTraversable)(dictApplicative)(v.value1));
         };
     }, function (dictApplicative) {
         return function (f) {
             return function (v) {
-                return apply(dictApplicative.Apply0())(Data_Functor.map((dictApplicative.Apply0()).Functor0())(NonEmpty.create)(f(v.value0)))(Data_Traversable.traverse(dictTraversable)(dictApplicative)(f)(v.value1));
+                return apply(dictApplicative.Apply0())(data.map((dictApplicative.Apply0()).Functor0())(NonEmpty.create)(f(v.value0)))(Data_Traversable.traverse(dictTraversable)(dictApplicative)(f)(v.value1));
             };
         };
     });
@@ -206,7 +205,7 @@ let traversableWithIndexNonEmpty = function (dictTraversableWithIndex) {
     }, function (dictApplicative) {
         return function (f) {
             return function (v) {
-                return apply(dictApplicative.Apply0())(Data_Functor.map((dictApplicative.Apply0()).Functor0())(NonEmpty.create)(f(Data_Maybe.Nothing.value)(v.value0)))(Data_TraversableWithIndex.traverseWithIndex(dictTraversableWithIndex)(dictApplicative)(function ($150) {
+                return apply(dictApplicative.Apply0())(data.map((dictApplicative.Apply0()).Functor0())(NonEmpty.create)(f(Data_Maybe.Nothing.value)(v.value0)))(Data_TraversableWithIndex.traverseWithIndex(dictTraversableWithIndex)(dictApplicative)(function ($150) {
                     return f(Data_Maybe.Just.create($150));
                 })(v.value1));
             };

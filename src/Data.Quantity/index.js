@@ -3,7 +3,6 @@ let Data_Decimal = require("../Data.Decimal/index.js");
 let Data_Either = require("../Data.Either/index.js");
 const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_List_Types = require("../Data.List.Types/index.js");
 let Data_Number_Approximate = require("../Data.Number.Approximate/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
@@ -212,7 +211,7 @@ let convert = function (to) {
         throw new Error("Failed pattern match at Data.Quantity (line 215, column 1 - line 215, column 67): " + [ to.constructor.name, v.constructor.name ]);
     };
 };
-let convertTo = Data_Functor.flip(convert);
+let convertTo = data.flip(convert);
 let qAdd = function (v) {
     return function (v1) {
         if (data.eq(Data_Decimal.eqDecimal)(v.value0)(zero(Data_Decimal.semiringDecimal))) {
@@ -266,8 +265,8 @@ let fullSimplify = function (v) {
             throw new Error("Failed pattern match at Data.Quantity (line 151, column 13 - line 153, column 55): " + [ v3.constructor.name ]);
         };
         let list = Data_Units.splitByDimension(v.value1);
-        let list$prime = Data_Functor.map(Data_List_Types.functorList)(toTuple)(list);
-        let factor = Data_Foldable.product(Data_List_Types.foldableList)(Data_Decimal.semiringDecimal)(Data_Functor.map(Data_List_Types.functorList)(Data_Tuple.fst)(list$prime));
+        let list$prime = data.map(Data_List_Types.functorList)(toTuple)(list);
+        let factor = Data_Foldable.product(Data_List_Types.foldableList)(Data_Decimal.semiringDecimal)(data.map(Data_List_Types.functorList)(Data_Tuple.fst)(list$prime));
         let du$prime = Data_Foldable.foldMap(Data_List_Types.foldableList)(Data_Units.monoidDerivedUnit)(Data_Tuple.snd)(list$prime);
         return new Quantity(mul(Data_Decimal.semiringDecimal)(v.value0)(factor), du$prime);
     };
@@ -275,7 +274,7 @@ let fullSimplify = function (v) {
 };
 let asValueIn = function (q) {
     return function (u) {
-        return Data_Functor.map(Data_Either.functorEither)(Data_Decimal.toNumber)(asValueIn$prime(q)(u));
+        return data.map(Data_Either.functorEither)(Data_Decimal.toNumber)(asValueIn$prime(q)(u));
     };
 };
 let toScalar = function (q) {

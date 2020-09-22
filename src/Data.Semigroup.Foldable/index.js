@@ -1,6 +1,6 @@
 let Data_Foldable = require("../Data.Foldable/index.js");
 
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Ord_Max = require("../Data.Ord.Max/index.js");
 let Data_Ord_Min = require("../Data.Ord.Min/index.js");
@@ -46,7 +46,7 @@ let apply = function (dict) {
 let applySecond = function (dictApply) {
 	return function (a) {
 		return function (b) {
-			return apply(dictApply)(Data_Functor.map(dictApply.Functor0())(Data_Functor._const(identity(categoryFn)))(a))(b);
+			return apply(dictApply)(data.map(dictApply.Functor0())(data._const(identity(categoryFn)))(a))(b);
 		};
 	};
 };
@@ -94,7 +94,7 @@ let intercalateMap = function (dictFoldable1) {
             return function (f) {
                 return function (foldable) {
                     return joinee(foldMap1(dictFoldable1)(semigroupJoinWith(dictSemigroup))(function ($43) {
-                        return JoinWith(Data_Functor._const(f($43)));
+                        return JoinWith(data._const(f($43)));
                     })(foldable))(j);
                 };
             };
@@ -103,24 +103,24 @@ let intercalateMap = function (dictFoldable1) {
 };
 let intercalate = function (dictFoldable1) {
     return function (dictSemigroup) {
-        return Data_Functor.flip(intercalateMap(dictFoldable1)(dictSemigroup))(identity(categoryFn));
+        return data.flip(intercalateMap(dictFoldable1)(dictSemigroup))(identity(categoryFn));
     };
 };
 let maximum = function (dictOrd) {
     return function (dictFoldable1) {
-        return Data_Newtype.ala(Data_Functor.functorFn)(Data_Ord_Max.newtypeMax)(Data_Ord_Max.newtypeMax)(Data_Ord_Max.Max)(foldMap1(dictFoldable1)(Data_Ord_Max.semigroupMax(dictOrd)));
+        return Data_Newtype.ala(data.functorFn)(Data_Ord_Max.newtypeMax)(Data_Ord_Max.newtypeMax)(Data_Ord_Max.Max)(foldMap1(dictFoldable1)(Data_Ord_Max.semigroupMax(dictOrd)));
     };
 };
 let minimum = function (dictOrd) {
     return function (dictFoldable1) {
-        return Data_Newtype.ala(Data_Functor.functorFn)(Data_Ord_Min.newtypeMin)(Data_Ord_Min.newtypeMin)(Data_Ord_Min.Min)(foldMap1(dictFoldable1)(Data_Ord_Min.semigroupMin(dictOrd)));
+        return Data_Newtype.ala(data.functorFn)(Data_Ord_Min.newtypeMin)(Data_Ord_Min.newtypeMin)(Data_Ord_Min.Min)(foldMap1(dictFoldable1)(Data_Ord_Min.semigroupMin(dictOrd)));
     };
 };
 let traverse1_ = function (dictFoldable1) {
     return function (dictApply) {
         return function (f) {
             return function (t) {
-                return Data_Functor.voidRight(dictApply.Functor0())()(getAct(foldMap1(dictFoldable1)(semigroupAct(dictApply))(function ($44) {
+                return data.voidRight(dictApply.Functor0())()(getAct(foldMap1(dictFoldable1)(semigroupAct(dictApply))(function ($44) {
                     return Act(f($44));
                 })(t)));
             };
@@ -129,7 +129,7 @@ let traverse1_ = function (dictFoldable1) {
 };
 let for1_ = function (dictFoldable1) {
     return function (dictApply) {
-        return Data_Functor.flip(traverse1_(dictFoldable1)(dictApply));
+        return data.flip(traverse1_(dictFoldable1)(dictApply));
     };
 };
 let sequence1_ = function (dictFoldable1) {
@@ -172,7 +172,7 @@ let foldMap1Default = function (dictFoldable1) {
         return function (dictSemigroup) {
             return function (f) {
                 let $45 = fold1(dictFoldable1)(dictSemigroup);
-                let $46 = Data_Functor.map(dictFunctor)(f);
+                let $46 = data.map(dictFunctor)(f);
                 return function ($47) {
                     return $45($46($47));
                 };

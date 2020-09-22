@@ -2,7 +2,7 @@ const control = require("../control");
 let Data_Decimal = require("../Data.Decimal/index.js");
 let Data_Either = require("../Data.Either/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_List_NonEmpty = require("../Data.List.NonEmpty/index.js");
 let Data_List_Types = require("../Data.List.Types/index.js");
 let Data_Quantity = require("../Data.Quantity/index.js");
@@ -41,7 +41,7 @@ function mul(dict) {
 
 function mean(xs) {
 	let n = Data_Quantity["scalar'"](Data_Decimal.fromInt(Data_List_NonEmpty.length(xs)));
-	return Data_Functor.map(Data_Either.functorEither)(function (v) {
+	return data.map(Data_Either.functorEither)(function (v) {
 		return Data_Quantity.qDivide(v)(n);
 	})(Data_Foldable.foldM(Data_List_Types.foldableList)(Data_Either.monadEither)(Data_Quantity.qAdd)(Data_List_NonEmpty.head(xs))(Data_List_NonEmpty.tail(xs)));
 }
@@ -69,7 +69,7 @@ function min(xs) {
 
 function lift(fn) {
 	return function (q) {
-		return Data_Functor.map(Data_Either.functorEither)(function ($1) {
+		return data.map(Data_Either.functorEither)(function ($1) {
 			return Data_Quantity["scalar'"](fn($1));
 		})(Data_Quantity["toScalar'"](q));
 	};
@@ -80,7 +80,7 @@ function atan2(x) {
 		let removeDims = function (q) {
 			return Data_Quantity.qDivide(q)(Data_Quantity.quantity(1.0)(Data_Quantity.derivedUnit(q)));
 		};
-		return Data_Functor.map(Data_Either.functorEither)(removeDims)(lift2(Data_Decimal.atan2)(x)(y));
+		return data.map(Data_Either.functorEither)(removeDims)(lift2(Data_Decimal.atan2)(x)(y));
 	};
 }
 

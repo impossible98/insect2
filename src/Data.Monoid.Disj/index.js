@@ -1,6 +1,5 @@
 const control = require("../control");
 const data = require("../data");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_HeytingAlgebra = require("../Data.HeytingAlgebra/index.js");
 let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
@@ -57,7 +56,7 @@ let monoidDisj = function (dictHeytingAlgebra) {
 		return semigroupDisj(dictHeytingAlgebra);
 	}, Data_HeytingAlgebra.ff(dictHeytingAlgebra));
 };
-let functorDisj = new Data_Functor.Functor(function (f) {
+let functorDisj = new data.Functor(function (f) {
 	return function (m) {
 		return f(m);
 	};

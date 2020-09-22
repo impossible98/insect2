@@ -1,6 +1,5 @@
 const control = require("../control");
 const data = require("../data");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
@@ -37,7 +36,7 @@ let monoidDual = function (dictMonoid) {
         return semigroupDual(dictMonoid.Semigroup0());
     }, Data_Monoid.mempty(dictMonoid));
 };
-let functorDual = new Data_Functor.Functor(function (f) {
+let functorDual = new data.Functor(function (f) {
     return function (m) {
         return f(m);
     };

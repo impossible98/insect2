@@ -1,5 +1,4 @@
-
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Monoid_Additive = require("../Data.Monoid.Additive/index.js");
 let Data_Monoid_Conj = require("../Data.Monoid.Conj/index.js");
 let Data_Monoid_Disj = require("../Data.Monoid.Disj/index.js");
@@ -52,8 +51,8 @@ let underF2 = function (dictFunctor) {
             return function (dictNewtype1) {
                 return function (v) {
                     return function (f) {
-                        let $66 = compose(semigroupoidFn)(Data_Functor.map(dictFunctor1)(unwrap(dictNewtype1)));
-                        let $67 = Data_Functor.on(f)(Data_Functor.map(dictFunctor)(wrap(dictNewtype)));
+                        let $66 = compose(semigroupoidFn)(data.map(dictFunctor1)(unwrap(dictNewtype1)));
+                        let $67 = data.on(f)(data.map(dictFunctor)(wrap(dictNewtype)));
                         return function ($68) {
                             return $66($67($68));
                         };
@@ -69,8 +68,8 @@ let underF = function (dictFunctor) {
             return function (dictNewtype1) {
                 return function (v) {
                     return function (f) {
-                        let $69 = Data_Functor.map(dictFunctor1)(unwrap(dictNewtype1));
-                        let $70 = Data_Functor.map(dictFunctor)(wrap(dictNewtype));
+                        let $69 = data.map(dictFunctor1)(unwrap(dictNewtype1));
+                        let $70 = data.map(dictFunctor)(wrap(dictNewtype));
                         return function ($71) {
                             return $69(f($70($71)));
                         };
@@ -85,7 +84,7 @@ let under2 = function (dictNewtype) {
         return function (v) {
             return function (f) {
                 let $72 = compose(semigroupoidFn)(unwrap(dictNewtype1));
-                let $73 = Data_Functor.on(f)(wrap(dictNewtype));
+                let $73 = data.on(f)(wrap(dictNewtype));
                 return function ($74) {
                     return $72($73($74));
                 };
@@ -115,7 +114,7 @@ let traverse = function (dictFunctor) {
     return function (dictNewtype) {
         return function (v) {
             return function (f) {
-                let $78 = Data_Functor.map(dictFunctor)(wrap(dictNewtype));
+                let $78 = data.map(dictFunctor)(wrap(dictNewtype));
                 let $79 = unwrap(dictNewtype);
                 return function ($80) {
                     return $78(f($79($80)));
@@ -130,8 +129,8 @@ let overF2 = function (dictFunctor) {
             return function (dictNewtype1) {
                 return function (v) {
                     return function (f) {
-                        let $81 = compose(semigroupoidFn)(Data_Functor.map(dictFunctor1)(wrap(dictNewtype1)));
-                        let $82 = Data_Functor.on(f)(Data_Functor.map(dictFunctor)(unwrap(dictNewtype)));
+                        let $81 = compose(semigroupoidFn)(data.map(dictFunctor1)(wrap(dictNewtype1)));
+                        let $82 = data.on(f)(data.map(dictFunctor)(unwrap(dictNewtype)));
                         return function ($83) {
                             return $81($82($83));
                         };
@@ -147,8 +146,8 @@ let overF = function (dictFunctor) {
             return function (dictNewtype1) {
                 return function (v) {
                     return function (f) {
-                        let $84 = Data_Functor.map(dictFunctor1)(wrap(dictNewtype1));
-                        let $85 = Data_Functor.map(dictFunctor)(unwrap(dictNewtype));
+                        let $84 = data.map(dictFunctor1)(wrap(dictNewtype1));
+                        let $85 = data.map(dictFunctor)(unwrap(dictNewtype));
                         return function ($86) {
                             return $84(f($85($86)));
                         };
@@ -163,7 +162,7 @@ let over2 = function (dictNewtype) {
         return function (v) {
             return function (f) {
                 let $87 = compose(semigroupoidFn)(wrap(dictNewtype1));
-                let $88 = Data_Functor.on(f)(unwrap(dictNewtype));
+                let $88 = data.on(f)(unwrap(dictNewtype));
                 return function ($89) {
                     return $87($88($89));
                 };
@@ -216,7 +215,7 @@ let collect = function (dictFunctor) {
         return function (v) {
             return function (f) {
                 let $93 = wrap(dictNewtype);
-                let $94 = Data_Functor.map(dictFunctor)(unwrap(dictNewtype));
+                let $94 = data.map(dictFunctor)(unwrap(dictNewtype));
                 return function ($95) {
                     return $93(f($94($95)));
                 };
@@ -230,8 +229,8 @@ let alaF = function (dictFunctor) {
             return function (dictNewtype1) {
                 return function (v) {
                     return function (f) {
-                        let $96 = Data_Functor.map(dictFunctor1)(unwrap(dictNewtype1));
-                        let $97 = Data_Functor.map(dictFunctor)(wrap(dictNewtype));
+                        let $96 = data.map(dictFunctor1)(unwrap(dictNewtype1));
+                        let $97 = data.map(dictFunctor)(wrap(dictNewtype));
                         return function ($98) {
                             return $96(f($97($98)));
                         };
@@ -246,7 +245,7 @@ let ala = function (dictFunctor) {
         return function (dictNewtype1) {
             return function (v) {
                 return function (f) {
-                    return Data_Functor.map(dictFunctor)(unwrap(dictNewtype))(f(wrap(dictNewtype1)));
+                    return data.map(dictFunctor)(unwrap(dictNewtype))(f(wrap(dictNewtype1)));
                 };
             };
         };
