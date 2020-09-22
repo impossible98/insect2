@@ -1,6 +1,6 @@
 const control = require("../control");
 let Control_Monad_Rec_Class = require("../Control.Monad.Rec.Class/index.js");
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_HeytingAlgebra = require("../Data.HeytingAlgebra/index.js");
@@ -189,7 +189,7 @@ let stripPrefix = function (dictEq) {
                     };
                     if (v1 instanceof Data_List_Lazy_Types.Cons) {
                         let v2 = Data_List_Lazy_Types.step(input);
-                        if (v2 instanceof Data_List_Lazy_Types.Cons && Data_Eq.eq(dictEq)(v1.value0)(v2.value0)) {
+                        if (v2 instanceof Data_List_Lazy_Types.Cons && data.eq(dictEq)(v1.value0)(v2.value0)) {
                             return Data_Maybe.Just.create(new Control_Monad_Rec_Class.Loop({
                                 a: v1.value1,
                                 b: v2.value1
@@ -534,7 +534,7 @@ let groupBy = function (eq) {
     };
 };
 let group = function (dictEq) {
-    return groupBy(Data_Eq.eq(dictEq));
+    return groupBy(data.eq(dictEq));
 };
 let fromStep = (function () {
     let $254 = control.pure(Data_Lazy.applicativeLazy);
@@ -691,7 +691,7 @@ let intersectBy = function (eq) {
     };
 };
 let intersect = function (dictEq) {
-    return intersectBy(Data_Eq.eq(dictEq));
+    return intersectBy(data.eq(dictEq));
 };
 let nubBy = function (eq) {
     let go = function (v) {
@@ -712,12 +712,12 @@ let nubBy = function (eq) {
     };
 };
 let nub = function (dictEq) {
-    return nubBy(Data_Eq.eq(dictEq));
+    return nubBy(data.eq(dictEq));
 };
 let eqPattern = function (dictEq) {
-    return new Data_Eq.Eq(function (x) {
+    return new data.Eq(function (x) {
         return function (y) {
-            return Data_Eq.eq(Data_List_Lazy_Types.eqList(dictEq))(x)(y);
+            return data.eq(Data_List_Lazy_Types.eqList(dictEq))(x)(y);
         };
     });
 };
@@ -733,14 +733,14 @@ let ordPattern = function (dictOrd) {
 let elemLastIndex = function (dictEq) {
     return function (x) {
         return findLastIndex(function (v) {
-            return Data_Eq.eq(dictEq)(v)(x);
+            return data.eq(dictEq)(v)(x);
         });
     };
 };
 let elemIndex = function (dictEq) {
     return function (x) {
         return findIndex(function (v) {
-            return Data_Eq.eq(dictEq)(v)(x);
+            return data.eq(dictEq)(v)(x);
         });
     };
 };
@@ -835,7 +835,7 @@ let unionBy = function (eq) {
     };
 };
 let union = function (dictEq) {
-    return unionBy(Data_Eq.eq(dictEq));
+    return unionBy(data.eq(dictEq));
 };
 let deleteAt = function (n) {
     return function (xs) {
@@ -857,7 +857,7 @@ let deleteAt = function (n) {
     };
 };
 let $$delete = function (dictEq) {
-    return deleteBy(Data_Eq.eq(dictEq));
+    return deleteBy(data.eq(dictEq));
 };
 let difference = function (dictEq) {
     return Data_Foldable.foldl(Data_List_Lazy_Types.foldableList)(Data_Functor.flip($$delete(dictEq)));

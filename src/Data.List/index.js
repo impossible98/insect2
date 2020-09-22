@@ -1,7 +1,7 @@
 const control = require("../control");
 let Control_Monad_Rec_Class = require("../Control.Monad.Rec.Class/index.js");
 let Data_Bifunctor = require("../Data.Bifunctor/index.js");
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
 
 let Data_Functor = require("../Data.Functor/index.js");
@@ -114,7 +114,7 @@ let stripPrefix = function (dictEq) {
 		return function (s) {
 			let go = function (prefix) {
 				return function (input) {
-					if (prefix instanceof Data_List_Types.Cons && (input instanceof Data_List_Types.Cons && Data_Eq.eq(dictEq)(prefix.value0)(input.value0))) {
+					if (prefix instanceof Data_List_Types.Cons && (input instanceof Data_List_Types.Cons && data.eq(dictEq)(prefix.value0)(input.value0))) {
 						return Data_Maybe.Just.create(new Control_Monad_Rec_Class.Loop({
 							a: prefix.value1,
 							b: input.value1
@@ -157,7 +157,7 @@ let sortBy = function (cmp) {
 	let merge = function (v) {
 		return function (v1) {
 			if (v instanceof Data_List_Types.Cons && v1 instanceof Data_List_Types.Cons) {
-				if (Data_Eq.eq(Data_Ordering.eqOrdering)(cmp(v.value0)(v1.value0))(Data_Ordering.GT.value)) {
+				if (data.eq(Data_Ordering.eqOrdering)(cmp(v.value0)(v1.value0))(Data_Ordering.GT.value)) {
 					return new Data_List_Types.Cons(v1.value0, merge(v)(v1.value1));
 				};
 				if (true) {
@@ -197,7 +197,7 @@ let sortBy = function (cmp) {
 	};
 	let sequences = function (v) {
 		if (v instanceof Data_List_Types.Cons && v.value1 instanceof Data_List_Types.Cons) {
-			if (Data_Eq.eq(Data_Ordering.eqOrdering)(cmp(v.value0)(v.value1.value0))(Data_Ordering.GT.value)) {
+			if (data.eq(Data_Ordering.eqOrdering)(cmp(v.value0)(v.value1.value0))(Data_Ordering.GT.value)) {
 				return descending(v.value1.value0)(singleton(v.value0))(v.value1.value1);
 			};
 			if (true) {
@@ -216,7 +216,7 @@ let sortBy = function (cmp) {
 				let $tco_done = false;
 				let $tco_result;
 				function $tco_loop(a, as, v) {
-					if (v instanceof Data_List_Types.Cons && Data_Eq.eq(Data_Ordering.eqOrdering)(cmp(a)(v.value0))(Data_Ordering.GT.value)) {
+					if (v instanceof Data_List_Types.Cons && data.eq(Data_Ordering.eqOrdering)(cmp(a)(v.value0))(Data_Ordering.GT.value)) {
 						$tco_var_a = v.value0;
 						$tco_var_as = new Data_List_Types.Cons(a, as);
 						$copy_v = v.value1;
@@ -240,7 +240,7 @@ let sortBy = function (cmp) {
 				let $tco_done = false;
 				let $tco_result;
 				function $tco_loop(a, as, v) {
-					if (v instanceof Data_List_Types.Cons && Data_Eq.notEq(Data_Ordering.eqOrdering)(cmp(a)(v.value0))(Data_Ordering.GT.value)) {
+					if (v instanceof Data_List_Types.Cons && data.notEq(Data_Ordering.eqOrdering)(cmp(a)(v.value0))(Data_Ordering.GT.value)) {
 						$tco_var_a = v.value0;
 						$tco_var_as = function (ys) {
 							return as(new Data_List_Types.Cons(a, ys));
@@ -731,7 +731,7 @@ let groupBy = function (v) {
 	};
 };
 let group = function (dictEq) {
-	return groupBy(Data_Eq.eq(dictEq));
+	return groupBy(data.eq(dictEq));
 };
 let group$prime = function (dictOrd) {
 	let $332 = group(dictOrd.Eq0());
@@ -870,7 +870,7 @@ let intersectBy = function (v) {
 	};
 };
 let intersect = function (dictEq) {
-	return intersectBy(Data_Eq.eq(dictEq));
+	return intersectBy(data.eq(dictEq));
 };
 let nubBy = function (v) {
 	return function (v1) {
@@ -886,12 +886,12 @@ let nubBy = function (v) {
 	};
 };
 let nub = function (dictEq) {
-	return nubBy(Data_Eq.eq(dictEq));
+	return nubBy(data.eq(dictEq));
 };
 let eqPattern = function (dictEq) {
-	return new Data_Eq.Eq(function (x) {
+	return new data.Eq(function (x) {
 		return function (y) {
-			return Data_Eq.eq(Data_List_Types.eqList(dictEq))(x)(y);
+			return data.eq(Data_List_Types.eqList(dictEq))(x)(y);
 		};
 	});
 };
@@ -907,14 +907,14 @@ let ordPattern = function (dictOrd) {
 let elemLastIndex = function (dictEq) {
 	return function (x) {
 		return findLastIndex(function (v) {
-			return Data_Eq.eq(dictEq)(v)(x);
+			return data.eq(dictEq)(v)(x);
 		});
 	};
 };
 let elemIndex = function (dictEq) {
 	return function (x) {
 		return findIndex(function (v) {
-			return Data_Eq.eq(dictEq)(v)(x);
+			return data.eq(dictEq)(v)(x);
 		});
 	};
 };
@@ -1005,7 +1005,7 @@ let unionBy = function (eq) {
 	};
 };
 let union = function (dictEq) {
-	return unionBy(Data_Eq.eq(dictEq));
+	return unionBy(data.eq(dictEq));
 };
 let deleteAt = function (v) {
 	return function (v1) {
@@ -1021,7 +1021,7 @@ let deleteAt = function (v) {
 	};
 };
 let $$delete = function (dictEq) {
-	return deleteBy(Data_Eq.eq(dictEq));
+	return deleteBy(data.eq(dictEq));
 };
 let difference = function (dictEq) {
 	return Data_Foldable.foldl(Data_List_Types.foldableList)(Data_Functor.flip($$delete(dictEq)));

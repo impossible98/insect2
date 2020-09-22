@@ -1,5 +1,5 @@
 const control = require("../control");
-let Data_Eq = require("../Data.Eq/index.js");
+let data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_FoldableWithIndex = require("../Data.FoldableWithIndex/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
@@ -182,8 +182,8 @@ let euclideanRingIdentity = function (dictEuclideanRing) {
 let eqIdentity = function (dictEq) {
     return dictEq;
 };
-let eq1Identity = new Data_Eq.Eq1(function (dictEq) {
-    return Data_Eq.eq(eqIdentity(dictEq));
+let eq1Identity = new data.Eq1(function (dictEq) {
+    return data.eq(eqIdentity(dictEq));
 });
 let ord1Identity = new Data_Ord.Ord1(function () {
     return eq1Identity;

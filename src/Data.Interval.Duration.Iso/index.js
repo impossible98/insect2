@@ -1,7 +1,7 @@
 const control = require("../control");
 let Control_Plus = require("../Control.Plus/index.js");
 let Data_Either = require("../Data.Either/index.js");
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_HeytingAlgebra = require("../Data.HeytingAlgebra/index.js");
 let Data_Interval_Duration = require("../Data.Interval.Duration/index.js");
@@ -17,6 +17,7 @@ let Data_Ord = require("../Data.Ord/index.js");
 let Data_Ordering = require("../Data.Ordering/index.js");
 let Data_Show = require("../Data.Show/index.js");
 let Data_Tuple = require("../Data.Tuple/index.js");
+const { concat } = require("../Data.Array/foreign");
 
 
 let numAdd = function (n1) {
@@ -30,8 +31,6 @@ let numMul = function (n1) {
 		return n1 * n2;
 	};
 };
-
-
 
 let Semiring = function (add, mul, one, zero) {
 	this.add = add;
@@ -113,9 +112,9 @@ let prettyError = function (v) {
     };
     throw new Error("Failed pattern match at Data.Interval.Duration.Iso (line 49, column 1 - line 49, column 31): " + [ v.constructor.name ]);
 };
-let eqIsoDuration = new Data_Eq.Eq(function (x) {
+let eqIsoDuration = new data.Eq(function (x) {
     return function (y) {
-        return Data_Eq.eq(Data_Interval_Duration.eqDuration)(x)(y);
+        return data.eq(Data_Interval_Duration.eqDuration)(x)(y);
     };
 });
 let ordIsoDuration = new Data_Ord.Ord(function () {
@@ -125,7 +124,7 @@ let ordIsoDuration = new Data_Ord.Ord(function () {
         return Data_Ord.compare(Data_Interval_Duration.ordDuration)(x)(y);
     };
 });
-let eqError = new Data_Eq.Eq(function (x) {
+let eqError = new data.Eq(function (x) {
     return function (y) {
         if (x instanceof IsEmpty && y instanceof IsEmpty) {
             return true;
@@ -134,10 +133,10 @@ let eqError = new Data_Eq.Eq(function (x) {
             return true;
         };
         if (x instanceof ContainsNegativeValue && y instanceof ContainsNegativeValue) {
-            return Data_Eq.eq(Data_Interval_Duration.eqDurationComponent)(x.value0)(y.value0);
+            return data.eq(Data_Interval_Duration.eqDurationComponent)(x.value0)(y.value0);
         };
         if (x instanceof InvalidFractionalUse && y instanceof InvalidFractionalUse) {
-            return Data_Eq.eq(Data_Interval_Duration.eqDurationComponent)(x.value0)(y.value0);
+            return data.eq(Data_Interval_Duration.eqDurationComponent)(x.value0)(y.value0);
         };
         return false;
     };

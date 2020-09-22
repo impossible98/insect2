@@ -2,7 +2,7 @@ const control = require("../control");
 let Control_MonadPlus = require("../Control.MonadPlus/index.js");
 let Control_MonadZero = require("../Control.MonadZero/index.js");
 let Control_Plus = require("../Control.Plus/index.js");
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_FoldableWithIndex = require("../Data.FoldableWithIndex/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
@@ -208,7 +208,7 @@ let functorNonEmptyList = new Data_Functor.Functor(function (f) {
         return Data_Functor.map(Data_Lazy.functorLazy)(Data_Functor.map(Data_NonEmpty.functorNonEmpty(functorList))(f))(v);
     };
 });
-let eq1List = new Data_Eq.Eq1(function (dictEq) {
+let eq1List = new data.Eq1(function (dictEq) {
     return function (xs) {
         return function (ys) {
             let go = function ($copy_v) {
@@ -221,7 +221,7 @@ let eq1List = new Data_Eq.Eq1(function (dictEq) {
                             $tco_done = true;
                             return true;
                         };
-                        if (v instanceof Cons && (v1 instanceof Cons && Data_Eq.eq(dictEq)(v.value0)(v1.value0))) {
+                        if (v instanceof Cons && (v1 instanceof Cons && data.eq(dictEq)(v.value0)(v1.value0))) {
                             $tco_var_v = step(v.value1);
                             $copy_v1 = step(v1.value1);
                             return;
@@ -240,7 +240,7 @@ let eq1List = new Data_Eq.Eq1(function (dictEq) {
     };
 });
 let eqList = function (dictEq) {
-    return new Data_Eq.Eq(Data_Eq.eq1(eq1List)(dictEq));
+    return new data.Eq(data.eq1(eq1List)(dictEq));
 };
 let eqNonEmptyList = function (dictEq) {
     return Data_Lazy.eqLazy(Data_NonEmpty.eqNonEmpty(eq1List)(dictEq));

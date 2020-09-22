@@ -8,7 +8,7 @@ let Control_MonadPlus = require("./Control.MonadPlus/index.js");
 let Control_MonadZero = require("./Control.MonadZero/index.js");
 let Control_Plus = require("./Control.Plus/index.js");
 let Data_Either = require("./Data.Either/index.js");
-let Data_Eq = require("./Data.Eq/index.js");
+const data = require("./data");
 let Data_Identity = require("./Data.Identity/index.js");
 let Data_Monoid = require("./Data.Monoid/index.js");
 let Data_Newtype = require("./Data.Newtype/index.js");
@@ -43,7 +43,7 @@ let showPosition = new Data_Show.Show(function (v) {
 	return "(Position { line: " + (Data_Show.show(Data_Show.showInt)(v.line) + (", column: " + (Data_Show.show(Data_Show.showInt)(v.column) + " })")));
 });
 
-let eqPosition = new Data_Eq.Eq(function (x) {
+let eqPosition = new data.Eq(function (x) {
 	return function (y) {
 		return x.column === y.column && x.line === y.line;
 	};
@@ -209,9 +209,9 @@ function failWithPosition(dictMonad) {
 	};
 }
 
-let eqParseError = new Data_Eq.Eq(function (x) {
+let eqParseError = new data.Eq(function (x) {
 	return function (y) {
-		return x.value0 === y.value0 && Data_Eq.eq(eqPosition)(x.value1)(y.value1);
+		return x.value0 === y.value0 && data.eq(eqPosition)(x.value1)(y.value1);
 	};
 });
 

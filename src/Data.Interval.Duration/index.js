@@ -1,4 +1,4 @@
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_Map_Internal = require("../Data.Map.Internal/index.js");
 let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
@@ -120,7 +120,7 @@ let showDuration = new Data_Show.Show(function (v) {
 let newtypeDuration = new Data_Newtype.Newtype(function (n) {
 	return n;
 }, Duration);
-let eqDurationComponent = new Data_Eq.Eq(function (x) {
+let eqDurationComponent = new data.Eq(function (x) {
 	return function (y) {
 		if (x instanceof Second && y instanceof Second) {
 			return true;
@@ -218,9 +218,9 @@ let semigroupDuration = new Data_Semigroup.Semigroup(function (v) {
 let monoidDuration = new Data_Monoid.Monoid(function () {
 	return semigroupDuration;
 }, Data_Monoid.mempty(Data_Map_Internal.monoidMap(ordDurationComponent)));
-let eqDuration = new Data_Eq.Eq(function (x) {
+let eqDuration = new data.Eq(function (x) {
 	return function (y) {
-		return Data_Eq.eq(Data_Map_Internal.eqMap(eqDurationComponent)(Data_Eq.eqNumber))(x)(y);
+		return data.eq(Data_Map_Internal.eqMap(eqDurationComponent)(data.eqNumber))(x)(y);
 	};
 });
 let ordDuration = new Data_Ord.Ord(function () {

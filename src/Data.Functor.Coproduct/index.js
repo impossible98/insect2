@@ -1,7 +1,7 @@
 const control = require("../control");
 let Data_Bifunctor = require("../Data.Bifunctor/index.js");
 let Data_Either = require("../Data.Either/index.js");
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_FoldableWithIndex = require("../Data.FoldableWithIndex/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
@@ -65,14 +65,14 @@ let functorWithIndexCoproduct = function (dictFunctorWithIndex) {
 };
 let eq1Coproduct = function (dictEq1) {
 	return function (dictEq11) {
-		return new Data_Eq.Eq1(function (dictEq) {
+		return new data.Eq1(function (dictEq) {
 			return function (v) {
 				return function (v1) {
 					if (v instanceof Data_Either.Left && v1 instanceof Data_Either.Left) {
-						return Data_Eq.eq1(dictEq1)(dictEq)(v.value0)(v1.value0);
+						return data.eq1(dictEq1)(dictEq)(v.value0)(v1.value0);
 					};
 					if (v instanceof Data_Either.Right && v1 instanceof Data_Either.Right) {
-						return Data_Eq.eq1(dictEq11)(dictEq)(v.value0)(v1.value0);
+						return data.eq1(dictEq11)(dictEq)(v.value0)(v1.value0);
 					};
 					return false;
 				};
@@ -83,7 +83,7 @@ let eq1Coproduct = function (dictEq1) {
 let eqCoproduct = function (dictEq1) {
 	return function (dictEq11) {
 		return function (dictEq) {
-			return new Data_Eq.Eq(Data_Eq.eq1(eq1Coproduct(dictEq1)(dictEq11))(dictEq));
+			return new data.Eq(data.eq1(eq1Coproduct(dictEq1)(dictEq11))(dictEq));
 		};
 	};
 };

@@ -1,5 +1,4 @@
-let data = require("../data");
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 
 
 let zero = function (dict) {
@@ -56,7 +55,7 @@ let gcd = function ($copy_dictEq) {
 				let $tco_done = false;
 				let $tco_result;
 				function $tco_loop(dictEq, dictEuclideanRing, a, b) {
-					let $7 = Data_Eq.eq(dictEq)(b)(zero(((dictEuclideanRing.CommutativeRing0()).Ring0()).Semiring0()));
+					let $7 = data.eq(dictEq)(b)(zero(((dictEuclideanRing.CommutativeRing0()).Ring0()).Semiring0()));
 					if ($7) {
 						$tco_done = true;
 						return a;
@@ -94,7 +93,7 @@ let lcm = function (dictEq) {
 	return function (dictEuclideanRing) {
 		return function (a) {
 			return function (b) {
-				let $8 = Data_Eq.eq(dictEq)(a)(zero(((dictEuclideanRing.CommutativeRing0()).Ring0()).Semiring0())) || Data_Eq.eq(dictEq)(b)(zero(((dictEuclideanRing.CommutativeRing0()).Ring0()).Semiring0()));
+				let $8 = data.eq(dictEq)(a)(zero(((dictEuclideanRing.CommutativeRing0()).Ring0()).Semiring0())) || data.eq(dictEq)(b)(zero(((dictEuclideanRing.CommutativeRing0()).Ring0()).Semiring0()));
 				if ($8) {
 					return zero(((dictEuclideanRing.CommutativeRing0()).Ring0()).Semiring0());
 				};

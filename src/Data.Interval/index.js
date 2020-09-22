@@ -2,7 +2,7 @@ const control = require("../control");
 let Data_Bifoldable = require("../Data.Bifoldable/index.js");
 let Data_Bifunctor = require("../Data.Bifunctor/index.js");
 let Data_Bitraversable = require("../Data.Bitraversable/index.js");
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
@@ -179,19 +179,19 @@ let foldableRecurringInterval = new Data_Foldable.Foldable(function (dictMonoid)
 });
 let eqInterval = function (dictEq) {
     return function (dictEq1) {
-        return new Data_Eq.Eq(function (x) {
+        return new data.Eq(function (x) {
             return function (y) {
                 if (x instanceof StartEnd && y instanceof StartEnd) {
-                    return Data_Eq.eq(dictEq1)(x.value0)(y.value0) && Data_Eq.eq(dictEq1)(x.value1)(y.value1);
+                    return data.eq(dictEq1)(x.value0)(y.value0) && data.eq(dictEq1)(x.value1)(y.value1);
                 };
                 if (x instanceof DurationEnd && y instanceof DurationEnd) {
-                    return Data_Eq.eq(dictEq)(x.value0)(y.value0) && Data_Eq.eq(dictEq1)(x.value1)(y.value1);
+                    return data.eq(dictEq)(x.value0)(y.value0) && data.eq(dictEq1)(x.value1)(y.value1);
                 };
                 if (x instanceof StartDuration && y instanceof StartDuration) {
-                    return Data_Eq.eq(dictEq1)(x.value0)(y.value0) && Data_Eq.eq(dictEq)(x.value1)(y.value1);
+                    return data.eq(dictEq1)(x.value0)(y.value0) && data.eq(dictEq)(x.value1)(y.value1);
                 };
                 if (x instanceof DurationOnly && y instanceof DurationOnly) {
-                    return Data_Eq.eq(dictEq)(x.value0)(y.value0);
+                    return data.eq(dictEq)(x.value0)(y.value0);
                 };
                 return false;
             };
@@ -200,9 +200,9 @@ let eqInterval = function (dictEq) {
 };
 let eqRecurringInterval = function (dictEq) {
     return function (dictEq1) {
-        return new Data_Eq.Eq(function (x) {
+        return new data.Eq(function (x) {
             return function (y) {
-                return Data_Eq.eq(Data_Maybe.eqMaybe(Data_Eq.eqInt))(x.value0)(y.value0) && Data_Eq.eq(eqInterval(dictEq)(dictEq1))(x.value1)(y.value1);
+                return data.eq(Data_Maybe.eqMaybe(data.eqInt))(x.value0)(y.value0) && data.eq(eqInterval(dictEq)(dictEq1))(x.value1)(y.value1);
             };
         });
     };

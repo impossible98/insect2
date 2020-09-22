@@ -1,5 +1,5 @@
 let Data_Bounded = require("../Data.Bounded/index.js");
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_EuclideanRing = require("../Data.EuclideanRing/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
@@ -206,7 +206,7 @@ function round(arg) {
 	return unsafeClamp(Math.round(arg));
 }
 
-let eqParity = new Data_Eq.Eq(function (x) {
+let eqParity = new data.Eq(function (x) {
 	return function (y) {
 		if (x instanceof Even && y instanceof Even) {
 			return true;
@@ -240,7 +240,7 @@ let ordParity = new Data_Ord.Ord(function () {
 
 let semiringParity = new Control4(function (x) {
 	return function (y) {
-		let $19 = Data_Eq.eq(eqParity)(x)(y);
+		let $19 = data.eq(eqParity)(x)(y);
 		if ($19) {
 			return Even.value;
 		};

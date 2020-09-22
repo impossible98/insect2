@@ -1,7 +1,7 @@
 const control = require("../control");
 let Data_BooleanAlgebra = require("../Data.BooleanAlgebra/index.js");
 let Data_Bounded = require("../Data.Bounded/index.js");
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_EuclideanRing = require("../Data.EuclideanRing/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_FoldableWithIndex = require("../Data.FoldableWithIndex/index.js");
@@ -11,7 +11,6 @@ let Data_FunctorWithIndex = require("../Data.FunctorWithIndex/index.js");
 let Data_HeytingAlgebra = require("../Data.HeytingAlgebra/index.js");
 let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
-const data = require("../data");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
 let Data_Semigroup_Foldable = require("../Data.Semigroup.Foldable/index.js");
 let Data_Semigroup_Traversable = require("../Data.Semigroup.Traversable/index.js");
@@ -241,9 +240,9 @@ let extendLazy = new control.Extend(function () {
 	};
 });
 let eqLazy = function (dictEq) {
-	return new Data_Eq.Eq(function (x) {
+	return new data.Eq(function (x) {
 		return function (y) {
-			return Data_Eq.eq(dictEq)(force(x))(force(y));
+			return data.eq(dictEq)(force(x))(force(y));
 		};
 	});
 };
@@ -256,8 +255,8 @@ let ordLazy = function (dictOrd) {
 		};
 	});
 };
-let eq1Lazy = new Data_Eq.Eq1(function (dictEq) {
-	return Data_Eq.eq(eqLazy(dictEq));
+let eq1Lazy = new data.Eq1(function (dictEq) {
+	return data.eq(eqLazy(dictEq));
 });
 let ord1Lazy = new Data_Ord.Ord1(function () {
 	return eq1Lazy;

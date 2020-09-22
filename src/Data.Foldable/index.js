@@ -1,6 +1,6 @@
 const control = require("../control");
 let Control_Plus = require("../Control.Plus/index.js");
-let Data_Eq = require("../Data.Eq/index.js");
+const data = require("../data");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_HeytingAlgebra = require("../Data.HeytingAlgebra/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
@@ -273,7 +273,7 @@ let maximumBy = function (dictFoldable) {
 				};
 				if (v instanceof Data_Maybe.Just) {
 					return new Data_Maybe.Just((function () {
-						let $116 = Data_Eq.eq(Data_Ordering.eqOrdering)(cmp(v.value0)(v1))(Data_Ordering.GT.value);
+						let $116 = data.eq(Data_Ordering.eqOrdering)(cmp(v.value0)(v1))(Data_Ordering.GT.value);
 						if ($116) {
 							return v.value0;
 						};
@@ -300,7 +300,7 @@ let minimumBy = function (dictFoldable) {
 				};
 				if (v instanceof Data_Maybe.Just) {
 					return new Data_Maybe.Just((function () {
-						let $120 = Data_Eq.eq(Data_Ordering.eqOrdering)(cmp(v.value0)(v1))(Data_Ordering.LT.value);
+						let $120 = data.eq(Data_Ordering.eqOrdering)(cmp(v.value0)(v1))(Data_Ordering.LT.value);
 						if ($120) {
 							return v.value0;
 						};
@@ -626,7 +626,7 @@ let any = function (dictFoldable) {
 let elem = function (dictFoldable) {
 	return function (dictEq) {
 		let $204 = any(dictFoldable)(Data_HeytingAlgebra.heytingAlgebraBoolean);
-		let $205 = Data_Eq.eq(dictEq);
+		let $205 = data.eq(dictEq);
 		return function ($206) {
 			return $204($205($206));
 		};
