@@ -4,7 +4,6 @@ let Data_EuclideanRing = require("../Data.EuclideanRing/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
 let Data_Ordering = require("../Data.Ordering/index.js");
-const data = require("../data");
 let Data_Show = require("../Data.Show/index.js");
 
 

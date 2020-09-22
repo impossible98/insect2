@@ -1,5 +1,5 @@
 let $foreign = require("./foreign.js");
-let data = require("../data");
+const data = require("../data");
 let Data_EuclideanRing = require("../Data.EuclideanRing/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Ord = require("../Data.Ord/index.js");

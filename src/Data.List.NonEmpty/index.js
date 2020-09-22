@@ -1,5 +1,5 @@
 const control = require("../control");
-let data = require("../data");
+const data = require("../data");
 let Data_Functor = require("../Data.Functor/index.js");
 let Data_FunctorWithIndex = require("../Data.FunctorWithIndex/index.js");
 let Data_List = require("../Data.List/index.js");
