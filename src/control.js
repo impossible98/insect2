@@ -2,6 +2,13 @@ let Data_Bifunctor = require("./Data.Bifunctor/index.js");
 const data = require('./data');
 let Data_Semigroup = require("./Data.Semigroup/index.js");
 
+
+class Control {
+	constructor(kw) {
+		this.kw = kw;
+	}
+}
+
 class Control2 {
 	constructor(kw, kw2) {
 		this.kw = kw;
@@ -9,30 +16,6 @@ class Control2 {
 	}
 }
 
-class Plus {
-	constructor(Alt0, empty) {
-		this.Alt0 = Alt0;
-		this.empty = empty;
-	}
-}
-
-let altArray = new Control2(() => {
-	return data.functorArray;
-}, Data_Semigroup.append(Data_Semigroup.semigroupArray));
-
-let plusArray = new Plus(() => {
-	return altArray;
-}, []);
-
-let empty = function (dict) {
-	return dict.empty;
-};
-
-class Control {
-	constructor(kw) {
-		this.kw = kw;
-	}
-}
 
 class Applicative {
 	constructor(Apply0, pure) {
@@ -109,6 +92,14 @@ class Monad {
 	}
 }
 
+
+class Plus {
+	constructor(Alt0, empty) {
+		this.Alt0 = Alt0;
+		this.empty = empty;
+	}
+}
+
 function arrayApply(fs) {
 	return function (xs) {
 		let l = fs.length;
@@ -123,6 +114,18 @@ function arrayApply(fs) {
 		}
 		return result;
 	};
+}
+
+let altArray = new Control2(() => {
+	return data.functorArray;
+}, Data_Semigroup.append(Data_Semigroup.semigroupArray));
+
+let plusArray = new Plus(() => {
+	return altArray;
+}, []);
+
+function empty(dict) {
+	return dict.empty;
 }
 
 let applyFn = new Apply(() => {
@@ -140,7 +143,7 @@ let applyArray = new Apply(() => {
 }, arrayApply);
 
 
-let unless = function (dictApplicative) {
+function unless(dictApplicative) {
 	return function (v) {
 		return function (v1) {
 			if (!v) {
@@ -152,9 +155,9 @@ let unless = function (dictApplicative) {
 			throw new Error("Failed pattern match at Control.Applicative (line 62, column 1 - line 62, column 65): " + [v.constructor.name, v1.constructor.name]);
 		};
 	};
-};
+}
 
-let when = function (dictApplicative) {
+function when(dictApplicative) {
 	return function (v) {
 		return function (v1) {
 			if (v) {
@@ -166,7 +169,7 @@ let when = function (dictApplicative) {
 			throw new Error("Failed pattern match at Control.Applicative (line 57, column 1 - line 57, column 63): " + [v.constructor.name, v1.constructor.name]);
 		};
 	};
-};
+}
 
 let applicativeFn = new Applicative(() => {
 	return applyFn;
@@ -175,14 +178,14 @@ let applicativeFn = new Applicative(() => {
 		return x;
 	};
 });
+
 let applicativeArray = new Applicative(() => {
 	return applyArray;
 }, function (x) {
 	return [x];
 });
 
-
-let whenM = function (dictMonad) {
+function whenM(dictMonad) {
 	return function (mb) {
 		return function (m) {
 			return bind(dictMonad.Bind1())(mb)(function (b) {
@@ -190,9 +193,9 @@ let whenM = function (dictMonad) {
 			});
 		};
 	};
-};
+}
 
-let unlessM = function (dictMonad) {
+function unlessM(dictMonad) {
 	return function (mb) {
 		return function (m) {
 			return bind(dictMonad.Bind1())(mb)(function (b) {
@@ -200,7 +203,7 @@ let unlessM = function (dictMonad) {
 			});
 		};
 	};
-};
+}
 
 let monadFn = new Monad(() => {
 	return applicativeFn;
@@ -214,7 +217,7 @@ let monadArray = new Monad(() => {
 	return bindArray;
 });
 
-let liftM1 = function (dictMonad) {
+function liftM1(dictMonad) {
 	return function (f) {
 		return function (a) {
 			return bind(dictMonad.Bind1())(a)(function (a$prime) {
@@ -222,9 +225,9 @@ let liftM1 = function (dictMonad) {
 			});
 		};
 	};
-};
+}
 
-let ap = function (dictMonad) {
+function ap(dictMonad) {
 	return function (f) {
 		return function (a) {
 			return bind(dictMonad.Bind1())(f)(function (f$prime) {
@@ -234,7 +237,7 @@ let ap = function (dictMonad) {
 			});
 		};
 	};
-};
+}
 
 let semigroupoidFn = new Control(function (f) {
 	return function (g) {
