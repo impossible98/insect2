@@ -1,6 +1,4 @@
 let Data_Bounded = require("../Data.Bounded/index.js");
-let data = require("../data");
-let Data_DivisionRing = require("../Data.DivisionRing/index.js");
 let Data_Eq = require("../Data.Eq/index.js");
 let Data_EuclideanRing = require("../Data.EuclideanRing/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
@@ -261,7 +259,7 @@ let ringParity = new data.Ring(function () {
 	return semiringParity;
 }, dict(semiringParity));
 
-let divisionRingParity = new Data_DivisionRing.DivisionRing(function () {
+let divisionRingParity = new data.DivisionRing(function () {
 	return ringParity;
 }, dict(categoryFn));
 
