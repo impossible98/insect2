@@ -1,5 +1,5 @@
 let Data_Bifunctor = require("./Data.Bifunctor/index.js");
-const data = require("./data");
+const data = require('./data');
 let Data_Semigroup = require("./Data.Semigroup/index.js");
 
 class Control2 {
