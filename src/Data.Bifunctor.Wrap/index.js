@@ -43,7 +43,7 @@ let biapplyWrap = function (dictBiapply) {
         return bifunctorWrap(dictBiapply.Bifunctor0());
     }, function (v) {
         return function (v1) {
-            return control.biapply(dictBiapply)(v)(v1);
+            return control.dict(dictBiapply)(v)(v1);
         };
     });
 };

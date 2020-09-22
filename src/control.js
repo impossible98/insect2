@@ -545,6 +545,7 @@ module.exports = {
 	composeKleisliFlipped: composeKleisliFlipped,
 	defer: defer,
 	discard: discard,
+	dict: dict,
 	discardUnit: discardUnit,
 	duplicate: duplicate,
 	extend: extend,

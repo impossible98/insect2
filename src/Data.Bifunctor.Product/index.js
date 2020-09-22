@@ -99,7 +99,7 @@ let biapplyProduct = function (dictBiapply) {
             return bifunctorProduct(dictBiapply.Bifunctor0())(dictBiapply1.Bifunctor0());
         }, function (v) {
             return function (v1) {
-                return new Product(control.biapply(dictBiapply)(v.value0)(v1.value0), control.biapply(dictBiapply1)(v.value1)(v1.value1));
+                return new Product(control.dict(dictBiapply)(v.value0)(v1.value0), control.dict(dictBiapply1)(v.value1)(v1.value1));
             };
         });
     };

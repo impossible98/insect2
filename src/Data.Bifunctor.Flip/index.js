@@ -41,7 +41,7 @@ let biapplyFlip = function (dictBiapply) {
         return bifunctorFlip(dictBiapply.Bifunctor0());
     }, function (v) {
         return function (v1) {
-            return control.biapply(dictBiapply)(v)(v1);
+            return control.dict(dictBiapply)(v)(v1);
         };
     });
 };
