@@ -1,5 +1,5 @@
-let record = require("../record");
-let type = require("../type");
+let record = require("./record");
+let type = require("./type");
 
 
 let SProxy = (function () {

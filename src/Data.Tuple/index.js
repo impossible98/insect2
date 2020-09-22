@@ -19,7 +19,7 @@ let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
 let Data_Ordering = require("../Data.Ordering/index.js");
-let Data_Ring = require("../Data.Ring/index.js");
+let data = require("../data");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
 let Data_Semigroup_Foldable = require("../Data.Semigroup.Foldable/index.js");
 let Data_Semigroup_Traversable = require("../Data.Semigroup.Traversable/index.js");
@@ -132,11 +132,11 @@ let semigroupTuple = function (dictSemigroup) {
 };
 let ringTuple = function (dictRing) {
     return function (dictRing1) {
-        return new Data_Ring.Ring(function () {
+        return new data.Ring(function () {
             return semiringTuple(dictRing.Semiring0())(dictRing1.Semiring0());
         }, function (v) {
             return function (v1) {
-                return new Tuple(Data_Ring.sub(dictRing)(v.value0)(v1.value0), Data_Ring.sub(dictRing1)(v.value1)(v1.value1));
+                return new Tuple(data.sub(dictRing)(v.value0)(v1.value0), data.sub(dictRing1)(v.value1)(v1.value1));
             };
         });
     };

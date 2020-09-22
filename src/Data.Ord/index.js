@@ -3,7 +3,7 @@
 let $foreign = require("./foreign.js");
 let Data_Eq = require("../Data.Eq/index.js");
 let Data_Ordering = require("../Data.Ordering/index.js");
-let Data_Ring = require("../Data.Ring/index.js");
+let data = require("../data");
 let record = require("../record");
 let type = require("../type");
 
@@ -162,7 +162,7 @@ let signum = function (dictOrd) {
             if ($43) {
                 return one(dictRing.Semiring0());
             };
-            return Data_Ring.negate(dictRing)(one(dictRing.Semiring0()));
+            return data.negate(dictRing)(one(dictRing.Semiring0()));
         };
     };
 };
@@ -307,7 +307,7 @@ let abs = function (dictOrd) {
             if ($53) {
                 return x;
             };
-            return Data_Ring.negate(dictRing)(x);
+            return data.negate(dictRing)(x);
         };
     };
 };

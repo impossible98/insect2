@@ -8,7 +8,7 @@ let Data_Functor = require("../Data.Functor/index.js");
 let Data_List_Types = require("../Data.List.Types/index.js");
 let Data_Number_Approximate = require("../Data.Number.Approximate/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
-let Data_Ring = require("../Data.Ring/index.js");
+let data = require("../data");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
 let Data_Show = require("../Data.Show/index.js");
 let Data_Tuple = require("../Data.Tuple/index.js");
@@ -88,7 +88,7 @@ let scalar = function (factor) {
     return quantity(factor)(Data_Units.unity);
 };
 let qNegate = function (v) {
-    return new Quantity(Data_Ring.negate(Data_Decimal.ringDecimal)(v.value0), v.value1);
+    return new Quantity(data.negate(Data_Decimal.ringDecimal)(v.value0), v.value1);
 };
 let qMultiply = function (v) {
     return function (v1) {
@@ -233,7 +233,7 @@ let qAdd = function (v) {
 };
 let qSubtract = function (q1) {
     return function (v) {
-        return qAdd(q1)(new Quantity(Data_Ring.negate(Data_Decimal.ringDecimal)(v.value0), v.value1));
+        return qAdd(q1)(new Quantity(data.negate(Data_Decimal.ringDecimal)(v.value0), v.value1));
     };
 };
 let asValueIn$prime = function (u) {

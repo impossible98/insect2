@@ -14,7 +14,7 @@ function reflectSymbol(dict) {
 }
 
 function refEq(r1) {
-	return function (r2) {
+	return (r2) => {
 		return r1 === r2;
 	};
 }
@@ -55,6 +55,7 @@ let eqUnit = new Eq(function (v) {
 		return true;
 	};
 });
+
 let eqString = new Eq(eqStringImpl);
 let eqNumber = new Eq(eqNumberImpl);
 let eqInt = new Eq(eqIntImpl);

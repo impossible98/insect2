@@ -32,7 +32,6 @@ class Alt {
 	}
 }
 
-
 class Alternative {
 	constructor(Applicative0, Plus1) {
 		this.Applicative0 = Applicative0;
@@ -49,7 +48,8 @@ let eqPosition = new Data_Eq.Eq(function (x) {
 		return x.column === y.column && x.line === y.line;
 	};
 });
-let ordPosition = new Data_Ord.Ord(()=> {
+
+let ordPosition = new Data_Ord.Ord(() => {
 	return eqPosition;
 }, function (x) {
 	return function (y) {
@@ -79,7 +79,7 @@ let lift2 = function (dictApply) {
 };
 
 
-let ParseState = (()=> {
+let ParseState = (() => {
 	function ParseState(value0, value1, value2) {
 		this.value0 = value0;
 		this.value1 = value1;
@@ -94,7 +94,8 @@ let ParseState = (()=> {
 	};
 	return ParseState;
 })();
-let ParseError = (()=> {
+
+let ParseError = (() => {
 	function ParseError(value0, value1) {
 		this.value0 = value0;
 		this.value1 = value1;
@@ -106,36 +107,44 @@ let ParseError = (()=> {
 	};
 	return ParseError;
 })();
+
 let ParserT = function (x) {
 	return x;
 };
+
 let showParseError = new Data_Show.Show(function (v) {
 	return "(ParseError " + (Data_Show.show(Data_Show.showString)(v.value0) + (" " + (Data_Show.show(showPosition)(v.value1) + ")")));
 });
-let parseErrorPosition = function (v) {
+
+function parseErrorPosition(v) {
 	return v.value1;
-};
-let parseErrorMessage = function (v) {
+}
+
+function parseErrorMessage(v) {
 	return v.value0;
-};
+}
+
 let newtypeParserT = new Data_Newtype.Newtype(function (n) {
 	return n;
 }, ParserT);
-let runParserT = function (dictMonad) {
-	return function (s) {
-		return function (p) {
+
+function runParserT(dictMonad) {
+	return (s) => {
+		return (p) => {
 			let initialState = new ParseState(s, initialPos, false);
 			return Control_Monad_State_Trans.evalStateT(((dictMonad.Bind1()).Apply0()).Functor0())(Control_Monad_Except_Trans.runExceptT(Data_Newtype.unwrap(newtypeParserT)(p)))(initialState);
 		};
 	};
-};
-let runParser = function (s) {
+}
+
+function runParser(s) {
 	let $90 = Data_Newtype.unwrap(Data_Identity.newtypeIdentity);
 	let $91 = runParserT(Data_Identity.monadIdentity)(s);
-	return function ($92) {
+	return ($92) => {
 		return $90($91($92));
 	};
-};
+}
+
 let monadTransParserT = new Control_Monad_Trans_Class.MonadTrans(function (dictMonad) {
 	let $93 = Control_Monad_Trans_Class.lift(Control_Monad_Except_Trans.monadTransExceptT)(Control_Monad_State_Trans.monadStateT(dictMonad));
 	let $94 = Control_Monad_Trans_Class.lift(Control_Monad_State_Trans.monadTransStateT)(dictMonad);
@@ -143,57 +152,70 @@ let monadTransParserT = new Control_Monad_Trans_Class.MonadTrans(function (dictM
 		return ParserT($93($94($95)));
 	};
 });
-let monadThrowParserT = function (dictMonad) {
+
+function monadThrowParserT(dictMonad) {
 	return Control_Monad_Except_Trans.monadThrowExceptT(Control_Monad_State_Trans.monadStateT(dictMonad));
-};
-let monadStateParserT = function (dictMonad) {
+}
+
+function monadStateParserT(dictMonad) {
 	return Control_Monad_Except_Trans.monadStateExceptT(Control_Monad_State_Trans.monadStateStateT(dictMonad));
-};
-let position = function (dictMonad) {
+}
+
+function position(dictMonad) {
 	return Control_Monad_State_Class.gets(monadStateParserT(dictMonad))(function (v) {
 		return v.value1;
 	});
-};
-let monadRecParserT = function (dictMonadRec) {
+}
+
+function monadRecParserT(dictMonadRec) {
 	return Control_Monad_Except_Trans.monadRecExceptT(Control_Monad_State_Trans.monadRecStateT(dictMonadRec));
-};
-let monadParserT = function (dictMonad) {
+}
+
+function monadParserT(dictMonad) {
 	return Control_Monad_Except_Trans.monadExceptT(Control_Monad_State_Trans.monadStateT(dictMonad));
-};
-let monadErrorParserT = function (dictMonad) {
+}
+
+function monadErrorParserT(dictMonad) {
 	return Control_Monad_Except_Trans.monadErrorExceptT(Control_Monad_State_Trans.monadStateT(dictMonad));
-};
-let mapParserT = (()=> {
+}
+
+let mapParserT = (() => {
 	let $96 = Data_Newtype.over(newtypeParserT)(newtypeParserT)(ParserT);
 	return function ($97) {
 		return $96(Control_Monad_Except_Trans.mapExceptT(Control_Monad_State_Trans.mapStateT($97)));
 	};
 })();
+
 let lazyParserT = new control.Lazy(function (f) {
-	return control.defer(Control_Monad_State_Trans.lazyStateT)((()=> {
+	return control.defer(Control_Monad_State_Trans.lazyStateT)((() => {
 		let $98 = Data_Newtype.unwrap(newtypeParserT);
 		return function ($99) {
 			return Control_Monad_Except_Trans.runExceptT($98(f($99)));
 		};
 	})());
 });
+
 let hoistParserT = mapParserT;
-let functorParserT = function (dictFunctor) {
+
+function functorParserT(dictFunctor) {
 	return Control_Monad_Except_Trans.functorExceptT(Control_Monad_State_Trans.functorStateT(dictFunctor));
-};
-let failWithPosition = function (dictMonad) {
-	return function (message) {
-		return function (pos) {
+}
+
+function failWithPosition(dictMonad) {
+	return (message) => {
+		return (pos) => {
 			return Control_Monad_Error_Class.throwError(monadThrowParserT(dictMonad))(new ParseError(message, pos));
 		};
 	};
-};
+}
+
 let eqParseError = new Data_Eq.Eq(function (x) {
 	return function (y) {
 		return x.value0 === y.value0 && Data_Eq.eq(eqPosition)(x.value1)(y.value1);
 	};
 });
-let ordParseError = new Data_Ord.Ord(()=> {
+
+let ordParseError = new Data_Ord.Ord(() => {
 	return eqParseError;
 }, function (x) {
 	return function (y) {
@@ -207,39 +229,47 @@ let ordParseError = new Data_Ord.Ord(()=> {
 		return Data_Ord.compare(ordPosition)(x.value1)(y.value1);
 	};
 });
-let consume = function (dictMonad) {
+
+function consume(dictMonad) {
 	return Control_Monad_State_Class.modify_(monadStateParserT(dictMonad))(function (v) {
 		return new ParseState(v.value0, v.value1, true);
 	});
-};
-let bindParserT = function (dictMonad) {
+}
+
+function bindParserT(dictMonad) {
 	return Control_Monad_Except_Trans.bindExceptT(Control_Monad_State_Trans.monadStateT(dictMonad));
-};
-let fail = function (dictMonad) {
-	return function (message) {
+}
+
+function fail(dictMonad) {
+	return (message) => {
 		return control.bindFlipped(bindParserT(dictMonad))(failWithPosition(dictMonad)(message))(position(dictMonad));
 	};
-};
-let applyParserT = function (dictMonad) {
+}
+
+function applyParserT(dictMonad) {
 	return Control_Monad_Except_Trans.applyExceptT(Control_Monad_State_Trans.monadStateT(dictMonad));
-};
-let semigroupParserT = function (dictMonad) {
+}
+
+function semigroupParserT(dictMonad) {
 	return function (dictSemigroup) {
 		return new Data_Semigroup.Semigroup(lift2(applyParserT(dictMonad))(Data_Semigroup.append(dictSemigroup)));
 	};
-};
-let applicativeParserT = function (dictMonad) {
+}
+
+function applicativeParserT(dictMonad) {
 	return Control_Monad_Except_Trans.applicativeExceptT(Control_Monad_State_Trans.monadStateT(dictMonad));
-};
-let monoidParserT = function (dictMonad) {
-	return function (dictMonoid) {
-		return new Data_Monoid.Monoid(()=> {
+}
+
+function monoidParserT(dictMonad) {
+	return (dictMonoid) => {
+		return new Data_Monoid.Monoid(() => {
 			return semigroupParserT(dictMonad)(dictMonoid.Semigroup0());
 		}, control.pure(applicativeParserT(dictMonad))(Data_Monoid.mempty(dictMonoid)));
 	};
-};
-let altParserT = function (dictMonad) {
-	return new Alt(()=> {
+}
+
+function altParserT(dictMonad) {
+	return new Alt(() => {
 		return functorParserT(((dictMonad.Bind1()).Apply0()).Functor0());
 	}, function (p1) {
 		return function (p2) {
@@ -253,31 +283,36 @@ let altParserT = function (dictMonad) {
 			})));
 		};
 	});
-};
-let plusParserT = function (dictMonad) {
-	return new Control_Plus.Plus(()=> {
+}
+
+function plusParserT(dictMonad) {
+	return new Control_Plus.Plus(() => {
 		return altParserT(dictMonad);
 	}, fail(dictMonad)("No alternative"));
-};
-let alternativeParserT = function (dictMonad) {
-	return new Alternative(()=> {
+}
+
+function alternativeParserT(dictMonad) {
+	return new Alternative(() => {
 		return applicativeParserT(dictMonad);
-	}, ()=> {
+	}, () => {
 		return plusParserT(dictMonad);
 	});
-};
-let monadZeroParserT = function (dictMonad) {
-	return new Control_MonadZero.MonadZero(()=> {
+}
+
+function monadZeroParserT(dictMonad) {
+	return new Control_MonadZero.MonadZero(() => {
 		return alternativeParserT(dictMonad);
-	}, ()=> {
+	}, () => {
 		return monadParserT(dictMonad);
 	});
-};
-let monadPlusParserT = function (dictMonad) {
-	return new Control_MonadPlus.MonadPlus(()=> {
+}
+
+function monadPlusParserT(dictMonad) {
+	return new Control_MonadPlus.MonadPlus(() => {
 		return monadZeroParserT(dictMonad);
 	});
-};
+}
+
 module.exports = {
 	ParseError: ParseError,
 	parseErrorMessage: parseErrorMessage,

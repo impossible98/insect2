@@ -4,7 +4,7 @@ let Data_EuclideanRing = require("../Data.EuclideanRing/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
 let Data_Ordering = require("../Data.Ordering/index.js");
-let Data_Ring = require("../Data.Ring/index.js");
+let data = require("../data");
 let Data_Show = require("../Data.Show/index.js");
 
 
@@ -40,7 +40,7 @@ let showDecimal = new Data_Show.Show(function (x) {
 
 let semiringDecimal = new Semiring($foreign.dAdd, $foreign.dMul, $foreign.fromInt(1), $foreign.fromInt(0));
 
-let ringDecimal = new Data_Ring.Ring(function () {
+let ringDecimal = new data.Ring(function () {
     return semiringDecimal;
 }, $foreign.dSub);
 

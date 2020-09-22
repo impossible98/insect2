@@ -12,7 +12,7 @@ let Data_FunctorWithIndex = require("../Data.FunctorWithIndex/index.js");
 let Data_HeytingAlgebra = require("../Data.HeytingAlgebra/index.js");
 let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
-let Data_Ring = require("../Data.Ring/index.js");
+let data = require("../data");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
 let Data_Semigroup_Foldable = require("../Data.Semigroup.Foldable/index.js");
 let Data_Semigroup_Traversable = require("../Data.Semigroup.Traversable/index.js");
@@ -107,12 +107,12 @@ let semigroupLazy = function (dictSemigroup) {
 	});
 };
 let ringLazy = function (dictRing) {
-	return new Data_Ring.Ring(function () {
+	return new data.Ring(function () {
 		return semiringLazy(dictRing.Semiring0());
 	}, function (a) {
 		return function (b) {
 			return defer(function (v) {
-				return Data_Ring.sub(dictRing)(force(a))(force(b));
+				return data.sub(dictRing)(force(a))(force(b));
 			});
 		};
 	});

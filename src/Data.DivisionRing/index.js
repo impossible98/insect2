@@ -1,4 +1,4 @@
-let Data_Ring = require("../Data.Ring/index.js");
+let data = require("../data");
 
 
 let mul = function (dict) {
@@ -31,7 +31,7 @@ let leftDiv = function (dictDivisionRing) {
 };
 
 let divisionringNumber = new DivisionRing(function () {
-	return Data_Ring.ringNumber;
+	return data.ringNumber;
 }, function (x) {
 	return 1.0 / x;
 });

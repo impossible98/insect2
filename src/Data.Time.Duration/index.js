@@ -3,7 +3,7 @@ let Data_Eq = require("../Data.Eq/index.js");
 let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
-let Data_Ring = require("../Data.Ring/index.js");
+let data = require("../data");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
 let Data_Show = require("../Data.Show/index.js");
 
@@ -140,7 +140,7 @@ let fromDuration = function (dict) {
 };
 let negateDuration = function (dictDuration) {
     let $56 = toDuration(dictDuration);
-    let $57 = Data_Newtype.over(newtypeMilliseconds)(newtypeMilliseconds)(Milliseconds)(Data_Ring.negate(Data_Ring.ringNumber));
+    let $57 = Data_Newtype.over(newtypeMilliseconds)(newtypeMilliseconds)(Milliseconds)(data.negate(data.ringNumber));
     let $58 = fromDuration(dictDuration);
     return function ($59) {
         return $56($57($58($59)));

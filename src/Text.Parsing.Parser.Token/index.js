@@ -11,7 +11,7 @@ let Data_List_Types = require("../Data.List.Types/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
 let Data_Ordering = require("../Data.Ordering/index.js");
-let Data_Ring = require("../Data.Ring/index.js");
+let data = require("../data");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
 let Data_Show = require("../Data.Show/index.js");
 let Data_String_CodeUnits = require("../Data.String.CodeUnits/index.js");
@@ -280,7 +280,7 @@ let makeTokenParser = function (dictMonad) {
             return c !== "\"" && (c !== "\\" && c > "\x1a");
         });
         let sign = function (dictRing) {
-            return alt(text.altParserT(dictMonad))(alt(text.altParserT(dictMonad))(Data_Functor.voidLeft(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Text_Parsing_Parser_String["char"](Text_Parsing_Parser_String.stringLikeString)(dictMonad)("-"))(Data_Ring.negate(dictRing)))(Data_Functor.voidLeft(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Text_Parsing_Parser_String["char"](Text_Parsing_Parser_String.stringLikeString)(dictMonad)("+"))(identity(categoryFn))))(control.pure(text.applicativeParserT(dictMonad))(identity(categoryFn)));
+            return alt(text.altParserT(dictMonad))(alt(text.altParserT(dictMonad))(Data_Functor.voidLeft(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Text_Parsing_Parser_String["char"](Text_Parsing_Parser_String.stringLikeString)(dictMonad)("-"))(data.negate(dictRing)))(Data_Functor.voidLeft(text.functorParserT(((dictMonad.Bind1()).Apply0()).Functor0()))(Text_Parsing_Parser_String["char"](Text_Parsing_Parser_String.stringLikeString)(dictMonad)("+"))(identity(categoryFn))))(control.pure(text.applicativeParserT(dictMonad))(identity(categoryFn)));
         };
         let oper = (function () {
             let go = control.bind(text.bindParserT(dictMonad))(v.opStart)(function (c) {
@@ -407,7 +407,7 @@ let makeTokenParser = function (dictMonad) {
                 throw new Error("Failed pattern match at Text.Parsing.Parser.Token (line 563, column 9 - line 563, column 31): " + [ e.constructor.name ]);
             };
             return Text_Parsing_Parser_Combinators.asErrorMessage(dictMonad)("exponent")(control.bind(text.bindParserT(dictMonad))(Text_Parsing_Parser_String.oneOf(Text_Parsing_Parser_String.stringLikeString)(dictMonad)([ "e", "E" ]))(function () {
-                return control.bind(text.bindParserT(dictMonad))(sign(Data_Ring.ringInt))(function (f) {
+                return control.bind(text.bindParserT(dictMonad))(sign(data.ringInt))(function (f) {
                     return control.bind(text.bindParserT(dictMonad))(Text_Parsing_Parser_Combinators.withErrorMessage(dictMonad)(decimal)("exponent"))(function (e) {
                         return control.pure(text.applicativeParserT(dictMonad))(power(f(e)));
                     });
@@ -438,7 +438,7 @@ let makeTokenParser = function (dictMonad) {
         let $$float = Text_Parsing_Parser_Combinators.withErrorMessage(dictMonad)(lexeme(floating))("float");
         let zeroNumber = Text_Parsing_Parser_Combinators.withErrorMessage(dictMonad)(applySecond(text.applyParserT(dictMonad))(Text_Parsing_Parser_String["char"](Text_Parsing_Parser_String.stringLikeString)(dictMonad)("0"))(alt(text.altParserT(dictMonad))(alt(text.altParserT(dictMonad))(alt(text.altParserT(dictMonad))(hexadecimal)(octal))(decimal))(control.pure(text.applicativeParserT(dictMonad))(0))))("");
         let nat = alt(text.altParserT(dictMonad))(zeroNumber)(decimal);
-        let $$int = control.bind(text.bindParserT(dictMonad))(lexeme(sign(Data_Ring.ringInt)))(function (f) {
+        let $$int = control.bind(text.bindParserT(dictMonad))(lexeme(sign(data.ringInt)))(function (f) {
             return control.bind(text.bindParserT(dictMonad))(nat)(function (n) {
                 return control.pure(text.applicativeParserT(dictMonad))(f(n));
             });
