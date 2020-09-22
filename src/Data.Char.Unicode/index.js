@@ -2,7 +2,7 @@
 let Data_Bounded = require("../Data.Bounded/index.js");
 let Data_Char_Unicode_Internal = require("../Data.Char.Unicode.Internal/index.js");
 let Data_Enum = require("../Data.Enum/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
 let Data_Show = require("../Data.Show/index.js");
@@ -498,7 +498,7 @@ let isAlpha = function ($55) {
     return Data_Char_Unicode_Internal.uIswalpha(toCharCode($55));
 };
 let generalCategory = (() => {
-    let $56 = Data_Functor.map(Data_Maybe.functorMaybe)(unicodeCatToGeneralCat);
+    let $56 = data.map(Data_Maybe.functorMaybe)(unicodeCatToGeneralCat);
     return function ($57) {
         return $56(Data_Char_Unicode_Internal.uGencat(toCharCode($57)));
     };

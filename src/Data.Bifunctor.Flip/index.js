@@ -1,6 +1,6 @@
 const control = require("../control");
 let Data_Bifunctor = require("../Data.Bifunctor/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Show = require("../Data.Show/index.js");
 let Flip = function (x) {
@@ -18,7 +18,7 @@ let newtypeFlip = new Data_Newtype.Newtype(function (n) {
     return n;
 }, Flip);
 let functorFlip = function (dictBifunctor) {
-    return new Data_Functor.Functor(function (f) {
+    return new data.Functor(function (f) {
         return function (v) {
             return Data_Bifunctor.lmap(dictBifunctor)(f)(v);
         };

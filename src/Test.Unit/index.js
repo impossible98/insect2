@@ -8,7 +8,7 @@ let Control_Monad_State_Trans = require("../Control.Monad.State.Trans/index.js")
 let Control_Parallel_Class = require("../Control.Parallel.Class/index.js");
 let Data_Either = require("../Data.Either/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_HeytingAlgebra = require("../Data.HeytingAlgebra/index.js");
 let Data_Identity = require("../Data.Identity/index.js");
 let Data_List = require("../Data.List/index.js");
@@ -20,7 +20,6 @@ let Data_Tuple = require("../Data.Tuple/index.js");
 let Effect_Aff = require("../Effect.Aff/index.js");
 let Effect_Aff_AVar = require("../Effect.Aff.AVar/index.js");
 let Effect_Exception = require("../Effect.Exception/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
 
 
 function intAdd(x) {
@@ -209,7 +208,7 @@ function makeTimeout(time) {
 function timeout(time) {
 	return function (t) {
 		return control.bind(Effect_Aff.bindAff)(Control_Parallel_Class.sequential(Effect_Aff.parallelAff)(alt(Effect_Aff.altParAff)(Control_Parallel_Class.parallel(Effect_Aff.parallelAff)(Effect_Aff.attempt(makeTimeout(time))))(Control_Parallel_Class.parallel(Effect_Aff.parallelAff)(Effect_Aff.attempt(t)))))(function (r) {
-			return Data_Either.either(Control_Monad_Error_Class.throwError(Effect_Aff.monadThrowAff))(Data_Functor._const(success))(r);
+			return Data_Either.either(Control_Monad_Error_Class.throwError(Effect_Aff.monadThrowAff))(data._const(success))(r);
 		});
 	};
 }
@@ -233,7 +232,7 @@ let haytingAlgebraOnly = new Data_HeytingAlgebra.HeytingAlgebra(Data_Newtype.ove
 function hasOnly(t) {
 	let go = function (v) {
 		if (v instanceof TestGroup) {
-			return Data_Functor.voidLeft(Control_Monad_State_Trans.functorStateT(Data_Identity.functorIdentity))(Control_Monad_State_Class.modify(Control_Monad_State_Trans.monadStateStateT(Data_Identity.monadIdentity))((() => {
+			return data.voidLeft(Control_Monad_State_Trans.functorStateT(Data_Identity.functorIdentity))(Control_Monad_State_Class.modify(Control_Monad_State_Trans.monadStateStateT(Data_Identity.monadIdentity))((() => {
 				let $159 = Data_HeytingAlgebra.disj(Data_Tuple.heytingAlgebraTuple(haytingAlgebraOnly)(haytingAlgebraOnly))(hasOnly(v.value0.value1));
 				let $160 = Data_HeytingAlgebra.disj(Data_Tuple.heytingAlgebraTuple(haytingAlgebraOnly)(haytingAlgebraOnly))(new Data_Tuple.Tuple(v.value2, Data_HeytingAlgebra.ff(haytingAlgebraOnly)));
 				return function ($161) {
@@ -243,7 +242,7 @@ function hasOnly(t) {
 		}
 
 		if (v instanceof TestUnit) {
-			return Data_Functor.voidLeft(Control_Monad_State_Trans.functorStateT(Data_Identity.functorIdentity))(Control_Monad_State_Class.modify(Control_Monad_State_Trans.monadStateStateT(Data_Identity.monadIdentity))(Data_HeytingAlgebra.disj(Data_Tuple.heytingAlgebraTuple(haytingAlgebraOnly)(haytingAlgebraOnly))(new Data_Tuple.Tuple(Data_HeytingAlgebra.ff(haytingAlgebraOnly), v.value2))))(v.value4);
+			return data.voidLeft(Control_Monad_State_Trans.functorStateT(Data_Identity.functorIdentity))(Control_Monad_State_Class.modify(Control_Monad_State_Trans.monadStateStateT(Data_Identity.monadIdentity))(Data_HeytingAlgebra.disj(Data_Tuple.heytingAlgebraTuple(haytingAlgebraOnly)(haytingAlgebraOnly))(new Data_Tuple.Tuple(Data_HeytingAlgebra.ff(haytingAlgebraOnly), v.value2))))(v.value4);
 		}
 
 		if (v instanceof SkipUnit) {
@@ -255,7 +254,7 @@ function hasOnly(t) {
 	return Control_Monad_State.execState(Control_Monad_Free.foldFree(Control_Monad_State_Trans.monadRecStateT(Control_Monad_Rec_Class.monadRecIdentity))(go)(t))(Data_HeytingAlgebra.ff(Data_Tuple.heytingAlgebraTuple(haytingAlgebraOnly)(haytingAlgebraOnly)));
 }
 
-let functorTestF = new Data_Functor.Functor(function (f) {
+let functorTestF = new data.Functor(function (f) {
 	return function (v) {
 		if (v instanceof TestGroup) {
 			return new TestGroup(v.value0, v.value1, v.value2, f(v.value3));
@@ -264,7 +263,7 @@ let functorTestF = new Data_Functor.Functor(function (f) {
 			return new TestUnit(v.value0, v.value1, v.value2, v.value3, f(v.value4));
 		};
 		if (v instanceof SkipUnit) {
-			return new SkipUnit(Data_Functor.map(functorTestF)(f)(v.value0), f(v.value1));
+			return new SkipUnit(data.map(functorTestF)(f)(v.value0), f(v.value1));
 		};
 		throw new Error("Failed pattern match at Test.Unit (line 98, column 1 - line 101, column 50): " + [f.constructor.name, v.constructor.name]);
 	};
@@ -315,10 +314,10 @@ let filterEmptyNodes = (() => {
 	};
 	let empty = function (v) {
 		if (v instanceof TestGroup) {
-			return Data_Functor.voidLeft(Control_Monad_State_Trans.functorStateT(Data_Identity.functorIdentity))(Control_Monad_State_Class.modify(Control_Monad_State_Trans.monadStateStateT(Data_Identity.monadIdentity))(Data_HeytingAlgebra.conj(Data_HeytingAlgebra.heytingAlgebraBoolean)(isEmpty(v.value0.value1))))(v.value3);
+			return data.voidLeft(Control_Monad_State_Trans.functorStateT(Data_Identity.functorIdentity))(Control_Monad_State_Class.modify(Control_Monad_State_Trans.monadStateStateT(Data_Identity.monadIdentity))(Data_HeytingAlgebra.conj(Data_HeytingAlgebra.heytingAlgebraBoolean)(isEmpty(v.value0.value1))))(v.value3);
 		};
 		if (v instanceof TestUnit) {
-			return Data_Functor.voidLeft(Control_Monad_State_Trans.functorStateT(Data_Identity.functorIdentity))(Control_Monad_State_Class.modify(Control_Monad_State_Trans.monadStateStateT(Data_Identity.monadIdentity))(Data_HeytingAlgebra.conj(Data_HeytingAlgebra.heytingAlgebraBoolean)(false)))(v.value4);
+			return data.voidLeft(Control_Monad_State_Trans.functorStateT(Data_Identity.functorIdentity))(Control_Monad_State_Class.modify(Control_Monad_State_Trans.monadStateStateT(Data_Identity.monadIdentity))(Data_HeytingAlgebra.conj(Data_HeytingAlgebra.heytingAlgebraBoolean)(false)))(v.value4);
 		};
 		if (v instanceof SkipUnit) {
 			return control.pure(Control_Monad_State_Trans.applicativeStateT(Data_Identity.monadIdentity))(v.value1);
@@ -384,10 +383,10 @@ function countTests(ts) {
 			return control.pure(Control_Monad_State_Trans.applicativeStateT(Data_Identity.monadIdentity))(v.value1);
 		};
 		if (v instanceof TestUnit) {
-			return Data_Functor.voidLeft(Control_Monad_State_Trans.functorStateT(Data_Identity.functorIdentity))(Control_Monad_State_Class.modify(Control_Monad_State_Trans.monadStateStateT(Data_Identity.monadIdentity))(add(semiringInt)(1)))(v.value4);
+			return data.voidLeft(Control_Monad_State_Trans.functorStateT(Data_Identity.functorIdentity))(Control_Monad_State_Class.modify(Control_Monad_State_Trans.monadStateStateT(Data_Identity.monadIdentity))(add(semiringInt)(1)))(v.value4);
 		};
 		if (v instanceof TestGroup) {
-			return Data_Functor.voidLeft(Control_Monad_State_Trans.functorStateT(Data_Identity.functorIdentity))(Control_Monad_State_Class.modify(Control_Monad_State_Trans.monadStateStateT(Data_Identity.monadIdentity))(add(semiringInt)(countTests(v.value0.value1))))(v.value3);
+			return data.voidLeft(Control_Monad_State_Trans.functorStateT(Data_Identity.functorIdentity))(Control_Monad_State_Class.modify(Control_Monad_State_Trans.monadStateStateT(Data_Identity.monadIdentity))(add(semiringInt)(countTests(v.value0.value1))))(v.value3);
 		};
 		throw new Error("Failed pattern match at Test.Unit (line 160, column 5 - line 160, column 29): " + [v.constructor.name]);
 	};
@@ -397,10 +396,10 @@ function countTests(ts) {
 function countSkippedTests(ts) {
 	let go = function (v) {
 		if (v instanceof SkipUnit && v.value0 instanceof TestUnit) {
-			return Data_Functor.voidLeft(Control_Monad_State_Trans.functorStateT(Data_Identity.functorIdentity))(Control_Monad_State_Class.modify(Control_Monad_State_Trans.monadStateStateT(Data_Identity.monadIdentity))(add(semiringInt)(1)))(v.value1);
+			return data.voidLeft(Control_Monad_State_Trans.functorStateT(Data_Identity.functorIdentity))(Control_Monad_State_Class.modify(Control_Monad_State_Trans.monadStateStateT(Data_Identity.monadIdentity))(add(semiringInt)(1)))(v.value1);
 		};
 		if (v instanceof SkipUnit && v.value0 instanceof TestGroup) {
-			return Data_Functor.voidLeft(Control_Monad_State_Trans.functorStateT(Data_Identity.functorIdentity))(Control_Monad_State_Class.modify(Control_Monad_State_Trans.monadStateStateT(Data_Identity.monadIdentity))(add(semiringInt)(countTests(v.value0.value0.value1))))(v.value1);
+			return data.voidLeft(Control_Monad_State_Trans.functorStateT(Data_Identity.functorIdentity))(Control_Monad_State_Class.modify(Control_Monad_State_Trans.monadStateStateT(Data_Identity.monadIdentity))(add(semiringInt)(countTests(v.value0.value0.value1))))(v.value1);
 		};
 		if (v instanceof SkipUnit && v.value0 instanceof SkipUnit) {
 			return control.pure(Control_Monad_State_Trans.applicativeStateT(Data_Identity.monadIdentity))(v.value1);
@@ -409,7 +408,7 @@ function countSkippedTests(ts) {
 			return control.pure(Control_Monad_State_Trans.applicativeStateT(Data_Identity.monadIdentity))(v.value4);
 		};
 		if (v instanceof TestGroup) {
-			return Data_Functor.voidLeft(Control_Monad_State_Trans.functorStateT(Data_Identity.functorIdentity))(Control_Monad_State_Class.modify(Control_Monad_State_Trans.monadStateStateT(Data_Identity.monadIdentity))(add(semiringInt)(countSkippedTests(v.value0.value1))))(v.value3);
+			return data.voidLeft(Control_Monad_State_Trans.functorStateT(Data_Identity.functorIdentity))(Control_Monad_State_Class.modify(Control_Monad_State_Trans.monadStateStateT(Data_Identity.monadIdentity))(add(semiringInt)(countSkippedTests(v.value0.value1))))(v.value3);
 		};
 		throw new Error("Failed pattern match at Test.Unit (line 168, column 5 - line 168, column 29): " + [v.constructor.name]);
 	};
@@ -417,7 +416,7 @@ function countSkippedTests(ts) {
 }
 
 let collectTests = (() => {
-	let $164 = Data_Functor.map(Effect_Aff.functorAff)(Data_List.reverse);
+	let $164 = data.map(Effect_Aff.functorAff)(Data_List.reverse);
 	let $165 = walkSuite(() => {
 		return () => {
 			return control.pure(Effect_Aff.applicativeAff)({});
@@ -430,7 +429,7 @@ let collectTests = (() => {
 
 function collectResults(tests) {
 	function run(v) {
-		return Data_Functor.map(Effect_Aff.functorAff)(Data_Tuple.Tuple.create(v.value0))(Effect_Aff.attempt(v.value1));
+		return data.map(Effect_Aff.functorAff)(Data_Tuple.Tuple.create(v.value0))(Effect_Aff.attempt(v.value1));
 	}
 
 	return Data_Traversable["for"](Effect_Aff.applicativeAff)(Data_List_Types.traversableList)(tests)(run);

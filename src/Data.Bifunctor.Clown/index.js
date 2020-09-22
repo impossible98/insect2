@@ -1,6 +1,6 @@
 const control = require("../control");
 let Data_Bifunctor = require("../Data.Bifunctor/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Show = require("../Data.Show/index.js");
 
@@ -23,7 +23,7 @@ let ordClown = function (dictOrd) {
 let newtypeClown = new Data_Newtype.Newtype(function (n) {
     return n;
 }, Clown);
-let functorClown = new Data_Functor.Functor(function (v) {
+let functorClown = new data.Functor(function (v) {
     return function (v1) {
         return v1;
     };
@@ -35,7 +35,7 @@ let bifunctorClown = function (dictFunctor) {
     return new Data_Bifunctor.Bifunctor(function (f) {
         return function (v) {
             return function (v1) {
-                return Data_Functor.map(dictFunctor)(f)(v1);
+                return data.map(dictFunctor)(f)(v1);
             };
         };
     });

@@ -1,5 +1,5 @@
 const control = require("../control");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 
 
 class Apply {
@@ -21,7 +21,7 @@ let stateR = function (v) {
 let stateL = function (v) {
     return v;
 };
-let functorStateR = new Data_Functor.Functor(function (f) {
+let functorStateR = new data.Functor(function (f) {
     return function (k) {
         return function (s) {
             let v = stateR(k)(s);
@@ -32,7 +32,7 @@ let functorStateR = new Data_Functor.Functor(function (f) {
         };
     };
 });
-let functorStateL = new Data_Functor.Functor(function (f) {
+let functorStateL = new data.Functor(function (f) {
     return function (k) {
         return function (s) {
             let v = stateL(k)(s);

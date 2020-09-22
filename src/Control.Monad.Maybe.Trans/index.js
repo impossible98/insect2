@@ -9,7 +9,7 @@ let Control_Monad_Trans_Class = require("../Control.Monad.Trans.Class/index.js")
 let Control_Monad_Writer_Class = require("../Control.Monad.Writer.Class/index.js");
 let Control_MonadPlus = require("../Control.MonadPlus/index.js");
 let Control_MonadZero = require("../Control.MonadZero/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Tuple = require("../Data.Tuple/index.js");
@@ -112,9 +112,9 @@ let mapMaybeT = function (f) {
 	};
 };
 let functorMaybeT = function (dictFunctor) {
-	return new Data_Functor.Functor(function (f) {
+	return new data.Functor(function (f) {
 		return function (v) {
-			return Data_Functor.map(dictFunctor)(Data_Functor.map(Data_Maybe.functorMaybe)(f))(v);
+			return data.map(dictFunctor)(data.map(Data_Maybe.functorMaybe)(f))(v);
 		};
 	});
 };
@@ -242,7 +242,7 @@ let monadWriterMaybeT = function (dictMonadWriter) {
 		return monadTellMaybeT(dictMonadWriter.MonadTell0());
 	}, mapMaybeT(function (m) {
 		return control.bind(((dictMonadWriter.MonadTell0()).Monad0()).Bind1())(Control_Monad_Writer_Class.listen(dictMonadWriter)(m))(function (v) {
-			return pure(((dictMonadWriter.MonadTell0()).Monad0()).Applicative0())(Data_Functor.map(Data_Maybe.functorMaybe)(function (r) {
+			return pure(((dictMonadWriter.MonadTell0()).Monad0()).Applicative0())(data.map(Data_Maybe.functorMaybe)(function (r) {
 				return new Data_Tuple.Tuple(r, v.value1);
 			})(v.value0));
 		});

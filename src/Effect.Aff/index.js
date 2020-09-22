@@ -7,15 +7,13 @@ let Control_Parallel = require("../Control.Parallel/index.js");
 let Control_Parallel_Class = require("../Control.Parallel.Class/index.js");
 let Data_Either = require("../Data.Either/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
 let Effect = require("../Effect/index.js");
 let Effect_Class = require("../Effect.Class/index.js");
 let Effect_Exception = require("../Effect.Exception/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
-let Data_Semigroup = require("../Data.Semigroup/index.js");
 
 
 class Alt {
@@ -47,7 +45,7 @@ let lift2 = function (dictApply) {
 	return function (f) {
 		return function (a) {
 			return function (b) {
-				return apply(dictApply)(Data_Functor.map(dictApply.Functor0())(f)(a))(b);
+				return apply(dictApply)(data.map(dictApply.Functor0())(f)(a))(b);
 			};
 		};
 	};
@@ -65,8 +63,8 @@ let suspendAff = $foreign["_fork"](false);
 let newtypeCanceler = new Data_Newtype.Newtype(function (n) {
 	return n;
 }, Canceler);
-let functorParAff = new Data_Functor.Functor($foreign["_parAffMap"]);
-let functorAff = new Data_Functor.Functor($foreign["_map"]);
+let functorParAff = new data.Functor($foreign["_parAffMap"]);
+let functorAff = new data.Functor($foreign["_map"]);
 let forkAff = $foreign["_fork"](true);
 
 function crashWith() {
@@ -134,7 +132,7 @@ let launchAff = function (aff) {
 	};
 };
 let launchAff_ = (() => {
-	let $43 = Data_Functor._void(Effect.functorEffect);
+	let $43 = data._void(Effect.functorEffect);
 	return function ($44) {
 		return $43(launchAff($44));
 	};
@@ -146,9 +144,9 @@ let delay = function (v) {
 let bracket = function (acquire) {
 	return function (completed) {
 		return $foreign.generalBracket(acquire)({
-			killed: Data_Functor._const(completed),
-			failed: Data_Functor._const(completed),
-			completed: Data_Functor._const(completed)
+			killed: data._const(completed),
+			failed: data._const(completed),
+			completed: data._const(completed)
 		});
 	};
 };
@@ -180,18 +178,18 @@ let cancelWith = function (aff) {
 					return v(e);
 				};
 			},
-			failed: Data_Functor._const(control.pure(applicativeAff)),
-			completed: Data_Functor._const(control.pure(applicativeAff))
-		})(Data_Functor._const(aff));
+			failed: data._const(control.pure(applicativeAff)),
+			completed: data._const(control.pure(applicativeAff))
+		})(data._const(aff));
 	};
 };
 let $$finally = function (fin) {
 	return function (a) {
-		return bracket(control.pure(applicativeAff)({}))(Data_Functor._const(fin))(Data_Functor._const(a));
+		return bracket(control.pure(applicativeAff)({}))(data._const(fin))(data._const(a));
 	};
 };
 let invincible = function (a) {
-	return bracket(a)(Data_Functor._const(control.pure(applicativeAff)({})))(control.pure(applicativeAff));
+	return bracket(a)(data._const(control.pure(applicativeAff)({})))(control.pure(applicativeAff));
 };
 let lazyAff = new control.Lazy(function (f) {
 	return control.bind(bindAff)(control.pure(applicativeAff)({}))(f);
@@ -205,17 +203,17 @@ let monadEffectAff = new Effect_Class.MonadEffect(() => {
 let effectCanceler = (() => {
 	let $45 = Effect_Class.liftEffect(monadEffectAff);
 	return function ($46) {
-		return Canceler(Data_Functor._const($45($46)));
+		return Canceler(data._const($45($46)));
 	};
 })();
 let joinFiber = function (v) {
 	return $foreign.makeAff(function (k) {
-		return Data_Functor.map(Effect.functorEffect)(effectCanceler)(v.join(k));
+		return data.map(Effect.functorEffect)(effectCanceler)(v.join(k));
 	});
 };
-let functorFiber = new Data_Functor.Functor(function (f) {
+let functorFiber = new data.Functor(function (f) {
 	return function (t) {
-		return unsafePerformEffect(makeFiber(Data_Functor.map(functorAff)(f)(joinFiber(t))));
+		return unsafePerformEffect(makeFiber(data.map(functorAff)(f)(joinFiber(t))));
 	};
 });
 let applyFiber = new Apply(() => {
@@ -234,16 +232,16 @@ let killFiber = function (e) {
 	return function (v) {
 		return control.bind(bindAff)(Effect_Class.liftEffect(monadEffectAff)(v.isSuspended))(function (v1) {
 			if (v1) {
-				return Effect_Class.liftEffect(monadEffectAff)(Data_Functor._void(Effect.functorEffect)(v.kill(e, Data_Functor._const(control.pure(Effect.applicativeEffect)({})))));
+				return Effect_Class.liftEffect(monadEffectAff)(data._void(Effect.functorEffect)(v.kill(e, data._const(control.pure(Effect.applicativeEffect)({})))));
 			};
 			return $foreign.makeAff(function (k) {
-				return Data_Functor.map(Effect.functorEffect)(effectCanceler)(v.kill(e, k));
+				return data.map(Effect.functorEffect)(effectCanceler)(v.kill(e, k));
 			});
 		});
 	};
 };
 let fiberCanceler = (() => {
-	let $47 = Data_Functor.flip(killFiber);
+	let $47 = data.flip(killFiber);
 	return function ($48) {
 		return Canceler($47($48));
 	};
@@ -267,7 +265,7 @@ let runAff = function (k) {
 };
 let runAff_ = function (k) {
 	return function (aff) {
-		return Data_Functor._void(Effect.functorEffect)(runAff(k)(aff));
+		return data._void(Effect.functorEffect)(runAff(k)(aff));
 	};
 };
 let runSuspendedAff = function (k) {
@@ -326,8 +324,8 @@ let supervise = function (aff) {
 				return Control_Parallel.parSequence_(parallelAff)(Data_Foldable.foldableArray)([killFiber(err)(sup.fiber), killAll(err)(sup)]);
 			};
 		},
-		failed: Data_Functor._const(killAll(killError)),
-		completed: Data_Functor._const(killAll(killError))
+		failed: data._const(killAll(killError)),
+		completed: data._const(killAll(killError))
 	})(function ($56) {
 		return joinFiber((function (v) {
 			return v.fiber;
@@ -355,7 +353,7 @@ let monoidAff = function (dictMonoid) {
 		return semigroupAff(dictMonoid.Semigroup0());
 	}, control.pure(applicativeAff)(Data_Monoid.mempty(dictMonoid)));
 };
-let nonCanceler = Data_Functor._const(control.pure(applicativeAff)({}));
+let nonCanceler = data._const(control.pure(applicativeAff)({}));
 let monoidCanceler = new Data_Monoid.Monoid(() => {
 	return semigroupCanceler;
 }, nonCanceler);
@@ -363,7 +361,7 @@ let never = $foreign.makeAff(function (v) {
 	return control.pure(Effect.applicativeEffect)(Data_Monoid.mempty(monoidCanceler));
 });
 let apathize = (() => {
-	let $57 = Data_Functor.map(functorAff)(Data_Functor._const({}));
+	let $57 = data.map(functorAff)(data._const({}));
 	return function ($58) {
 		return $57(attempt($58));
 	};
@@ -375,7 +373,7 @@ let altAff = new Alt(() => {
 	return functorAff;
 }, function (a1) {
 	return function (a2) {
-		return Control_Monad_Error_Class.catchError(monadErrorAff)(a1)(Data_Functor._const(a2));
+		return Control_Monad_Error_Class.catchError(monadErrorAff)(a1)(data._const(a2));
 	};
 });
 let plusAff = new control.Plus(() => {

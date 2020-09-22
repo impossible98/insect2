@@ -2,7 +2,7 @@ const control = require("../control");
 let Data_Array = require("../Data.Array/index.js");
 let Data_Array_NonEmpty_Internal = require("../Data.Array.NonEmpty.Internal/index.js");
 let Data_Bifunctor = require("../Data.Bifunctor/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_NonEmpty = require("../Data.NonEmpty/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
@@ -184,9 +184,9 @@ let cons$prime = function (x) {
 let fromNonEmpty = function (v) {
     return cons$prime(v.value0)(v.value1);
 };
-let concatMap = Data_Functor.flip(control.bind(Data_Array_NonEmpty_Internal.bindNonEmptyArray));
+let concatMap = data.flip(control.bind(Data_Array_NonEmpty_Internal.bindNonEmptyArray));
 let concat = (function () {
-    let $60 = Data_Functor.map(Data_Array_NonEmpty_Internal.functorNonEmptyArray)(toArray);
+    let $60 = data.map(Data_Array_NonEmpty_Internal.functorNonEmptyArray)(toArray);
     return function ($61) {
         return unsafeFromArray(Data_Array.concat(toArray($60($61))));
     };

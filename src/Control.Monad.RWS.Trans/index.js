@@ -5,7 +5,7 @@ let Control_Monad_Rec_Class = require("../Control.Monad.Rec.Class/index.js");
 let Control_Monad_State_Class = require("../Control.Monad.State.Class/index.js");
 let Control_Monad_Trans_Class = require("../Control.Monad.Trans.Class/index.js");
 let Control_Monad_Writer_Class = require("../Control.Monad.Writer.Class/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
@@ -102,11 +102,11 @@ let lazyRWST = new control.Lazy(function (f) {
 	};
 });
 let functorRWST = function (dictFunctor) {
-	return new Data_Functor.Functor(function (f) {
+	return new data.Functor(function (f) {
 		return function (v) {
 			return function (r) {
 				return function (s) {
-					return Data_Functor.map(dictFunctor)(function (v1) {
+					return data.map(dictFunctor)(function (v1) {
 						return new RWSResult(v1.value0, f(v1.value1), v1.value2);
 					})(v(r)(s));
 				};
@@ -145,7 +145,7 @@ let applyRWST = function (dictBind) {
 				return function (r) {
 					return function (s) {
 						return control.bind(dictBind)(v(r)(s))(function (v2) {
-							return Data_Functor.mapFlipped((dictBind.Apply0()).Functor0())(v1(r)(v2.value0))(function (v3) {
+							return data.mapFlipped((dictBind.Apply0()).Functor0())(v1(r)(v2.value0))(function (v3) {
 								return new RWSResult(v3.value0, v2.value1(v3.value1), Data_Semigroup.append(dictMonoid.Semigroup0())(v2.value2)(v3.value2));
 							});
 						});
@@ -165,7 +165,7 @@ let bindRWST = function (dictBind) {
 					return function (s) {
 						return control.bind(dictBind)(v(r)(s))(function (v1) {
 							let v2 = f(v1.value1);
-							return Data_Functor.mapFlipped((dictBind.Apply0()).Functor0())(v2(r)(v1.value0))(function (v3) {
+							return data.mapFlipped((dictBind.Apply0()).Functor0())(v2(r)(v1.value0))(function (v3) {
 								return new RWSResult(v3.value0, v3.value1, Data_Semigroup.append(dictMonoid.Semigroup0())(v1.value2)(v3.value2));
 							});
 						});

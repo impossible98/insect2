@@ -1,5 +1,5 @@
 const control = require("../control");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 
 
 class Control {
@@ -68,7 +68,7 @@ let ask = function (dict) {
 };
 let asks = function (dictMonadAsk) {
     return function (f) {
-        return Data_Functor.map((((dictMonadAsk.Monad0()).Bind1()).Apply0()).Functor0())(f)(ask(dictMonadAsk));
+        return data.map((((dictMonadAsk.Monad0()).Bind1()).Apply0()).Functor0())(f)(ask(dictMonadAsk));
     };
 };
 module.exports = {

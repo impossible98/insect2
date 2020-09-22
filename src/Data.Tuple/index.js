@@ -7,7 +7,6 @@ let Data_Bounded = require("../Data.Bounded/index.js");
 let Data_Distributive = require("../Data.Distributive/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_FoldableWithIndex = require("../Data.FoldableWithIndex/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_Functor_Invariant = require("../Data.Functor.Invariant/index.js");
 let Data_FunctorWithIndex = require("../Data.FunctorWithIndex/index.js");
 let Data_HeytingAlgebra = require("../Data.HeytingAlgebra/index.js");
@@ -24,7 +23,6 @@ let Data_Semigroup_Traversable = require("../Data.Semigroup.Traversable/index.js
 let Data_Show = require("../Data.Show/index.js");
 let Data_Traversable = require("../Data.Traversable/index.js");
 let Data_TraversableWithIndex = require("../Data.TraversableWithIndex/index.js");
-const type = require('../type');
 
 
 
@@ -185,7 +183,7 @@ let heytingAlgebraTuple = function (dictHeytingAlgebra) {
         }, new Tuple(Data_HeytingAlgebra.tt(dictHeytingAlgebra), Data_HeytingAlgebra.tt(dictHeytingAlgebra1)));
     };
 };
-let functorTuple = new Data_Functor.Functor(function (f) {
+let functorTuple = new data.Functor(function (f) {
     return function (m) {
         return new Tuple(m.value0, f(m.value1));
     };
@@ -193,7 +191,7 @@ let functorTuple = new Data_Functor.Functor(function (f) {
 let functorWithIndexTuple = new Data_FunctorWithIndex.FunctorWithIndex(function () {
     return functorTuple;
 }, function (f) {
-    return Data_Functor.map(functorTuple)(f({}));
+    return data.map(functorTuple)(f({}));
 });
 let invariantTuple = new Data_Functor_Invariant.Invariant(Data_Functor_Invariant.imapF(functorTuple));
 let fst = function (v) {
@@ -256,12 +254,12 @@ let traversableTuple = new Data_Traversable.Traversable(function () {
     return functorTuple;
 }, function (dictApplicative) {
     return function (v) {
-        return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Tuple.create(v.value0))(v.value1);
+        return data.map((dictApplicative.Apply0()).Functor0())(Tuple.create(v.value0))(v.value1);
     };
 }, function (dictApplicative) {
     return function (f) {
         return function (v) {
-            return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Tuple.create(v.value0))(f(v.value1));
+            return data.map((dictApplicative.Apply0()).Functor0())(Tuple.create(v.value0))(f(v.value1));
         };
     };
 });
@@ -274,7 +272,7 @@ let traversableWithIndexTuple = new Data_TraversableWithIndex.TraversableWithInd
 }, function (dictApplicative) {
     return function (f) {
         return function (v) {
-            return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Tuple.create(v.value0))(f({})(v.value1));
+            return data.map((dictApplicative.Apply0()).Functor0())(Tuple.create(v.value0))(f({})(v.value1));
         };
     };
 });
@@ -297,12 +295,12 @@ let traversable1Tuple = new Data_Semigroup_Traversable.Traversable1(function () 
     return traversableTuple;
 }, function (dictApply) {
     return function (v) {
-        return Data_Functor.map(dictApply.Functor0())(Tuple.create(v.value0))(v.value1);
+        return data.map(dictApply.Functor0())(Tuple.create(v.value0))(v.value1);
     };
 }, function (dictApply) {
     return function (f) {
         return function (v) {
-            return Data_Functor.map(dictApply.Functor0())(Tuple.create(v.value0))(f(v.value1));
+            return data.map(dictApply.Functor0())(Tuple.create(v.value0))(f(v.value1));
         };
     };
 });
@@ -359,7 +357,7 @@ let distributiveTuple = function (dictTypeEquals) {
         return Data_Distributive.collectDefault(distributiveTuple(dictTypeEquals))(dictFunctor);
     }, function (dictFunctor) {
         let $315 = Tuple.create(dict(dictTypeEquals)({}));
-        let $316 = Data_Functor.map(dictFunctor)(snd);
+        let $316 = data.map(dictFunctor)(snd);
         return function ($317) {
             return $315($316($317));
         };
@@ -434,13 +432,13 @@ let bitraversableTuple = new Data_Bitraversable.Bitraversable(function () {
     return bifunctorTuple;
 }, function (dictApplicative) {
     return function (v) {
-        return apply(dictApplicative.Apply0())(Data_Functor.map((dictApplicative.Apply0()).Functor0())(Tuple.create)(v.value0))(v.value1);
+        return apply(dictApplicative.Apply0())(data.map((dictApplicative.Apply0()).Functor0())(Tuple.create)(v.value0))(v.value1);
     };
 }, function (dictApplicative) {
     return function (f) {
         return function (g) {
             return function (v) {
-                return apply(dictApplicative.Apply0())(Data_Functor.map((dictApplicative.Apply0()).Functor0())(Tuple.create)(f(v.value0)))(g(v.value1));
+                return apply(dictApplicative.Apply0())(data.map((dictApplicative.Apply0()).Functor0())(Tuple.create)(f(v.value0)))(g(v.value1));
             };
         };
     };

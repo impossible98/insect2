@@ -6,7 +6,7 @@ let Control_Monad_ST_Internal = require("../Control.Monad.ST.Internal/index.js")
 let Data_Array_ST = require("../Data.Array.ST/index.js");
 let Data_Array_ST_Iterator = require("../Data.Array.ST.Iterator/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_HeytingAlgebra = require("../Data.HeytingAlgebra/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
@@ -140,7 +140,7 @@ let updateAt = $foreign["_updateAt"](Data_Maybe.Just.create)(Data_Maybe.Nothing.
 let unsafeIndex = function (dictPartial) {
     return $foreign.unsafeIndexImpl;
 };
-let uncons = $foreign["uncons'"](Data_Functor._const(Data_Maybe.Nothing.value))(function (x) {
+let uncons = $foreign["uncons'"](data._const(Data_Maybe.Nothing.value))(function (x) {
     return function (xs) {
         return new Data_Maybe.Just({
             head: x,
@@ -168,7 +168,7 @@ let takeEnd = function (n) {
         return $foreign.drop($foreign.length(xs) - n | 0)(xs);
     };
 };
-let tail = $foreign["uncons'"](Data_Functor._const(Data_Maybe.Nothing.value))(function (v) {
+let tail = $foreign["uncons'"](data._const(Data_Maybe.Nothing.value))(function (v) {
     return function (xs) {
         return new Data_Maybe.Just(xs);
     };
@@ -215,7 +215,7 @@ let nubByEq = function (eq) {
             let arr = Data_Array_ST.empty();
             Control_Monad_ST_Internal.foreach(xs)(function (x) {
                 return function __do() {
-                    let e = Data_Functor.map(Control_Monad_ST_Internal.functorST)((function () {
+                    let e = data.map(Control_Monad_ST_Internal.functorST)((function () {
                         let $84 = Data_HeytingAlgebra.not(Data_HeytingAlgebra.heytingAlgebraBoolean);
                         let $85 = Data_Foldable.any(Data_Foldable.foldableArray)(Data_HeytingAlgebra.heytingAlgebraBoolean)(function (v) {
                             return eq(v)(x);
@@ -224,7 +224,7 @@ let nubByEq = function (eq) {
                             return $84($85($86));
                         };
                     })())(Data_Array_ST.unsafeFreeze(arr))();
-                    return control.when(Control_Monad_ST_Internal.applicativeST)(e)(Data_Functor._void(Control_Monad_ST_Internal.functorST)(Data_Array_ST.push(x)(arr)))();
+                    return control.when(Control_Monad_ST_Internal.applicativeST)(e)(data._void(Control_Monad_ST_Internal.functorST)(Data_Array_ST.push(x)(arr)))();
                 };
             })();
             return Data_Array_ST.unsafeFreeze(arr)();
@@ -255,7 +255,7 @@ let mapWithIndex = function (f) {
 let some = function (dictAlternative) {
     return function (dictLazy) {
         return function (v) {
-            return apply((dictAlternative.Applicative0()).Apply0())(Data_Functor.map(((dictAlternative.Plus1()).Alt0()).Functor0())($foreign.cons)(v))(control.defer(dictLazy)(function (v1) {
+            return apply((dictAlternative.Applicative0()).Apply0())(data.map(((dictAlternative.Plus1()).Alt0()).Functor0())($foreign.cons)(v))(control.defer(dictLazy)(function (v1) {
                 return many(dictAlternative)(dictLazy)(v);
             }));
         };
@@ -283,7 +283,7 @@ let last = function (xs) {
     return index(xs)($foreign.length(xs) - 1 | 0);
 };
 let unsnoc = function (xs) {
-    return apply(Data_Maybe.applyMaybe)(Data_Functor.map(Data_Maybe.functorMaybe)(function (v) {
+    return apply(Data_Maybe.applyMaybe)(data.map(Data_Maybe.functorMaybe)(function (v) {
         return function (v1) {
             return {
                 init: v,
@@ -365,8 +365,8 @@ let unzip = function (xs) {
         })();
         Data_Array_ST_Iterator.iterate(iter)(function (v) {
             return function __do() {
-                Data_Functor._void(Control_Monad_ST_Internal.functorST)(Data_Array_ST.push(v.value0)(fsts))();
-                return Data_Functor._void(Control_Monad_ST_Internal.functorST)(Data_Array_ST.push(v.value1)(snds))();
+                data._void(Control_Monad_ST_Internal.functorST)(Data_Array_ST.push(v.value0)(fsts))();
+                return data._void(Control_Monad_ST_Internal.functorST)(Data_Array_ST.push(v.value1)(snds))();
             };
         })();
         let fsts$prime = Data_Array_ST.unsafeFreeze(fsts)();
@@ -389,11 +389,11 @@ let nubBy = function (comp) {
             return [  ];
         };
         if (v instanceof Data_Maybe.Just) {
-            return Data_Functor.map(Data_Functor.functorArray)(Data_Tuple.snd)(sortWith(Data_Ord.ordInt)(Data_Tuple.fst)((function __do() {
+            return data.map(data.functorArray)(Data_Tuple.snd)(sortWith(Data_Ord.ordInt)(Data_Tuple.fst)((function __do() {
                 let result = Data_Array_ST.unsafeThaw(singleton(v.value0))();
                 Control_Monad_ST_Internal.foreach(indexedAndSorted)(function (v1) {
                     return function __do() {
-                        let lst = Data_Functor.map(Control_Monad_ST_Internal.functorST)((function () {
+                        let lst = data.map(Control_Monad_ST_Internal.functorST)((function () {
                             let $87 = (function (dictPartial) {
                                 let $89 = Data_Maybe.fromJust();
                                 return function ($90) {
@@ -404,7 +404,7 @@ let nubBy = function (comp) {
                                 return Data_Tuple.snd($87($88));
                             };
                         })())(Data_Array_ST.unsafeFreeze(result))();
-                        return control.when(Control_Monad_ST_Internal.applicativeST)(notEq(Data_Ordering.eqOrdering)(comp(lst)(v1.value1))(Data_Ordering.EQ.value))(Data_Functor._void(Control_Monad_ST_Internal.functorST)(Data_Array_ST.push(v1)(result)))();
+                        return control.when(Control_Monad_ST_Internal.applicativeST)(notEq(Data_Ordering.eqOrdering)(comp(lst)(v1.value1))(Data_Ordering.EQ.value))(data._void(Control_Monad_ST_Internal.functorST)(Data_Array_ST.push(v1)(result)))();
                     };
                 })();
                 return Data_Array_ST.unsafeFreeze(result)();
@@ -424,7 +424,7 @@ let groupBy = function (op) {
                 return index(xs)(v);
             })();
             Data_Array_ST_Iterator.iterate(iter)(function (x) {
-                return Data_Functor._void(Control_Monad_ST_Internal.functorST)(function __do() {
+                return data._void(Control_Monad_ST_Internal.functorST)(function __do() {
                     let sub = Data_Array_ST.empty();
                     Data_Array_ST.push(x)(sub)();
                     Data_Array_ST_Iterator.pushWhile(op(x))(iter)(sub)();
@@ -560,7 +560,7 @@ let deleteBy = function (v) {
 let unionBy = function (eq) {
     return function (xs) {
         return function (ys) {
-            return Data_Semigroup.append(Data_Semigroup.semigroupArray)(xs)(Data_Foldable.foldl(Data_Foldable.foldableArray)(Data_Functor.flip(deleteBy(eq)))(nubByEq(eq)(ys))(xs));
+            return Data_Semigroup.append(Data_Semigroup.semigroupArray)(xs)(Data_Foldable.foldl(Data_Foldable.foldableArray)(data.flip(deleteBy(eq)))(nubByEq(eq)(ys))(xs));
         };
     };
 };
@@ -573,7 +573,7 @@ let $$delete = function (dictEq) {
 let difference = function (dictEq) {
     return Data_Foldable.foldr(Data_Foldable.foldableArray)($$delete(dictEq));
 };
-let concatMap = Data_Functor.flip(control.bind(control.bindArray));
+let concatMap = data.flip(control.bind(control.bindArray));
 let mapMaybe = function (f) {
     return concatMap((function () {
         let $94 = Data_Maybe.maybe([  ])(singleton);
@@ -584,14 +584,14 @@ let mapMaybe = function (f) {
 };
 let filterA = function (dictApplicative) {
     return function (p) {
-        let $96 = Data_Functor.map((dictApplicative.Apply0()).Functor0())(mapMaybe(function (v) {
+        let $96 = data.map((dictApplicative.Apply0()).Functor0())(mapMaybe(function (v) {
             if (v.value1) {
                 return new Data_Maybe.Just(v.value0);
             };
             return Data_Maybe.Nothing.value;
         }));
         let $97 = Data_Traversable.traverse(Data_Traversable.traversableArray)(dictApplicative)(function (x) {
-            return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Data_Tuple.Tuple.create(x))(p(x));
+            return data.map((dictApplicative.Apply0()).Functor0())(Data_Tuple.Tuple.create(x))(p(x));
         });
         return function ($98) {
             return $96($97($98));

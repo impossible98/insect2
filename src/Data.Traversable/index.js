@@ -2,7 +2,7 @@ let $foreign = require("./foreign.js");
 
 const control = require("../control");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Maybe_First = require("../Data.Maybe.First/index.js");
 let Data_Maybe_Last = require("../Data.Maybe.Last/index.js");
@@ -65,12 +65,12 @@ let traversableMultiplicative = new Traversable(function () {
     return Data_Monoid_Multiplicative.functorMultiplicative;
 }, function (dictApplicative) {
     return function (v) {
-        return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Data_Monoid_Multiplicative.Multiplicative)(v);
+        return data.map((dictApplicative.Apply0()).Functor0())(Data_Monoid_Multiplicative.Multiplicative)(v);
     };
 }, function (dictApplicative) {
     return function (f) {
         return function (v) {
-            return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Data_Monoid_Multiplicative.Multiplicative)(f(v));
+            return data.map((dictApplicative.Apply0()).Functor0())(Data_Monoid_Multiplicative.Multiplicative)(f(v));
         };
     };
 });
@@ -84,7 +84,7 @@ let traversableMaybe = new Traversable(function () {
             return control.pure(dictApplicative)(Data_Maybe.Nothing.value);
         };
         if (v instanceof Data_Maybe.Just) {
-            return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Data_Maybe.Just.create)(v.value0);
+            return data.map((dictApplicative.Apply0()).Functor0())(Data_Maybe.Just.create)(v.value0);
         };
         throw new Error("Failed pattern match at Data.Traversable (line 86, column 1 - line 90, column 33): " + [ v.constructor.name ]);
     };
@@ -95,7 +95,7 @@ let traversableMaybe = new Traversable(function () {
                 return control.pure(dictApplicative)(Data_Maybe.Nothing.value);
             };
             if (v1 instanceof Data_Maybe.Just) {
-                return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Data_Maybe.Just.create)(v(v1.value0));
+                return data.map((dictApplicative.Apply0()).Functor0())(Data_Maybe.Just.create)(v(v1.value0));
             };
             throw new Error("Failed pattern match at Data.Traversable (line 86, column 1 - line 90, column 33): " + [ v.constructor.name, v1.constructor.name ]);
         };
@@ -107,12 +107,12 @@ let traversableDual = new Traversable(function () {
     return Data_Monoid_Dual.functorDual;
 }, function (dictApplicative) {
     return function (v) {
-        return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Data_Monoid_Dual.Dual)(v);
+        return data.map((dictApplicative.Apply0()).Functor0())(Data_Monoid_Dual.Dual)(v);
     };
 }, function (dictApplicative) {
     return function (f) {
         return function (v) {
-            return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Data_Monoid_Dual.Dual)(f(v));
+            return data.map((dictApplicative.Apply0()).Functor0())(Data_Monoid_Dual.Dual)(f(v));
         };
     };
 });
@@ -122,12 +122,12 @@ let traversableDisj = new Traversable(function () {
     return Data_Monoid_Disj.functorDisj;
 }, function (dictApplicative) {
     return function (v) {
-        return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Data_Monoid_Disj.Disj)(v);
+        return data.map((dictApplicative.Apply0()).Functor0())(Data_Monoid_Disj.Disj)(v);
     };
 }, function (dictApplicative) {
     return function (f) {
         return function (v) {
-            return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Data_Monoid_Disj.Disj)(f(v));
+            return data.map((dictApplicative.Apply0()).Functor0())(Data_Monoid_Disj.Disj)(f(v));
         };
     };
 });
@@ -137,12 +137,12 @@ let traversableConj = new Traversable(function () {
     return Data_Monoid_Conj.functorConj;
 }, function (dictApplicative) {
     return function (v) {
-        return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Data_Monoid_Conj.Conj)(v);
+        return data.map((dictApplicative.Apply0()).Functor0())(Data_Monoid_Conj.Conj)(v);
     };
 }, function (dictApplicative) {
     return function (f) {
         return function (v) {
-            return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Data_Monoid_Conj.Conj)(f(v));
+            return data.map((dictApplicative.Apply0()).Functor0())(Data_Monoid_Conj.Conj)(f(v));
         };
     };
 });
@@ -152,12 +152,12 @@ let traversableAdditive = new Traversable(function () {
     return Data_Monoid_Additive.functorAdditive;
 }, function (dictApplicative) {
     return function (v) {
-        return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Data_Monoid_Additive.Additive)(v);
+        return data.map((dictApplicative.Apply0()).Functor0())(Data_Monoid_Additive.Additive)(v);
     };
 }, function (dictApplicative) {
     return function (f) {
         return function (v) {
-            return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Data_Monoid_Additive.Additive)(f(v));
+            return data.map((dictApplicative.Apply0()).Functor0())(Data_Monoid_Additive.Additive)(f(v));
         };
     };
 });
@@ -169,11 +169,11 @@ let sequenceDefault = function (dictTraversable) {
 let traversableArray = new Traversable(function () {
     return Data_Foldable.foldableArray;
 }, function () {
-    return Data_Functor.functorArray;
+    return data.functorArray;
 }, function (dictApplicative) {
     return sequenceDefault(traversableArray)(dictApplicative);
 }, function (dictApplicative) {
-    return $foreign.traverseArrayImpl(apply(dictApplicative.Apply0()))(Data_Functor.map((dictApplicative.Apply0()).Functor0()))(control.pure(dictApplicative));
+    return $foreign.traverseArrayImpl(apply(dictApplicative.Apply0()))(data.map((dictApplicative.Apply0()).Functor0()))(control.pure(dictApplicative));
 });
 let sequence = function (dict) {
     return dict.sequence;
@@ -184,12 +184,12 @@ let traversableFirst = new Traversable(function () {
     return Data_Maybe_First.functorFirst;
 }, function (dictApplicative) {
     return function (v) {
-        return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Data_Maybe_First.First)(sequence(traversableMaybe)(dictApplicative)(v));
+        return data.map((dictApplicative.Apply0()).Functor0())(Data_Maybe_First.First)(sequence(traversableMaybe)(dictApplicative)(v));
     };
 }, function (dictApplicative) {
     return function (f) {
         return function (v) {
-            return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Data_Maybe_First.First)(traverse(traversableMaybe)(dictApplicative)(f)(v));
+            return data.map((dictApplicative.Apply0()).Functor0())(Data_Maybe_First.First)(traverse(traversableMaybe)(dictApplicative)(f)(v));
         };
     };
 });
@@ -199,12 +199,12 @@ let traversableLast = new Traversable(function () {
     return Data_Maybe_Last.functorLast;
 }, function (dictApplicative) {
     return function (v) {
-        return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Data_Maybe_Last.Last)(sequence(traversableMaybe)(dictApplicative)(v));
+        return data.map((dictApplicative.Apply0()).Functor0())(Data_Maybe_Last.Last)(sequence(traversableMaybe)(dictApplicative)(v));
     };
 }, function (dictApplicative) {
     return function (f) {
         return function (v) {
-            return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Data_Maybe_Last.Last)(traverse(traversableMaybe)(dictApplicative)(f)(v));
+            return data.map((dictApplicative.Apply0()).Functor0())(Data_Maybe_Last.Last)(traverse(traversableMaybe)(dictApplicative)(f)(v));
         };
     };
 });
@@ -212,7 +212,7 @@ let traverseDefault = function (dictTraversable) {
     return function (dictApplicative) {
         return function (f) {
             return function (ta) {
-                return sequence(dictTraversable)(dictApplicative)(Data_Functor.map(dictTraversable.Functor0())(f)(ta));
+                return sequence(dictTraversable)(dictApplicative)(data.map(dictTraversable.Functor0())(f)(ta));
             };
         };
     };

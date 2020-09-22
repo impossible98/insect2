@@ -4,14 +4,12 @@ let Control_Monad_Maybe_Trans = require("../Control.Monad.Maybe.Trans/index.js")
 let Control_Monad_Reader_Trans = require("../Control.Monad.Reader.Trans/index.js");
 let Control_Monad_Writer_Trans = require("../Control.Monad.Writer.Trans/index.js");
 let Data_Either = require("../Data.Either/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Effect_Class = require("../Effect.Class/index.js");
 let Effect_Ref = require("../Effect.Ref/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Traversable = require("../Data.Traversable/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
@@ -75,7 +73,7 @@ let runContT = function (v) {
 
 
 let functorContT = function () {
-	return new Data_Functor.Functor(function (f) {
+	return new data.Functor(function (f) {
 		return function (v) {
 			return function (k) {
 				return v(function (a) {
@@ -168,9 +166,9 @@ let Compose = function (x) {
 
 let functorCompose = function (dictFunctor) {
 	return function (dictFunctor1) {
-		return new Data_Functor.Functor(function (f) {
+		return new data.Functor(function (f) {
 			return function (v) {
-				return Compose(Data_Functor.map(dictFunctor)(Data_Functor.map(dictFunctor1)(f))(v));
+				return Compose(data.map(dictFunctor)(data.map(dictFunctor1)(f))(v));
 			};
 		});
 	};
@@ -193,7 +191,7 @@ let foldableCompose = function (dictFoldable) {
 		}, function (f) {
 			return function (i) {
 				return function (v) {
-					return Data_Foldable.foldr(dictFoldable)(Data_Functor.flip(Data_Foldable.foldr(dictFoldable1)(f)))(i)(v);
+					return Data_Foldable.foldr(dictFoldable)(data.flip(Data_Foldable.foldr(dictFoldable1)(f)))(i)(v);
 				};
 			};
 		});
@@ -211,7 +209,7 @@ let traversableCompose = function (dictTraversable) {
 		}, function (dictApplicative) {
 			return function (f) {
 				return function (v) {
-					return Data_Functor.map((dictApplicative.Apply0()).Functor0())(Compose)(Data_Traversable.traverse(dictTraversable)(dictApplicative)(Data_Traversable.traverse(dictTraversable1)(dictApplicative)(f))(v));
+					return data.map((dictApplicative.Apply0()).Functor0())(Compose)(Data_Traversable.traverse(dictTraversable)(dictApplicative)(Data_Traversable.traverse(dictTraversable1)(dictApplicative)(f))(v));
 				};
 			};
 		});
@@ -224,7 +222,7 @@ let applyCompose = function (dictApply) {
 			return functorCompose(dictApply.Functor0())(dictApply1.Functor0());
 		}, function (v) {
 			return function (v1) {
-				return Compose(apply(dictApply)(Data_Functor.map(dictApply.Functor0())(apply(dictApply1))(v))(v1));
+				return Compose(apply(dictApply)(data.map(dictApply.Functor0())(apply(dictApply1))(v))(v1));
 			};
 		});
 	};
@@ -313,9 +311,9 @@ let monadParParCont = function (dictMonadEffect) {
 };
 
 let functorParCont = function (dictMonadEffect) {
-	return new Data_Functor.Functor(function (f) {
+	return new data.Functor(function (f) {
 		let $40 = parallel(monadParParCont(dictMonadEffect));
-		let $41 = Data_Functor.map(functorContT((((dictMonadEffect.Monad0()).Bind1()).Apply0()).Functor0()))(f);
+		let $41 = data.map(functorContT((((dictMonadEffect.Monad0()).Bind1()).Apply0()).Functor0()))(f);
 		let $42 = sequential(monadParParCont(dictMonadEffect));
 		return function ($43) {
 			return $40($41($42($43)));

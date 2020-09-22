@@ -1,6 +1,6 @@
 let Data_Array = require("../Data.Array/index.js");
 let Data_Bounded = require("../Data.Bounded/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Ordering = require("../Data.Ordering/index.js");
 let Data_Show = require("../Data.Show/index.js");
@@ -17978,7 +17978,7 @@ let uIswprint = checkAttr([gencatMC, gencatNO, gencatSK, gencatME, gencatND, gen
 let uIswupper = checkAttr([gencatLU, gencatLT]);
 let uGencat = function ($$char) {
 	let conversionRule = getRule(allchars)($$char)(numBlocks);
-	return Data_Functor.map(Data_Maybe.functorMaybe)(function (v) {
+	return data.map(Data_Maybe.functorMaybe)(function (v) {
 		return v.unicodeCat;
 	})(conversionRule);
 };

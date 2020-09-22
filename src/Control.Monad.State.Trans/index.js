@@ -7,7 +7,7 @@ let Control_Monad_Trans_Class = require("../Control.Monad.Trans.Class/index.js")
 let Control_Monad_Writer_Class = require("../Control.Monad.Writer.Class/index.js");
 let Control_MonadPlus = require("../Control.MonadPlus/index.js");
 let Control_MonadZero = require("../Control.MonadZero/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Tuple = require("../Data.Tuple/index.js");
 let Effect_Class = require("../Effect.Class/index.js");
@@ -90,10 +90,10 @@ let lazyStateT = new control.Lazy(function (f) {
     };
 });
 let functorStateT = function (dictFunctor) {
-    return new Data_Functor.Functor(function (f) {
+    return new data.Functor(function (f) {
         return function (v) {
             return function (s) {
-                return Data_Functor.map(dictFunctor)(function (v1) {
+                return data.map(dictFunctor)(function (v1) {
                     return new Data_Tuple.Tuple(f(v1.value0), v1.value1);
                 })(v(s));
             };
@@ -103,14 +103,14 @@ let functorStateT = function (dictFunctor) {
 let execStateT = function (dictFunctor) {
     return function (v) {
         return function (s) {
-            return Data_Functor.map(dictFunctor)(Data_Tuple.snd)(v(s));
+            return data.map(dictFunctor)(Data_Tuple.snd)(v(s));
         };
     };
 };
 let evalStateT = function (dictFunctor) {
     return function (v) {
         return function (s) {
-            return Data_Functor.map(dictFunctor)(Data_Tuple.fst)(v(s));
+            return data.map(dictFunctor)(Data_Tuple.fst)(v(s));
         };
     };
 };

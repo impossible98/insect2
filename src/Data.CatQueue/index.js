@@ -2,7 +2,7 @@ const control = require("../control");
 let Control_MonadPlus = require("../Control.MonadPlus/index.js");
 let Control_MonadZero = require("../Control.MonadZero/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_List = require("../Data.List/index.js");
 let Data_List_Types = require("../Data.List.Types/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
@@ -56,7 +56,7 @@ let lift2 = function (dictApply) {
 	return function (f) {
 		return function (a) {
 			return function (b) {
-				return apply(dictApply)(Data_Functor.map(dictApply.Functor0())(f)(a))(b);
+				return apply(dictApply)(data.map(dictApply.Functor0())(f)(a))(b);
 			};
 		};
 	};
@@ -140,9 +140,9 @@ let $$null = function (v) {
 let length = function (v) {
     return Data_List.length(v.value0) + Data_List.length(v.value1) | 0;
 };
-let functorCatQueue = new Data_Functor.Functor(function (f) {
+let functorCatQueue = new data.Functor(function (f) {
     return function (v) {
-        return new CatQueue(Data_Functor.map(Data_List_Types.functorList)(f)(v.value0), Data_Functor.map(Data_List_Types.functorList)(f)(v.value1));
+        return new CatQueue(data.map(Data_List_Types.functorList)(f)(v.value0), data.map(Data_List_Types.functorList)(f)(v.value1));
     };
 });
 let foldableCatQueue = new Data_Foldable.Foldable(function (dictMonoid) {
@@ -195,7 +195,7 @@ let traversableCatQueue = new Data_Traversable.Traversable(function () {
     return Data_Traversable.sequenceDefault(traversableCatQueue)(dictApplicative);
 }, function (dictApplicative) {
     return function (f) {
-        let $100 = Data_Functor.map((dictApplicative.Apply0()).Functor0())(Data_Foldable.foldl(foldableCatQueue)(snoc)(empty));
+        let $100 = data.map((dictApplicative.Apply0()).Functor0())(Data_Foldable.foldl(foldableCatQueue)(snoc)(empty));
         let $101 = Data_Foldable.foldl(foldableCatQueue)(function (acc) {
             let $103 = lift2(dictApplicative.Apply0())(snoc)(acc);
             return function ($104) {
@@ -359,7 +359,7 @@ let monadCatQueue = new control.Monad(function () {
 });
 let bindCatQueue = new control.Bind(function () {
     return applyCatQueue;
-}, Data_Functor.flip(Data_Foldable.foldMap(foldableCatQueue)(monoidCatQueue)));
+}, data.flip(Data_Foldable.foldMap(foldableCatQueue)(monoidCatQueue)));
 let applyCatQueue = new Apply(function () {
     return functorCatQueue;
 }, control.ap(monadCatQueue));

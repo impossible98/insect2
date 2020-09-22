@@ -7,7 +7,7 @@ let Data_Monoid_Dual = require("../Data.Monoid.Dual/index.js");
 let Data_Monoid_Endo = require("../Data.Monoid.Endo/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 
 
 class Control {
@@ -49,7 +49,7 @@ let apply = function (dict) {
 let applySecond = function (dictApply) {
 	return function (a) {
 		return function (b) {
-			return apply(dictApply)(Data_Functor.map(dictApply.Functor0())(Data_Functor._const(identity(categoryFn)))(a))(b);
+			return apply(dictApply)(data.map(dictApply.Functor0())(data._const(identity(categoryFn)))(a))(b);
 		};
 	};
 };
@@ -254,12 +254,12 @@ let bifoldlDefault = function (dictBifoldable) {
             return function (z) {
                 return function (p) {
                     return Data_Newtype.unwrap(Data_Newtype.newtypeEndo)(Data_Newtype.unwrap(Data_Newtype.newtypeDual)(bifoldMap(dictBifoldable)(Data_Monoid_Dual.monoidDual(Data_Monoid_Endo.monoidEndo(categoryFn)))((function () {
-                        let $105 = Data_Functor.flip(f);
+                        let $105 = data.flip(f);
                         return function ($106) {
                             return Data_Monoid_Dual.Dual(Data_Monoid_Endo.Endo($105($106)));
                         };
                     })())((function () {
-                        let $107 = Data_Functor.flip(g);
+                        let $107 = data.flip(g);
                         return function ($108) {
                             return Data_Monoid_Dual.Dual(Data_Monoid_Endo.Endo($107($108)));
                         };

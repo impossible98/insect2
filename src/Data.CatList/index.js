@@ -3,7 +3,7 @@ let Control_MonadPlus = require("../Control.MonadPlus/index.js");
 let Control_MonadZero = require("../Control.MonadZero/index.js");
 let Data_CatQueue = require("../Data.CatQueue/index.js");
 let Data_Foldable = require("../Data.Foldable/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_List_Types = require("../Data.List.Types/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Monoid = require("../Data.Monoid/index.js");
@@ -13,7 +13,6 @@ let Data_Traversable = require("../Data.Traversable/index.js");
 let Data_Tuple = require("../Data.Tuple/index.js");
 let Data_Unfoldable = require("../Data.Unfoldable/index.js");
 let Data_Unfoldable1 = require("../Data.Unfoldable1/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
 
 
@@ -251,7 +250,7 @@ let cons = function (a) {
 		return append(new CatCons(a, Data_CatQueue.empty))(cat);
 	};
 };
-let functorCatList = new Data_Functor.Functor(function (v) {
+let functorCatList = new data.Functor(function (v) {
 	return function (v1) {
 		if (v1 instanceof CatNil) {
 			return CatNil.value;
@@ -264,7 +263,7 @@ let functorCatList = new Data_Functor.Functor(function (v) {
 				};
 				return foldr(link)(CatNil.value)(v1.value1);
 			})();
-			return cons(v(v1.value0))(Data_Functor.map(functorCatList)(v)(d));
+			return cons(v(v1.value0))(data.map(functorCatList)(v)(d));
 		};
 		throw new Error("Failed pattern match at Data.CatList (line 185, column 1 - line 189, column 26): " + [v.constructor.name, v1.constructor.name]);
 	};
@@ -289,7 +288,7 @@ let traversableCatList = new Data_Traversable.Traversable(function () {
 				};
 				return foldr(link)(CatNil.value)(v.value1);
 			})();
-			return apply(dictApplicative.Apply0())(Data_Functor.map((dictApplicative.Apply0()).Functor0())(cons)(v.value0))(Data_Traversable.sequence(traversableCatList)(dictApplicative)(d));
+			return apply(dictApplicative.Apply0())(data.map((dictApplicative.Apply0()).Functor0())(cons)(v.value0))(Data_Traversable.sequence(traversableCatList)(dictApplicative)(d));
 		};
 		throw new Error("Failed pattern match at Data.CatList (line 175, column 1 - line 183, column 33): " + [v.constructor.name]);
 	};
@@ -307,7 +306,7 @@ let traversableCatList = new Data_Traversable.Traversable(function () {
 					};
 					return foldr(link)(CatNil.value)(v1.value1);
 				})();
-				return apply(dictApplicative.Apply0())(Data_Functor.map((dictApplicative.Apply0()).Functor0())(cons)(v(v1.value0)))(Data_Traversable.traverse(traversableCatList)(dictApplicative)(v)(d));
+				return apply(dictApplicative.Apply0())(data.map((dictApplicative.Apply0()).Functor0())(cons)(v(v1.value0)))(Data_Traversable.traverse(traversableCatList)(dictApplicative)(v)(d));
 			};
 			throw new Error("Failed pattern match at Data.CatList (line 175, column 1 - line 183, column 33): " + [v.constructor.name, v1.constructor.name]);
 		};
@@ -324,7 +323,7 @@ let monadCatList = new control.Monad(function () {
 });
 let bindCatList = new control.Bind(function () {
 	return applyCatList;
-}, Data_Functor.flip(foldMap(monoidCatList)));
+}, data.flip(foldMap(monoidCatList)));
 let applyCatList = new Apply(function () {
 	return functorCatList;
 }, control.ap(monadCatList));

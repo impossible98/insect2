@@ -1,7 +1,7 @@
 const control = require("../control");
 let Data_Bifunctor = require("../Data.Bifunctor/index.js");
 let Data_Either = require("../Data.Either/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Identity = require("../Data.Identity/index.js");
 let Data_Maybe = require("../Data.Maybe/index.js");
 let Data_Monoid = require("../Data.Monoid/index.js");
@@ -69,7 +69,7 @@ let tailRecM3 = function (dictMonadRec) {
 let untilJust = function (dictMonadRec) {
     return function (m) {
         return tailRecM(dictMonadRec)(function (v) {
-            return Data_Functor.mapFlipped((((dictMonadRec.Monad0()).Bind1()).Apply0()).Functor0())(m)(function (v1) {
+            return data.mapFlipped((((dictMonadRec.Monad0()).Bind1()).Apply0()).Functor0())(m)(function (v1) {
                 if (v1 instanceof Data_Maybe.Nothing) {
                     return new Loop({});
                 };
@@ -85,7 +85,7 @@ let whileJust = function (dictMonoid) {
     return function (dictMonadRec) {
         return function (m) {
             return tailRecM(dictMonadRec)(function (v) {
-                return Data_Functor.mapFlipped((((dictMonadRec.Monad0()).Bind1()).Apply0()).Functor0())(m)(function (v1) {
+                return data.mapFlipped((((dictMonadRec.Monad0()).Bind1()).Apply0()).Functor0())(m)(function (v1) {
                     if (v1 instanceof Data_Maybe.Nothing) {
                         return new Done(v);
                     };
@@ -213,11 +213,11 @@ let monadRecEffect = new MonadRec(function () {
                 };
                 return {};
             })();
-            return Data_Functor.map(Effect.functorEffect)(fromDone)(Effect_Ref.read(r))();
+            return data.map(Effect.functorEffect)(fromDone)(Effect_Ref.read(r))();
         };
     };
 });
-let functorStep = new Data_Functor.Functor(function (f) {
+let functorStep = new data.Functor(function (f) {
     return function (m) {
         if (m instanceof Loop) {
             return new Loop(m.value0);
@@ -231,7 +231,7 @@ let functorStep = new Data_Functor.Functor(function (f) {
 let forever = function (dictMonadRec) {
     return function (ma) {
         return tailRecM(dictMonadRec)(function (u) {
-            return Data_Functor.voidRight((((dictMonadRec.Monad0()).Bind1()).Apply0()).Functor0())(new Loop(u))(ma);
+            return data.voidRight((((dictMonadRec.Monad0()).Bind1()).Apply0()).Functor0())(new Loop(u))(ma);
         })({});
     };
 };

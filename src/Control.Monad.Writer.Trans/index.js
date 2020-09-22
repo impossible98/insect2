@@ -7,7 +7,7 @@ let Control_Monad_Trans_Class = require("../Control.Monad.Trans.Class/index.js")
 let Control_Monad_Writer_Class = require("../Control.Monad.Writer.Class/index.js");
 let Control_MonadPlus = require("../Control.MonadPlus/index.js");
 let Control_MonadZero = require("../Control.MonadZero/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_Monoid = require("../Data.Monoid/index.js");
 let Data_Newtype = require("../Data.Newtype/index.js");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
@@ -79,15 +79,15 @@ let mapWriterT = function (f) {
     };
 };
 let functorWriterT = function (dictFunctor) {
-    return new Data_Functor.Functor(function (f) {
-        return mapWriterT(Data_Functor.map(dictFunctor)(function (v) {
+    return new data.Functor(function (f) {
+        return mapWriterT(data.map(dictFunctor)(function (v) {
             return new Data_Tuple.Tuple(f(v.value0), v.value1);
         }));
     });
 };
 let execWriterT = function (dictFunctor) {
     return function (v) {
-        return Data_Functor.map(dictFunctor)(Data_Tuple.snd)(v);
+        return data.map(dictFunctor)(Data_Tuple.snd)(v);
     };
 };
 let applyWriterT = function (dictSemigroup) {
@@ -101,7 +101,7 @@ let applyWriterT = function (dictSemigroup) {
                         return new Data_Tuple.Tuple(v3.value0(v4.value0), Data_Semigroup.append(dictSemigroup)(v3.value1)(v4.value1));
                     };
                 };
-                return apply(dictApply)(Data_Functor.map(dictApply.Functor0())(k)(v))(v1);
+                return apply(dictApply)(data.map(dictApply.Functor0())(k)(v))(v1);
             };
         });
     };
@@ -114,7 +114,7 @@ let bindWriterT = function (dictSemigroup) {
             return function (k) {
                 return WriterT(control.bind(dictBind)(v)(function (v1) {
                     let v2 = k(v1.value0);
-                    return Data_Functor.map((dictBind.Apply0()).Functor0())(function (v3) {
+                    return data.map((dictBind.Apply0()).Functor0())(function (v3) {
                         return new Data_Tuple.Tuple(v3.value0, Data_Semigroup.append(dictSemigroup)(v1.value1)(v3.value1));
                     })(v2);
                 }));

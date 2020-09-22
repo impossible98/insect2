@@ -3,7 +3,7 @@ let $foreign = require("./foreign.js");
 const control = require("../control");
 let Data_Foldable = require("../Data.Foldable/index.js");
 let Data_FoldableWithIndex = require("../Data.FoldableWithIndex/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../data");
 let Data_FunctorWithIndex = require("../Data.FunctorWithIndex/index.js");
 let Data_Ord = require("../Data.Ord/index.js");
 let Data_Semigroup = require("../Data.Semigroup/index.js");
@@ -33,10 +33,10 @@ let eq1Array = new Data(function (dictEq) {
 });
 
 let applyArray = new Data2(function () {
-	return Data_Functor.functorArray;
+	return data.functorArray;
 }, arrayApply);
 let altArray = new Data2(function () {
-	return Data_Functor.functorArray;
+	return data.functorArray;
 }, Data_Semigroup.append(Data_Semigroup.semigroupArray));
 
 function eqArrayImpl(f) {
@@ -98,7 +98,7 @@ let ordNonEmptyArray = function (dictOrd) {
 let ord1NonEmptyArray = Data_Ord.ord1Array;
 let monadNonEmptyArray = control.monadArray;
 let functorWithIndexNonEmptyArray = Data_FunctorWithIndex.functorWithIndexArray;
-let functorNonEmptyArray = Data_Functor.functorArray;
+let functorNonEmptyArray = data.functorArray;
 let foldableWithIndexNonEmptyArray = Data_FoldableWithIndex.foldableWithIndexArray;
 let foldableNonEmptyArray = Data_Foldable.foldableArray;
 let foldable1NonEmptyArray = new Data_Semigroup_Foldable.Foldable1(function () {
@@ -115,7 +115,7 @@ let traversable1NonEmptyArray = new Data_Semigroup_Traversable.Traversable1(func
 }, function (dictApply) {
 	return Data_Semigroup_Traversable.sequence1Default(traversable1NonEmptyArray)(dictApply);
 }, function (dictApply) {
-	return $foreign.traverse1Impl(apply(dictApply))(Data_Functor.map(dictApply.Functor0()));
+	return $foreign.traverse1Impl(apply(dictApply))(data.map(dictApply.Functor0()));
 });
 let eqNonEmptyArray = function (dictEq) {
 	return eqArray(dictEq);

@@ -1,7 +1,9 @@
 let $foreign = require("./foreign.js");
+
+
 const control = require("../control");
 let Control_Monad_Rec_Class = require("../Control.Monad.Rec.Class/index.js");
-let Data_Functor = require("../Data.Functor/index.js");
+let data = require("../Data");
 
 
 class Apply {
@@ -20,7 +22,7 @@ let modify = function (f) {
         };
     });
 };
-let functorST = new Data_Functor.Functor($foreign.map_);
+let functorST = new data.Functor($foreign.map_);
 let monadST = new control.Monad(function () {
     return applicativeST;
 }, function () {
@@ -52,10 +54,10 @@ let monadRecST = new Control_Monad_Rec_Class.MonadRec(function () {
             throw new Error("Failed pattern match at Control.Monad.ST.Internal (line 54, column 32 - line 54, column 46): " + [ v.constructor.name ]);
         };
         return control.bind(bindST)(control.bindFlipped(bindST)($foreign["new"])(f(a)))(function (r) {
-            return control.discard(control.discardUnit)(bindST)($foreign["while"](Data_Functor.map(functorST)(isLooping)($foreign.read(r)))(control.bind(bindST)($foreign.read(r))(function (v) {
+            return control.discard(control.discardUnit)(bindST)($foreign["while"](data.map(functorST)(isLooping)($foreign.read(r)))(control.bind(bindST)($foreign.read(r))(function (v) {
                 if (v instanceof Control_Monad_Rec_Class.Loop) {
                     return control.bind(bindST)(f(v.value0))(function (e) {
-                        return Data_Functor._void(functorST)($foreign.write(e)(r));
+                        return data._void(functorST)($foreign.write(e)(r));
                     });
                 };
                 if (v instanceof Control_Monad_Rec_Class.Done) {
@@ -63,7 +65,7 @@ let monadRecST = new Control_Monad_Rec_Class.MonadRec(function () {
                 };
                 throw new Error("Failed pattern match at Control.Monad.ST.Internal (line 46, column 18 - line 50, column 28): " + [ v.constructor.name ]);
             })))(function () {
-                return Data_Functor.map(functorST)(fromDone)($foreign.read(r));
+                return data.map(functorST)(fromDone)($foreign.read(r));
             });
         });
     };
