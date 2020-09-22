@@ -6,7 +6,6 @@ let Control_Monad_State_Trans = require("./Control.Monad.State.Trans/index.js");
 let Control_Monad_Trans_Class = require("./Control.Monad.Trans.Class/index.js");
 let Control_MonadPlus = require("./Control.MonadPlus/index.js");
 let Control_MonadZero = require("./Control.MonadZero/index.js");
-let Control_Plus = require("./Control.Plus/index.js");
 let Data_Either = require("./Data.Either/index.js");
 const data = require("./data");
 let Data_Identity = require("./Data.Identity/index.js");
@@ -286,7 +285,7 @@ function altParserT(dictMonad) {
 }
 
 function plusParserT(dictMonad) {
-	return new Control_Plus.Plus(() => {
+	return new control.Plus(() => {
 		return altParserT(dictMonad);
 	}, fail(dictMonad)("No alternative"));
 }
