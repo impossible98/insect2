@@ -20,9 +20,33 @@ let Data_Quantity = require("../Data.Quantity/index.js");
 let Data_Quantity_Math = require("../Data.Quantity.Math/index.js");
 let Data_Quantity_Physics = require("../Data.Quantity.Physics/index.js");
 let Data_Tuple = require("../Data.Tuple/index.js");
-let Insect_Functions = require("../Insect.Functions/index.js");
+let Data_Units_SI = require("../Data.Units.SI/index.js");
 let Insect_Language = require("../Insect.Language/index.js");
 
+
+let offsetFahrenheit = 459.67;
+let offsetCelsius = 273.15;
+let toCelsius = function (tempKelvin$prime) {
+    return control.bind(Data_Either.bindEither)(Data_Quantity.asValueIn(tempKelvin$prime)(Data_Units_SI.kelvin))(function (tempKelvin) {
+        return control.pure(Data_Either.applicativeEither)(Data_Quantity.scalar(tempKelvin - offsetCelsius));
+    });
+};
+let multiplierFahrenheit = 5.0 / 9.0;
+let toFahrenheit = function (tempKelvin$prime) {
+    return control.bind(Data_Either.bindEither)(Data_Quantity.asValueIn(tempKelvin$prime)(Data_Units_SI.kelvin))(function (tempKelvin) {
+        return control.pure(Data_Either.applicativeEither)(Data_Quantity.scalar(tempKelvin / multiplierFahrenheit - offsetFahrenheit));
+    });
+};
+let fromFahrenheit = function (tempFahrenheit$prime) {
+    return control.bind(Data_Either.bindEither)(Data_Quantity.toScalar(tempFahrenheit$prime))(function (tempFahrenheit) {
+        return control.pure(Data_Either.applicativeEither)(Data_Quantity.quantity((tempFahrenheit + offsetFahrenheit) * multiplierFahrenheit)(Data_Units_SI.kelvin));
+    });
+};
+let fromCelsius = function (tempCelsius$prime) {
+    return control.bind(Data_Either.bindEither)(Data_Quantity.toScalar(tempCelsius$prime))(function (tempCelsius) {
+        return control.pure(Data_Either.applicativeEither)(Data_Quantity.quantity(tempCelsius + offsetCelsius)(Data_Units_SI.kelvin));
+    });
+};
 
 class Eq {
 	constructor(eq) {
@@ -131,7 +155,7 @@ let initialEnvironment = (() => {
             return function ($11) {
                 return $10(Data_Quantity.abs($11));
             };
-        })()), constFunc("acos")(Data_Quantity_Math.acos), constFunc("acosh")(Data_Quantity_Math.acosh), constFunc("acos")(Data_Quantity_Math.acos), constFunc("acosh")(Data_Quantity_Math.acosh), constFunc("asin")(Data_Quantity_Math.asin), constFunc("asinh")(Data_Quantity_Math.asinh), constFunc("atan")(Data_Quantity_Math.atan), constFunc2("atan2")(Data_Quantity_Math.atan2), constFunc("atanh")(Data_Quantity_Math.atanh), constFunc("ceil")(Data_Quantity_Math.ceil), constFunc("cos")(Data_Quantity_Math.cos), constFunc("cosh")(Data_Quantity_Math.cosh), constFunc("exp")(Data_Quantity_Math.exp), constFunc("floor")(Data_Quantity_Math.floor), constFunc("fromCelsius")(Insect_Functions.fromCelsius), constFunc("fromFahrenheit")(Insect_Functions.fromFahrenheit), constFunc("gamma")(Data_Quantity_Math.gamma), constFunc("ln")(Data_Quantity_Math.ln), constFunc("log")(Data_Quantity_Math.ln), constFunc("log10")(Data_Quantity_Math.log10), constFuncN("minimum")((() => {
+        })()), constFunc("acos")(Data_Quantity_Math.acos), constFunc("acosh")(Data_Quantity_Math.acosh), constFunc("acos")(Data_Quantity_Math.acos), constFunc("acosh")(Data_Quantity_Math.acosh), constFunc("asin")(Data_Quantity_Math.asin), constFunc("asinh")(Data_Quantity_Math.asinh), constFunc("atan")(Data_Quantity_Math.atan), constFunc2("atan2")(Data_Quantity_Math.atan2), constFunc("atanh")(Data_Quantity_Math.atanh), constFunc("ceil")(Data_Quantity_Math.ceil), constFunc("cos")(Data_Quantity_Math.cos), constFunc("cosh")(Data_Quantity_Math.cosh), constFunc("exp")(Data_Quantity_Math.exp), constFunc("floor")(Data_Quantity_Math.floor), constFunc("fromCelsius")(fromCelsius), constFunc("fromFahrenheit")(fromFahrenheit), constFunc("gamma")(Data_Quantity_Math.gamma), constFunc("ln")(Data_Quantity_Math.ln), constFunc("log")(Data_Quantity_Math.ln), constFunc("log10")(Data_Quantity_Math.log10), constFuncN("minimum")((() => {
             let $12 = Data_Bifunctor.lmap(Data_Either.bifunctorEither)(Insect_Language.QConversionError.create);
             return function ($13) {
                 return $12(Data_Quantity_Math.min(Data_List_Types.NonEmptyList($13)));
@@ -151,7 +175,7 @@ let initialEnvironment = (() => {
             return function ($19) {
                 return $18(Data_Quantity.sqrt($19));
             };
-        })()), constFunc("tan")(Data_Quantity_Math.tan), constFunc("tanh")(Data_Quantity_Math.tanh), constFunc("toCelsius")(Insect_Functions.toCelsius), constFunc("toFahrenheit")(Insect_Functions.toFahrenheit) ])
+        })()), constFunc("tan")(Data_Quantity_Math.tan), constFunc("tanh")(Data_Quantity_Math.tanh), constFunc("toCelsius")(toCelsius), constFunc("toFahrenheit")(toFahrenheit) ])
     };
 })();
 let eqStorageType = new Eq(function (x) {
