@@ -1,6 +1,6 @@
 FROM node:12-alpine
 WORKDIR /home/insect
-COPY package.json package.json
+COPY package.json ./
 RUN yarn --pure-lockfile && \
     yarn cache clean
 COPY . .
