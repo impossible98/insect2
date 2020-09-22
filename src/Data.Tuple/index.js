@@ -41,6 +41,9 @@ let zero = function (dict) {
 	return dict.zero;
 };
 
+function dict(arg) {
+	return arg.dict;
+}
 
 let one = function (dict) {
 	return dict.one;
@@ -357,7 +360,7 @@ let distributiveTuple = function (dictTypeEquals) {
     }, function (dictFunctor) {
         return Data_Distributive.collectDefault(distributiveTuple(dictTypeEquals))(dictFunctor);
     }, function (dictFunctor) {
-        let $315 = Tuple.create(type.from(dictTypeEquals)({}));
+        let $315 = Tuple.create(dict(dictTypeEquals)({}));
         let $316 = Data_Functor.map(dictFunctor)(snd);
         return function ($317) {
             return $315($316($317));
