@@ -2,7 +2,7 @@ const record = require('./record');
 const type = require('./type');
 
 
-class Control {
+class Data {
 	constructor(compose) {
 		this.compose = compose;
 	}
@@ -13,7 +13,7 @@ class Functor {
 		this.map = map;
 	}
 }
-let semigroupoidFn = new Control(function (f) {
+let semigroupoidFn = new Data(function (f) {
 	return function (g) {
 		return function (x) {
 			return f(g(x));
@@ -142,38 +142,38 @@ function flap(dictFunctor) {
 	};
 }
 
-let zero = function (dict) {
+function zero (dict) {
 	return dict.zero;
 };
 
-let mul = function (dict) {
+function mul(dict) {
 	return dict.mul;
 };
 
-let intDegree = function (x) {
+function intDegree(x) {
 	return Math.min(Math.abs(x), 2147483647);
-};
+}
 
-let intDiv = function (x) {
+function intDiv(x) {
 	return function (y) {
 		if (y === 0) return 0;
 		return y > 0 ? Math.floor(x / y) : -Math.floor(x / -y);
 	};
-};
+}
 
-let intMod = function (x) {
+function intMod  (x) {
 	return function (y) {
 		if (y === 0) return 0;
 		let yy = Math.abs(y);
 		return ((x % yy) + yy) % yy;
 	};
-};
+}
 
-let numDiv = function (n1) {
+function numDiv(n1) {
 	return function (n2) {
 		return n1 / n2;
 	};
-};
+}
 
 let EuclideanRing = function (CommutativeRing0, degree, div, mod) {
 	this.CommutativeRing0 = CommutativeRing0;
@@ -182,11 +182,11 @@ let EuclideanRing = function (CommutativeRing0, degree, div, mod) {
 	this.mod = mod;
 };
 
-let mod = function (dict) {
+function mod (dict) {
 	return dict.mod;
-};
+}
 
-let gcd = function ($copy_dictEq) {
+function gcd($copy_dictEq) {
 	return function ($copy_dictEuclideanRing) {
 		return function ($copy_a) {
 			return function ($copy_b) {
@@ -214,7 +214,8 @@ let gcd = function ($copy_dictEq) {
 			};
 		};
 	};
-};
+}
+
 let euclideanRingNumber = new EuclideanRing(function () {
 	return commutativeRingNumber;
 }, function (v) {
@@ -224,13 +225,15 @@ let euclideanRingNumber = new EuclideanRing(function () {
 		return 0.0;
 	};
 });
+
 let euclideanRingInt = new EuclideanRing(function () {
 	return commutativeRingInt;
 }, intDegree, intDiv, intMod);
 let div = function (dict) {
 	return dict.div;
 };
-let lcm = function (dictEq) {
+
+function lcm(dictEq) {
 	return function (dictEuclideanRing) {
 		return function (a) {
 			return function (b) {
@@ -242,10 +245,11 @@ let lcm = function (dictEq) {
 			};
 		};
 	};
-};
-let degree = function (dict) {
+}
+
+function degree (dict) {
 	return dict.degree;
-};
+}
 
 
 let SProxy = (function () {
@@ -395,25 +399,25 @@ let DivisionRing = function (Ring0, recip) {
 	this.recip = recip;
 };
 
-let recip = function (dict) {
+function recip(dict) {
 	return dict.recip;
-};
+}
 
-let rightDiv = function (dictDivisionRing) {
+function rightDiv (dictDivisionRing) {
 	return function (a) {
 		return function (b) {
 			return mul((dictDivisionRing.Ring0()).Semiring0())(a)(recip(dictDivisionRing)(b));
 		};
 	};
-};
+}
 
-let leftDiv = function (dictDivisionRing) {
+function leftDiv (dictDivisionRing) {
 	return function (a) {
 		return function (b) {
 			return mul((dictDivisionRing.Ring0()).Semiring0())(recip(dictDivisionRing)(b))(a);
 		};
 	};
-};
+}
 
 let divisionringNumber = new DivisionRing(function () {
 	return ringNumber;
