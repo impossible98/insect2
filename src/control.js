@@ -320,10 +320,6 @@ function apply(dict) {
 	return dict.apply;
 }
 
-function biapply(dict) {
-	return dict.biapply;
-}
-
 function bind(dict) {
 	return dict.bind;
 }
@@ -529,7 +525,6 @@ module.exports = {
 	ap: ap,
 	applicativeFn: applicativeFn,
 	applicativeArray: applicativeArray,
-	biapply: biapply,
 	biapplyFirst: biapplyFirst,
 	biapplySecond: biapplySecond,
 	bilift2: bilift2,
