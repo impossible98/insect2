@@ -13,23 +13,35 @@
     "compile": "tsc",
     "dist": "ncc build src/main && node scripts/dist.js",
     "start": "ncc build src/main && node scripts/dist.js && node dist/main.js",
-    "web": "live-server src --open",
+    "web": "node src/web.js",
     "version": "node scripts/version.js"
   },
   "bugs": {
     "url": "https://github.com/impossible98/insect/issues"
   },
   "dependencies": {
+    "chokidar": "^3.4.2",
+    "colors": "^1.4.0",
+    "connect": "^3.7.0",
+    "cors": "^2.8.5",
     "decimal.js": "^10.2.0",
+    "event-stream": "^4.0.1",
+    "faye-websocket": "^0.11.3",
     "fs-extra": "^9.0.1",
     "historic-readline": "^1.0.8",
+    "http-auth": "3.1.x",
     "jquery.terminal": "^2.12.0",
     "keyboardevent-key-polyfill": "=1.1.0",
-    "line-reader": "^0.4.0"
+    "line-reader": "^0.4.0",
+    "morgan": "^1.9.1",
+    "object-assign": "latest",
+    "open": "latest",
+    "proxy-middleware": "latest",
+    "send": "latest",
+    "serve-index": "^1.9.1"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.24.1",
-    "live-server": "^1.2.1",
     "typescript": "^4.0.3"
   }
 }
